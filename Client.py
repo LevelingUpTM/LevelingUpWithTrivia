@@ -12,19 +12,19 @@ def run_client():
         client_socket.connect((HOST, PORT))
         print("Connected to the server!")
 
-        # Receive "hello" from the server
-        message = client_socket.recv(1024).decode()  # Receive the message
+        # Receive the message from the server
+        message = client_socket.recv(1024).decode()
         print("Received from server:", message)
+
 
         # After receiving "hello", send "hi" to the server
         if message == "hello":
+            print("Sending server hi...") # I know we need to send hello but still
             client_socket.sendall(b"hi")
 
-        # Receive server's response
-        response = client_socket.recv(1024)
-        print("Server response:", response.decode())
 
     finally:
+
         # Close the connection
         client_socket.close()
         print("Connection closed.")
