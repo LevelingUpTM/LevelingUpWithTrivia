@@ -2,6 +2,7 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <thread>
+#pragma comment(lib, "Ws2_32.lib")
 
 void Server::run()
 {

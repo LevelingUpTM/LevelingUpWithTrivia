@@ -2,6 +2,7 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <thread>
+#pragma comment(lib, "Ws2_32.lib")
 
 const int PORT = 5555;       // Port number to listen 
 const int BUFFER_SIZE = 6;  // Size of the buffer for receiving data
