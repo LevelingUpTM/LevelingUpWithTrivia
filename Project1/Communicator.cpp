@@ -2,6 +2,8 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <thread>
+#include "JsonRequestPacketDeserializer.h";
+#include "JsonResponsePacketSerializer.h";
 #pragma comment(lib, "Ws2_32.lib")
 
 const int PORT = 5555;       // Port number to listen 
@@ -40,19 +42,68 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
-    cout << "New client connected!\n";
+    std::cout << "New client connected!\n";
 
-    send(clientSocket, "hello", 5, 0);  // Send "hello" to client
-
-    char buffer[BUFFER_SIZE]; 
+    char headerBuffer[5]; // 1 byte for code + 4 bytes for message length
 
     while (true)
     {
-        int bytesReceived = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
-        if (bytesReceived <= 0) break;
+        // Step 1: Receive header (1 byte code + 4 bytes length)
+        int bytesReceived = recv(clientSocket, headerBuffer, 5, 0);
+        if (bytesReceived != 5)
+        {
+            std::cout << "Client disconnected or error receiving header\n";
+            break;
+        }
 
-        buffer[bytesReceived] = '\0';
-        cout << "Client: " << buffer << endl;
+        // Extract message code and length
+        unsigned char code = headerBuffer[0];
+        int length =
+            ((unsigned char)headerBuffer[1] << 24) |
+            ((unsigned char)headerBuffer[2] << 16) |
+            ((unsigned char)headerBuffer[3] << 8) |
+            (unsigned char)headerBuffer[4];
+
+        // Step 2: Receive the JSON message body
+        std::vector<unsigned char> messageBuffer(length);
+        int totalBytesReceived = 0;
+
+        while (totalBytesReceived < length)
+        {
+            int chunk = recv(clientSocket, reinterpret_cast<char*>(&messageBuffer[totalBytesReceived]), length - totalBytesReceived, 0);
+            if (chunk <= 0)
+            {
+                std::cout << "Client disconnected or error receiving message\n";
+                closesocket(clientSocket);
+                return;
+            }
+            totalBytesReceived += chunk;
+        }
+
+        // Step 3: Construct RequestInfo
+        RequestInfo reqInfo;
+        reqInfo.id = code;
+        reqInfo.receivedTime = std::chrono::system_clock::now();
+        reqInfo.buffer = messageBuffer;
+
+        // Step 4: Use appropriate handler (example here is login/sign-up)
+        IRequestHandler* handler = new LoginRequestHandler();  // TEMP: replace with your real handler logic
+
+        if (!handler->isRequestRelevant(reqInfo))
+        {
+            ErrorResponse err{ "Invalid request type" };
+            auto errorMsg = JsonResponsePacketSerializer::serializeErrorResponse(err);
+            send(clientSocket, reinterpret_cast<const char*>(errorMsg.data()), errorMsg.size(), 0);
+            continue;
+        }
+
+        RequestResult result = handler->handleRequest(reqInfo);
+
+        // Step 5: Send serialized response
+        send(clientSocket, reinterpret_cast<const char*>(result.response.data()), result.response.size(), 0);
+
+        // Update handler (temporary example)
+        handler = result.newHandler;
     }
 
     closesocket(clientSocket);
