@@ -84,7 +84,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
         // Step 3: Construct RequestInfo
         RequestInfo reqInfo;
         reqInfo.id = code;
-        reqInfo.receivalTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        reqInfo.receivalTime = std::chrono::system_clock::now();        
         reqInfo.buffer = messageBuffer;
 
         // Step 4: Use appropriate handler (example here is login/sign-up)
