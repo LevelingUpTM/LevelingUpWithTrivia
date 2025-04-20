@@ -1,11 +1,12 @@
 #pragma once
 
-#include <iostream>
+#include "RequestInfo.h"
+#include "RequestResult.h"
 
-using std::cout;
-using std::endl;
-using std::cerr;
 class IRequestHandler
 {
-
+public:
+    virtual bool isRequestRelevant(RequestInfo request) = 0;
+    virtual RequestResult handleRequest(RequestInfo request) = 0;
+    virtual ~IRequestHandler() = default;
 };
