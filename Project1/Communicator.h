@@ -2,6 +2,7 @@
 #include <WinSock2.h>
 #include <map>
 #include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
 #include <iostream>
 #include <thread>
 
@@ -15,6 +16,8 @@ class Communicator
 private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handlerFactory;
+
 
 	void bindAndListen();
 	void handleNewClient(SOCKET clientSocket);
