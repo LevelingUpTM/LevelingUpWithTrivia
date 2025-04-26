@@ -47,6 +47,8 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
     char headerBuffer[5]; // 1 byte for code + 4 bytes for message length
 
+    IRequestHandler* handler = m_handlerFactory.createLoginRequestHandler();
+
     while (true)
     {
         // Step 1: Receive header (1 byte code + 4 bytes length)
@@ -76,6 +78,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
             {
                 std::cout << "Client disconnected or error receiving message\n";
                 closesocket(clientSocket);
+                delete handler;
                 return;
             }
             totalBytesReceived += chunk;
@@ -88,7 +91,6 @@ void Communicator::handleNewClient(SOCKET clientSocket)
         reqInfo.buffer = messageBuffer;
 
         // Step 4: Use appropriate handler (example here is login/sign-up)
-        IRequestHandler* handler = new LoginRequestHandler();  // TEMP: replace with your real handler logic
 
         if (!handler->isRequestRelevant(reqInfo))
         {
@@ -103,10 +105,14 @@ void Communicator::handleNewClient(SOCKET clientSocket)
         // Step 5: Send serialized response
         send(clientSocket, reinterpret_cast<const char*>(result.response.data()), result.response.size(), 0);
 
-        // Update handler (temporary example)
-        handler = result.newHandler;
+        if (result.newHandler != handler)
+        {
+            delete handler;
+            handler = result.newHandler;
+        }
     }
 
+    delete handler;
     closesocket(clientSocket);
 }
 
