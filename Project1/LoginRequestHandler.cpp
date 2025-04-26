@@ -2,6 +2,7 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
 #include "LoginManager.h"
+#include "RequestHandlerFactory.h"
 #define LOGIN_REQUEST 1
 #define SIGNUP_REQUEST 2
 
@@ -89,7 +90,7 @@ RequestResult LoginRequestHandler::signup(RequestInfo request)
         response.status = 2;
         result.newHandler = this;
         break;
-    case SignUpStatus::ERROR:
+    case SignUpStatus::UNKNOWN_ERROR:
         response.status = 3;
         result.newHandler = nullptr;
         break;

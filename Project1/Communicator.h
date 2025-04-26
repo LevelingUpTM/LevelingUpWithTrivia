@@ -24,4 +24,5 @@ private:
 
 public:
 	void startHandleRequest();
+	Communicator(RequestHandlerFactory& handlerFactory);
 };

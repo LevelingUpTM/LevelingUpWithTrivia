@@ -2,6 +2,7 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <thread>
+#include "SqliteDatabase.h"
 #pragma comment(lib, "Ws2_32.lib")
 
 void Server::run()
@@ -23,4 +24,15 @@ void Server::run()
             break;
         }
     }
+}
+
+Server::Server()
+    :m_database(new SqliteDatabase()), m_handlerFactory(m_database), m_communicator(m_handlerFactory)
+{
+
+}
+
+Server::~Server()
+{
+    delete m_database;
 }

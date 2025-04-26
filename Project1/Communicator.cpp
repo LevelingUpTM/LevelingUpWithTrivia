@@ -3,12 +3,11 @@
 #include <iostream>
 #include <thread>
 #include "LoginRequestHandler.h"
-#include "JsonRequestPacketDeserializer.h";
-#include "JsonResponsePacketSerializer.h";
+#include "JsonRequestPacketDeserializer.h"
+#include "JsonResponsePacketSerializer.h"
 #pragma comment(lib, "Ws2_32.lib")
 
 const int PORT = 5555;       // Port number to listen 
-const int BUFFER_SIZE = 6;  // Size of the buffer for receiving data
 
 void Communicator::bindAndListen()
 {
@@ -127,4 +126,10 @@ void Communicator::startHandleRequest()
 
         thread(&Communicator::handleNewClient, this, clientSocket).detach();
     }
+}
+
+Communicator::Communicator(RequestHandlerFactory& handlerFactory)
+    :m_serverSocket(INVALID_SOCKET), m_handlerFactory(handlerFactory)
+{
+
 }

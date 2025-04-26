@@ -17,7 +17,7 @@ enum class SignUpStatus
 {
     SUCCESS,
     USER_ALREADY_EXISTS,
-    ERROR
+    UNKNOWN_ERROR
 };
 
 class LoginManager

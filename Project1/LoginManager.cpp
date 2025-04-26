@@ -42,7 +42,7 @@ SignUpStatus LoginManager::signup(const std::string& username, const std::string
 
     if (!m_database->addNewUser(username, password, email))
     {
-        return SignUpStatus::ERROR;
+        return SignUpStatus::UNKNOWN_ERROR;
     }
 
     return SignUpStatus::SUCCESS;
