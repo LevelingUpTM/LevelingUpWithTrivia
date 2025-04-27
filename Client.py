@@ -1,119 +1,122 @@
 import socket
 import json
 import struct
+import time
 
-HOST = 'localhost'  # Server address
-PORT = 5555         # Port number that the server is listening on
-
+HOST = 'localhost'
+PORT = 5555
 
 class UserClient:
-    """
-    A TCP client that communicates with the cpp server.
-    Protocol format:
-    - 1 byte for request code (unsigned char)
-    - 4 bytes for payload length (unsigned int)
-    - JSON - data
-    """
-
-    def __init__(self, host = HOST, port = PORT):
-        """
-        Initialize the client with host and port.
-        """
+    def __init__(self, host=HOST, port=PORT):
         self.host = host
         self.port = port
-        self.sock = socket.socket()
+        self.sock = None
 
     def connect(self):
-        """
-        Connect to the server.
-        :return: True if connection is successful, False otherwise.
-        """
         try:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.connect((self.host, self.port))
-            print(f"Connected to {self.host}:{self.port}")
+            print(f"[+] Connected to {self.host}:{self.port}")
             return True
         except Exception as e:
-            print("Connection error:", e)
+            print(f"[-] Connection failed: {e}")
             return False
-        
-
 
     def send(self, code, data):
-        """
-        Send a request to the server.
-
-        :param code: Request code (1 = login, 2 = signup)
-        :param data: Dictionary to send as JSON
-        :return: Response from server or None on error
-        """
         try:
-            # Convert dictionary to JSON and encode to bytes
-            payload = json.dumps(data).encode()
-
-            # Pack header: 1-byte code + 4-byte payload length (it turns the values into binary data)
+            payload = json.dumps(data).encode('utf-8')  
             header = struct.pack('>BI', code, len(payload))
-
-            # Send header and payload
             self.sock.sendall(header + payload)
-
-            # Receive and return the server's response
             return self.receive()
         except Exception as e:
-            print("Send error:", e)
+            print(f"[-] Send error: {e}")
+            return None
 
     def receive(self):
-        """
-        Receive and decode a response from the server.
-        :return: Decoded JSON response or None on error
-        """
         try:
-            # Read the 5-byte header
-            header = self.sock.recv(5)
-            if len(header) < 5:
-                raise Exception("Incomplete header")
+            header = self._recv_exact(5)
+            if not header:
+                raise Exception("Failed to receive header.")
 
-            # Unpack header into response code and payload length
             code, length = struct.unpack('>BI', header)
+            payload = self._recv_exact(length)
+            if not payload:
+                raise Exception("Failed to receive payload.")
 
-            # Read the JSON payload based on length
-            payload = self.sock.recv(length)
-            while len(payload) < length:
-                payload += self.sock.recv(length - len(payload))
-
-            # Decode and return the JSON data
-            return json.loads(payload.decode())
-        
+            response = json.loads(payload.decode('utf-8'))
+            return response
         except Exception as e:
-            print("Receive error:", e)
+            print(f"[-] Receive error: {e}")
+            return None
+
+    def _recv_exact(self, num_bytes):
+        data = b''
+        while len(data) < num_bytes:
+            chunk = self.sock.recv(num_bytes - len(data))
+            if not chunk:
+                return None
+            data += chunk
+        return data
 
     def close(self):
-        """
-        Close the connection to the server.
-        """
-        self.sock.close()
-        print("Disconnected")
+        if self.sock:
+            self.sock.close()
+            self.sock = None
+            print("[+] Disconnected.")
 
+def check_login_response(response):
+    status = response.get('status')
+    if status == 1:
+        print("[+] Login SUCCESS")
+    elif status == 2:
+        print("[-] Login FAILED: User not found")
+    elif status == 3:
+        print("[-] Login FAILED: Wrong password")
+    elif status == 4:
+        print("[-] Login FAILED: Already logged in")
+    else:
+        print("[-] Login FAILED: Unknown status code")
 
-# Example usage
+def check_signup_response(response):
+    status = response.get('status')
+    if status == 1:
+        print("[+] Signup SUCCESS")
+    elif status == 2:
+        print("[-] Signup FAILED: User already exists")
+    elif status == 3:
+        print("[-] Signup FAILED: Unknown server error")
+    else:
+        print("[-] Signup FAILED: Unknown status code")
+
 if __name__ == "__main__":
     client = UserClient()
 
     if client.connect():
+        username = "newuser123"
+        password = "mypassword"
+        email = "newuser123@example.com"
 
-        # Send login request (code 1)
-        login = {
-            "username": "test", 
-            "password": "1234"
+        # First, try to SIGNUP
+        signup_data = {
+            "username": username,
+            "password": password,
+            "email": email
         }
-        
-        print("Login: ", client.send(1, login))
+        print("\n[*] Attempting signup...")
+        signup_response = client.send(2, signup_data)
+        if signup_response:
+            check_signup_response(signup_response)
 
-        # Send signup request (code 2)
-        signup = {
-            "username": "new",
-            "password": "abcd", 
-            "email": "new@example.com"
+        time.sleep(10)
+
+        # Then, try to login
+        login_data = {
+            "username": username,
+            "password": password
         }
-        print("Signup: ", client.send(2, signup))
+        print("\n[*] Attempting login...")
+        login_response = client.send(1, login_data)
+        if login_response:
+            check_login_response(login_response)
 
         client.close()
