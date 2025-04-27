@@ -3,8 +3,7 @@
 #include "IRequestHandler.h"
 #include "RequestInfo.h"
 #include "RequestResult.h"
-
-class RequestHandlerFactory;
+#include "RequestHandlerFactory.h"
 
 class LoginRequestHandler : public IRequestHandler
 {
@@ -16,6 +15,7 @@ public:
 
 private:
     RequestHandlerFactory& m_handlerFactory;
+    LoginManager& m_loginManager;
 
     RequestResult login(RequestInfo request);
     RequestResult signup(RequestInfo request);
