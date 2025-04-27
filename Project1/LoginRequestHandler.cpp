@@ -74,11 +74,12 @@ RequestResult LoginRequestHandler::signup(RequestInfo request)
 {
     JsonRequestPacketDeserializer deserializer;
     SignupRequest signupData = deserializer.deserializeSignUpRequest(request.buffer);
-
+    
     SignUpStatus status = m_handlerFactory.getLoginManager().signup(signupData.username, signupData.password, signupData.email);
 
     SignupResponse response;
     RequestResult result;
+    result.newHandler = this;
 
     switch (status)
     {
@@ -92,7 +93,7 @@ RequestResult LoginRequestHandler::signup(RequestInfo request)
         break;
     case SignUpStatus::UNKNOWN_ERROR:
         response.status = 3;
-        result.newHandler = nullptr;
+        result.newHandler = this;
         break;
     }
 

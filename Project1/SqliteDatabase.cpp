@@ -1,6 +1,4 @@
 #include "SqliteDatabase.h"
-
-#include "SqliteDatabase.h"
 #include <iostream>
 
 SqliteDatabase::SqliteDatabase()
@@ -93,8 +91,15 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 
     if (result != SQLITE_OK)
     {
-        std::cerr << "Failed to add new user: " << errMsg << std::endl;
-        sqlite3_free(errMsg);
+        if (errMsg)
+        {
+            std::cerr << "Failed to add new user: " << errMsg << std::endl;
+            sqlite3_free(errMsg);
+        }
+        else
+        {
+            std::cerr << "Failed to add new user: Unknown error" << std::endl;
+        }
         return 0;
     }
 

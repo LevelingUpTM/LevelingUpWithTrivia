@@ -29,7 +29,11 @@ void Server::run()
 Server::Server()
     :m_database(new SqliteDatabase()), m_handlerFactory(m_database), m_communicator(m_handlerFactory)
 {
-
+    if (!m_database->open())
+    {
+        std::cerr << "Failed to open database!" << std::endl;
+        exit(1);
+    }
 }
 
 Server::~Server()

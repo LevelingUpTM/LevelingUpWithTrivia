@@ -1,8 +1,8 @@
 #include "JsonRequestPacketDeserializer.h"
-
+#include <iostream>
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const vector<unsigned char>& data)
 {
-    std::string jsonStr(data.begin() + 5, data.end());
+    std::string jsonStr(data.begin(), data.end());
     json jsonObj = json::parse(jsonStr);
     LoginRequest request;
     request.username = jsonObj["username"];
@@ -12,7 +12,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const vector
 
 SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(const vector<unsigned char>& data)
 {
-    std::string jsonStr(data.begin() + 5, data.end());
+    std::string jsonStr(data.begin(), data.end());
     json jsonObj = json::parse(jsonStr);
     SignupRequest request;
     request.username = jsonObj["username"];
