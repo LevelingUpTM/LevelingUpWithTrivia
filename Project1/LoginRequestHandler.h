@@ -1,10 +1,9 @@
 #pragma once
-
+#include "LoginManager.h"
 #include "IRequestHandler.h"
 #include "RequestInfo.h"
 #include "RequestResult.h"
-#include "RequestHandlerFactory.h"
-
+class RequestHandlerFactory;
 class LoginRequestHandler : public IRequestHandler
 {
 public:

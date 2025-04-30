@@ -7,7 +7,8 @@
 #define SIGNUP_REQUEST 2
 
 LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handlerFactory)
-    : m_handlerFactory(handlerFactory)
+    : m_handlerFactory(handlerFactory),
+    m_loginManager(handlerFactory.getLoginManager())
 {
 }
 
