@@ -2,7 +2,7 @@
 
 #include "RequestInfo.h"
 #include "RequestResult.h"
-
+//
 class IRequestHandler
 {
 public:
