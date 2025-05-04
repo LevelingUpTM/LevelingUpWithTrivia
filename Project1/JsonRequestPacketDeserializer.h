@@ -21,10 +21,30 @@ struct SignupRequest
     string email;
 };
 
+struct GetPlayersInRoomRequest
+{
+    unsigned int roomId;
+};
+
+struct JoinRoomRequest
+{
+    unsigned int roomId;
+};
+
+struct CreateRoomRequest
+{
+    string roomName;
+    unsigned int maxUsers;
+    unsigned int questionCount;
+    unsigned int answerTimeout;
+};
 
 class JsonRequestPacketDeserializer
 {
 public:
     static LoginRequest deserializeLoginRequest(const vector<unsigned char>& data);
     static SignupRequest deserializeSignUpRequest(const vector<unsigned char>& data);
+    static GetPlayersInRoomRequest deserializeGetPlayersRequest(const vector<unsigned char>& data);
+    static JoinRoomRequest deserializeJoinRoomRequest(const vector<unsigned char>& data);
+    static CreateRoomRequest deserializeCreateRoomRequest(const vector<unsigned char>& data);
 };

@@ -20,3 +20,33 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(const vect
     request.email = jsonObj["email"];
     return request;
 }
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(const vector<unsigned char>& data)
+{
+    std::string jsonStr(data.begin(), data.end());
+    json jsonObj = json::parse(jsonStr);
+    GetPlayersInRoomRequest request;
+    request.roomId = jsonObj["roomId"];
+    return request;
+}
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const vector<unsigned char>& data)
+{
+    std::string jsonStr(data.begin(), data.end());
+    json jsonObj = json::parse(jsonStr);
+    JoinRoomRequest request;
+    request.roomId = jsonObj["roomId"];
+    return request;
+}
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const vector<unsigned char>& data)
+{
+    std::string jsonStr(data.begin(), data.end());
+    json jsonObj = json::parse(jsonStr);
+    CreateRoomRequest request;
+    request.roomName = jsonObj["roomName"];
+    request.maxUsers = jsonObj["maxUsers"];
+    request.questionCount = jsonObj["questionCount"];
+    request.answerTimeout = jsonObj["answerTimeout"];
+    return request;
+}
