@@ -8,7 +8,7 @@ Question::Question(string question, vector<string> answers, unsigned int correct
 {
 	this->m_question = question;
 	this->m_possibleAnswers = answers;
-	this->correctAnswer = correctAnswer;
+	this->m_correctAnswer = correctAnswer;
 }
 
 string Question::getQuestion()
