@@ -19,3 +19,17 @@ WHERE Username = 'user1'
 AND Password = 'pass1';
 
 
+--------------------------------------
+
+-- like the  opentdb 
+CREATE TABLE questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    question_text TEXT NOT NULL,
+    answer_1 TEXT NOT NULL,
+    answer_2 TEXT NOT NULL,
+    answer_3 TEXT NOT NULL,
+    answer_4 TEXT NOT NULL,
+    correct_answer INT NOT NULL CHECK (correct_answer BETWEEN 1 AND 4),
+    category VARCHAR(100),
+    difficulty VARCHAR(20)
+);
