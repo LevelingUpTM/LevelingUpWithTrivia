@@ -105,3 +105,8 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 
     return 1;
 }
+
+bool SqliteDatabase::addQuestions()
+{
+    return false;
+}

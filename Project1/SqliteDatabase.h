@@ -16,6 +16,8 @@ public:
     int doesPasswordMatch(std::string username, std::string password) override;
     int addNewUser(std::string username, std::string password, std::string email) override;
 
+    bool addQuestions() override;
+
 private:
     sqlite3* db;
 };
