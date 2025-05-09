@@ -1,6 +1,10 @@
 #pragma once
 
 #include <string>
+#include <list>
+#include "Question.h"
+
+using std::list;
 
 class IDatabase
 {
@@ -9,7 +13,19 @@ public:
 
     virtual bool open() = 0;
     virtual bool close() = 0;
-    virtual int doesUserExist(std::string username) = 0;
-    virtual int doesPasswordMatch(std::string username, std::string password) = 0;
-    virtual int addNewUser(std::string username, std::string password, std::string email) = 0;
+    virtual int doesUserExist(string username) = 0;
+    virtual int doesPasswordMatch(string username, string password) = 0;
+    virtual int addNewUser(string username, string password, string email) = 0;
+
+    virtual bool addQuestions() = 0;
+
+    virtual list<Question> getQuestions(int) = 0;
+    virtual float getPlayerAverageAnswerTime(string) = 0;
+    virtual int getNumOfCorrectAnswers(string) = 0;
+    virtual int getNumOfTotalAnswers(string) = 0;
+    virtual int getNumOfPlayerGames(string) = 0;
+    virtual int getPlayerScore(string) = 0;
+    virtual vector<string> getHighScores() = 0;
+ 
+
 };
