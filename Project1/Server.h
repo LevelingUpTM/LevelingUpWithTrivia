@@ -2,9 +2,6 @@
 #include "Communicator.h"
 #include "IDataBase.h"
 #include "RequestHandlerFactory.h"
-#include <string>
-#include <iostream>
-#include <thread>
 class Server
 {
 private:

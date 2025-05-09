@@ -1,5 +1,4 @@
 #include "JsonRequestPacketDeserializer.h"
-#include <iostream>
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const vector<unsigned char>& data)
 {
     std::string jsonStr(data.begin(), data.end());
@@ -25,7 +24,7 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequ
 {
     std::string jsonStr(data.begin(), data.end());
     json jsonObj = json::parse(jsonStr);
-    GetPlayersInRoomRequest request;
+    GetPlayersInRoomRequest request{};
     request.roomId = jsonObj["roomId"];
     return request;
 }
@@ -34,7 +33,7 @@ JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const 
 {
     std::string jsonStr(data.begin(), data.end());
     json jsonObj = json::parse(jsonStr);
-    JoinRoomRequest request;
+    JoinRoomRequest request{};
     request.roomId = jsonObj["roomId"];
     return request;
 }

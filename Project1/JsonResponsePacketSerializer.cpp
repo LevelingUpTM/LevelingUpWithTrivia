@@ -85,10 +85,10 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(const
     return createBuffer(3, jsonResponse);  // 3 = Error response code
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::createBuffer(unsigned char code, const json& jsonResponse)
+vector<unsigned char> JsonResponsePacketSerializer::createBuffer(const unsigned char code, const json& jsonResponse)
 {
     string jsonStr = jsonResponse.dump();  // Convert JSON to string
-    size_t size = jsonStr.size();
+    const size_t size = jsonStr.size();
 
     vector<unsigned char> buffer;
     buffer.push_back(code); // First byte is the response code

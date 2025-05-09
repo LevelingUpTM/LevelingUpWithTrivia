@@ -33,7 +33,7 @@ LoginStatus LoginManager::login(const std::string& username, const std::string& 
     return LoginStatus::SUCCESS;
 }
 
-SignUpStatus LoginManager::signup(const std::string& username, const std::string& password, const std::string& email)
+SignUpStatus LoginManager::signup(const std::string& username, const std::string& password, const std::string& email) const
 {
     if (m_database->doesUserExist(username))
     {

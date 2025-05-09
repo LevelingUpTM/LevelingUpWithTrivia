@@ -20,9 +20,9 @@ private:
 
 
 	void bindAndListen();
-	void handleNewClient(SOCKET clientSocket);
+	void handleNewClient(SOCKET clientSocket) const;
 
 public:
 	void startHandleRequest();
-	Communicator(RequestHandlerFactory& handlerFactory);
+	explicit Communicator(RequestHandlerFactory& handlerFactory);
 };
