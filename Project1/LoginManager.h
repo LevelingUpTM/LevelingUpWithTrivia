@@ -23,10 +23,10 @@ enum class SignUpStatus
 class LoginManager
 {
 public:
-    LoginManager(IDatabase* db);
+    explicit LoginManager(IDatabase* db);
 
     LoginStatus login(const std::string& username, const std::string& password);
-    SignUpStatus signup(const std::string& username, const std::string& password, const std::string& email);
+    SignUpStatus signup(const std::string& username, const std::string& password, const std::string& email) const;
     void logout(const std::string& username);
 
 private:

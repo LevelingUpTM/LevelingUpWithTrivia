@@ -3739,12 +3739,12 @@ struct char_traits<unsigned char> : std::char_traits<char>
     using int_type = uint64_t;
 
     // Redefine to_int_type function
-    static int_type to_int_type(char_type c) noexcept
+    static int_type to_int_type(const char_type c) noexcept
     {
         return static_cast<int_type>(c);
     }
 
-    static char_type to_char_type(int_type i) noexcept
+    static char_type to_char_type(const int_type i) noexcept
     {
         return static_cast<char_type>(i);
     }
@@ -3763,12 +3763,12 @@ struct char_traits<signed char> : std::char_traits<char>
     using int_type = uint64_t;
 
     // Redefine to_int_type function
-    static int_type to_int_type(char_type c) noexcept
+    static int_type to_int_type(const char_type c) noexcept
     {
         return static_cast<int_type>(c);
     }
 
-    static char_type to_char_type(int_type i) noexcept
+    static char_type to_char_type(const int_type i) noexcept
     {
         return static_cast<char_type>(i);
     }
@@ -4521,9 +4521,9 @@ class exception : public std::exception
 
   protected:
     JSON_HEDLEY_NON_NULL(3)
-    exception(int id_, const char* what_arg) : id(id_), m(what_arg) {} // NOLINT(bugprone-throw-keyword-missing)
+    exception(const int id_, const char* what_arg) : id(id_), m(what_arg) {} // NOLINT(bugprone-throw-keyword-missing)
 
-    static std::string name(const std::string& ename, int id_)
+    static std::string name(const std::string& ename, const int id_)
     {
         return concat("[json.exception.", ename, '.', std::to_string(id_), "] ");
     }
@@ -4664,7 +4664,7 @@ class parse_error : public exception
     const std::size_t byte;
 
   private:
-    parse_error(int id_, std::size_t byte_, const char* what_arg)
+    parse_error(const int id_, const std::size_t byte_, const char* what_arg)
         : exception(id_, what_arg), byte(byte_) {}
 
     static std::string position_string(const position_t& pos)
@@ -4688,7 +4688,7 @@ class invalid_iterator : public exception
 
   private:
     JSON_HEDLEY_NON_NULL(3)
-    invalid_iterator(int id_, const char* what_arg)
+    invalid_iterator(const int id_, const char* what_arg)
         : exception(id_, what_arg) {}
 };
 
@@ -4706,7 +4706,7 @@ class type_error : public exception
 
   private:
     JSON_HEDLEY_NON_NULL(3)
-    type_error(int id_, const char* what_arg) : exception(id_, what_arg) {}
+    type_error(const int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
 
 /// @brief exception indicating access out of the defined range
@@ -4723,7 +4723,7 @@ class out_of_range : public exception
 
   private:
     JSON_HEDLEY_NON_NULL(3)
-    out_of_range(int id_, const char* what_arg) : exception(id_, what_arg) {}
+    out_of_range(const int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
 
 /// @brief exception indicating other library errors
@@ -4740,7 +4740,7 @@ class other_error : public exception
 
   private:
     JSON_HEDLEY_NON_NULL(3)
-    other_error(int id_, const char* what_arg) : exception(id_, what_arg) {}
+    other_error(const int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
 
 }  // namespace detail
@@ -5433,7 +5433,7 @@ namespace detail
 {
 
 template<typename StringType>
-void int_to_string(StringType& target, std::size_t value)
+void int_to_string(StringType& target, const std::size_t value)
 {
     // For ADL
     using std::to_string;
@@ -5482,7 +5482,7 @@ template<typename IteratorType> class iteration_proxy_value
 
   public:
     explicit iteration_proxy_value() = default;
-    explicit iteration_proxy_value(IteratorType it, std::size_t array_index_ = 0)
+    explicit iteration_proxy_value(IteratorType it, const std::size_t array_index_ = 0)
     noexcept(std::is_nothrow_move_constructible<IteratorType>::value
              && std::is_nothrow_default_constructible<string_type>::value)
         : anchor(std::move(it))
@@ -6212,14 +6212,14 @@ class byte_container_with_subtype : public BinaryType
     {}
 
     /// @sa https://json.nlohmann.me/api/byte_container_with_subtype/byte_container_with_subtype/
-    byte_container_with_subtype(const container_type& b, subtype_type subtype_) noexcept(noexcept(container_type(b)))
+    byte_container_with_subtype(const container_type& b, const subtype_type subtype_) noexcept(noexcept(container_type(b)))
         : container_type(b)
         , m_subtype(subtype_)
         , m_has_subtype(true)
     {}
 
     /// @sa https://json.nlohmann.me/api/byte_container_with_subtype/byte_container_with_subtype/
-    byte_container_with_subtype(container_type&& b, subtype_type subtype_) noexcept(noexcept(container_type(std::move(b))))
+    byte_container_with_subtype(container_type&& b, const subtype_type subtype_) noexcept(noexcept(container_type(std::move(b))))
         : container_type(std::move(b))
         , m_subtype(subtype_)
         , m_has_subtype(true)
@@ -6238,7 +6238,7 @@ class byte_container_with_subtype : public BinaryType
 
     /// @brief sets the binary subtype
     /// @sa https://json.nlohmann.me/api/byte_container_with_subtype/set_subtype/
-    void set_subtype(subtype_type subtype_) noexcept
+    void set_subtype(const subtype_type subtype_) noexcept
     {
         m_subtype = subtype_;
         m_has_subtype = true;
@@ -6304,7 +6304,7 @@ namespace detail
 {
 
 // boost::hash_combine
-inline std::size_t combine(std::size_t seed, std::size_t h) noexcept
+inline std::size_t combine(std::size_t seed, const std::size_t h) noexcept
 {
     seed ^= h + 0x9e3779b9 + (seed << 6U) + (seed >> 2U);
     return seed;
@@ -6511,14 +6511,14 @@ class file_input_adapter
     file_input_adapter& operator=(file_input_adapter&&) = delete;
     ~file_input_adapter() = default;
 
-    std::char_traits<char>::int_type get_character() noexcept
+    std::char_traits<char>::int_type get_character() const noexcept
     {
         return std::fgetc(m_file);
     }
 
     // returns the number of characters successfully read
     template<class T>
-    std::size_t get_elements(T* dest, std::size_t count = 1)
+    std::size_t get_elements(T* dest, const std::size_t count = 1)
     {
         return fread(dest, 1, sizeof(T) * count, m_file);
     }
@@ -6571,9 +6571,9 @@ class input_stream_adapter
     // std::istream/std::streambuf use std::char_traits<char>::to_int_type, to
     // ensure that std::char_traits<char>::eof() and the character 0xFF do not
     // end up as the same value, e.g. 0xFFFFFFFF.
-    std::char_traits<char>::int_type get_character()
+    std::char_traits<char>::int_type get_character() const
     {
-        auto res = sb->sbumpc();
+        const auto res = sb->sbumpc();
         // set eof manually, as we don't use the istream interface.
         if (JSON_HEDLEY_UNLIKELY(res == std::char_traits<char>::eof()))
         {
@@ -6583,9 +6583,9 @@ class input_stream_adapter
     }
 
     template<class T>
-    std::size_t get_elements(T* dest, std::size_t count = 1)
+    std::size_t get_elements(T* dest, const std::size_t count = 1)
     {
-        auto res = static_cast<std::size_t>(sb->sgetn(reinterpret_cast<char*>(dest), static_cast<std::streamsize>(count * sizeof(T))));
+        const auto res = static_cast<std::size_t>(sb->sgetn(reinterpret_cast<char*>(dest), static_cast<std::streamsize>(count * sizeof(T))));
         if (JSON_HEDLEY_UNLIKELY(res < count * sizeof(T)))
         {
             is->clear(is->rdstate() | std::ios::eofbit);
@@ -6626,7 +6626,7 @@ class iterator_input_adapter
 
     // for general iterators, we cannot really do something better than falling back to processing the range one-by-one
     template<class T>
-    std::size_t get_elements(T* dest, std::size_t count = 1)
+    std::size_t get_elements(T* dest, const std::size_t count = 1)
     {
         auto* ptr = reinterpret_cast<char*>(dest);
         for (std::size_t read_index = 0; read_index < count * sizeof(T); ++read_index)
@@ -6951,7 +6951,7 @@ contiguous_bytes_input_adapter input_adapter(CharT b)
     {
         JSON_THROW(parse_error::create(101, 0, "attempting to parse an empty input; check that your input string or stream contains the expected JSON", nullptr));
     }
-    auto length = std::strlen(reinterpret_cast<const char*>(b));
+    const auto length = std::strlen(reinterpret_cast<const char*>(b));
     const auto* ptr = reinterpret_cast<const char*>(b);
     return input_adapter(ptr, ptr + length); // cppcheck-suppress[nullPointerArithmeticRedundantCheck]
 }
@@ -6974,7 +6974,7 @@ class span_input_adapter
                    std::is_integral<typename std::remove_pointer<CharT>::type>::value&&
                    sizeof(typename std::remove_pointer<CharT>::type) == 1,
                    int >::type = 0 >
-    span_input_adapter(CharT b, std::size_t l)
+    span_input_adapter(CharT b, const std::size_t l)
         : ia(reinterpret_cast<const char*>(b), reinterpret_cast<const char*>(b) + l) {}
 
     template<class IteratorType,
@@ -7143,7 +7143,7 @@ class lexer : public lexer_base<BasicJsonType>
   public:
     using token_type = typename lexer_base<BasicJsonType>::token_type;
 
-    explicit lexer(InputAdapterType&& adapter, bool ignore_comments_ = false) noexcept
+    explicit lexer(InputAdapterType&& adapter, const bool ignore_comments_ = false) noexcept
         : ia(std::move(adapter))
         , ignore_comments(ignore_comments_)
         , decimal_point_char(static_cast<char_int_type>(get_decimal_point()))
@@ -11444,7 +11444,7 @@ class binary_reader
     bool get_msgpack_binary(binary_t& result)
     {
         // helper function to set the subtype
-        auto assign_and_return_true = [&result](std::int8_t subtype)
+        auto assign_and_return_true = [&result](const std::int8_t subtype)
         {
             result.set_subtype(static_cast<std::uint8_t>(subtype));
             return true;
@@ -11951,7 +11951,7 @@ class binary_reader
                 }
                 if (!dim.empty())  // if ndarray, convert to an object in JData annotated array format
                 {
-                    for (auto i : dim) // test if any dimension in an ndarray is 0, if so, return a 1D empty container
+                    for (const auto i : dim) // test if any dimension in an ndarray is 0, if so, return a 1D empty container
                     {
                         if ( i == 0 )
                         {
@@ -12013,7 +12013,7 @@ class binary_reader
 
     @return whether pair creation completed
     */
-    bool get_ubjson_size_type(std::pair<std::size_t, char_int_type>& result, bool inside_ndarray = false)
+    bool get_ubjson_size_type(std::pair<std::size_t, char_int_type>& result, const bool inside_ndarray = false)
     {
         result.first = npos; // size
         result.second = 0; // type
@@ -13460,24 +13460,24 @@ class primitive_iterator_t
         return m_it == end_value;
     }
 
-    friend constexpr bool operator==(primitive_iterator_t lhs, primitive_iterator_t rhs) noexcept
+    friend constexpr bool operator==(const primitive_iterator_t lhs, const primitive_iterator_t rhs) noexcept
     {
         return lhs.m_it == rhs.m_it;
     }
 
-    friend constexpr bool operator<(primitive_iterator_t lhs, primitive_iterator_t rhs) noexcept
+    friend constexpr bool operator<(const primitive_iterator_t lhs, const primitive_iterator_t rhs) noexcept
     {
         return lhs.m_it < rhs.m_it;
     }
 
-    primitive_iterator_t operator+(difference_type n) noexcept
+    primitive_iterator_t operator+(const difference_type n) const noexcept
     {
         auto result = *this;
         result += n;
         return result;
     }
 
-    friend constexpr difference_type operator-(primitive_iterator_t lhs, primitive_iterator_t rhs) noexcept
+    friend constexpr difference_type operator-(const primitive_iterator_t lhs, const primitive_iterator_t rhs) noexcept
     {
         return lhs.m_it - rhs.m_it;
     }
@@ -13490,7 +13490,7 @@ class primitive_iterator_t
 
     primitive_iterator_t operator++(int)& noexcept // NOLINT(cert-dcl21-cpp)
     {
-        auto result = *this;
+        const auto result = *this;
         ++m_it;
         return result;
     }
@@ -13503,18 +13503,18 @@ class primitive_iterator_t
 
     primitive_iterator_t operator--(int)& noexcept // NOLINT(cert-dcl21-cpp)
     {
-        auto result = *this;
+        const auto result = *this;
         --m_it;
         return result;
     }
 
-    primitive_iterator_t& operator+=(difference_type n) noexcept
+    primitive_iterator_t& operator+=(const difference_type n) noexcept
     {
         m_it += n;
         return *this;
     }
 
-    primitive_iterator_t& operator-=(difference_type n) noexcept
+    primitive_iterator_t& operator-=(const difference_type n) noexcept
     {
         m_it -= n;
         return *this;
@@ -14429,7 +14429,7 @@ class json_reverse_iterator : public std::reverse_iterator<Base>
     }
 
     /// access to successor
-    reference operator[](difference_type n) const
+    reference operator[](const difference_type n) const
     {
         return *(this->operator+(n));
     }
@@ -14617,7 +14617,7 @@ class json_pointer
 
     /// @brief append an array index at the end of this JSON pointer
     /// @sa https://json.nlohmann.me/api/json_pointer/operator_slasheq/
-    json_pointer& operator/=(std::size_t array_idx)
+    json_pointer& operator/=(const std::size_t array_idx)
     {
         return *this /= std::to_string(array_idx);
     }
@@ -15699,7 +15699,7 @@ class output_stream_adapter : public output_adapter_protocol<CharType>
     }
 
     JSON_HEDLEY_NON_NULL(2)
-    void write_characters(const CharType* s, std::size_t length) override
+    void write_characters(const CharType* s, const std::size_t length) override
     {
         stream.write(s, static_cast<std::streamsize>(length));
     }
@@ -17510,7 +17510,7 @@ class binary_writer
         oa->write_characters(vec.data(), sizeof(NumberType));
     }
 
-    void write_compact_float(const number_float_t n, detail::input_format_t format)
+    void write_compact_float(const number_float_t n, const detail::input_format_t format)
     {
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -17551,7 +17551,7 @@ class binary_writer
 
     template < typename C = CharType,
                enable_if_t < std::is_signed<C>::value && std::is_unsigned<char>::value > * = nullptr >
-    static CharType to_char_type(std::uint8_t x) noexcept
+    static CharType to_char_type(const std::uint8_t x) noexcept
     {
         static_assert(sizeof(std::uint8_t) == sizeof(CharType), "size of CharType must be equal to std::uint8_t");
         static_assert(std::is_trivial<CharType>::value, "CharType must be trivial");
@@ -17681,7 +17681,7 @@ struct diyfp // f * 2^e
     std::uint64_t f = 0;
     int e = 0;
 
-    constexpr diyfp(std::uint64_t f_, int e_) noexcept : f(f_), e(e_) {}
+    constexpr diyfp(const std::uint64_t f_, const int e_) noexcept : f(f_), e(e_) {}
 
     /*!
     @brief returns x - y
@@ -17945,7 +17945,7 @@ satisfies (Definition 3.2 from [1])
 
      alpha <= e_c + e + q <= gamma.
 */
-inline cached_power get_cached_power_for_binary_exponent(int e)
+inline cached_power get_cached_power_for_binary_exponent(const int e)
 {
     // Now
     //
@@ -18163,8 +18163,8 @@ inline int find_largest_pow10(const std::uint32_t n, std::uint32_t& pow10)
     return 1;
 }
 
-inline void grisu2_round(char* buf, int len, std::uint64_t dist, std::uint64_t delta,
-                         std::uint64_t rest, std::uint64_t ten_k)
+inline void grisu2_round(char* buf, const int len, const std::uint64_t dist, const std::uint64_t delta,
+                         std::uint64_t rest, const std::uint64_t ten_k)
 {
     JSON_ASSERT(len >= 1);
     JSON_ASSERT(dist <= delta);
@@ -18205,7 +18205,7 @@ Generates V = buffer * 10^decimal_exponent, such that M- <= V <= M+.
 M- and M+ must be normalized and share the same exponent -60 <= e <= -32.
 */
 inline void grisu2_digit_gen(char* buffer, int& length, int& decimal_exponent,
-                             diyfp M_minus, diyfp w, diyfp M_plus)
+                             const diyfp M_minus, const diyfp w, const diyfp M_plus)
 {
     static_assert(kAlpha >= -60, "internal error");
     static_assert(kGamma <= -32, "internal error");
@@ -18446,7 +18446,7 @@ The buffer must be large enough, i.e. >= max_digits10.
 */
 JSON_HEDLEY_NON_NULL(1)
 inline void grisu2(char* buf, int& len, int& decimal_exponent,
-                   diyfp m_minus, diyfp v, diyfp m_plus)
+                   const diyfp m_minus, const diyfp v, const diyfp m_plus)
 {
     JSON_ASSERT(m_plus.e == m_minus.e);
     JSON_ASSERT(m_plus.e == v.e);
@@ -18597,8 +18597,8 @@ notation. Otherwise it will be printed in exponential notation.
 */
 JSON_HEDLEY_NON_NULL(1)
 JSON_HEDLEY_RETURNS_NON_NULL
-inline char* format_buffer(char* buf, int len, int decimal_exponent,
-                           int min_exp, int max_exp)
+inline char* format_buffer(char* buf, const int len, const int decimal_exponent,
+                           const int min_exp, const int max_exp)
 {
     JSON_ASSERT(min_exp < 0);
     JSON_ASSERT(max_exp > 0);
@@ -18786,7 +18786,7 @@ class serializer
     @param[in] error_handler_  how to react on decoding errors
     */
     serializer(output_adapter_t<char> s, const char ichar,
-               error_handler_t error_handler_ = error_handler_t::strict)
+               const error_handler_t error_handler_ = error_handler_t::strict)
         : o(std::move(s))
         , loc(std::localeconv())
         , thousands_sep(loc->thousands_sep == nullptr ? '\0' : std::char_traits<char>::to_char_type(* (loc->thousands_sep)))
@@ -19395,7 +19395,7 @@ class serializer
      * @param[in] byte byte to represent
      * @return representation ("00".."FF")
      */
-    static std::string hex_bytes(std::uint8_t byte)
+    static std::string hex_bytes(const std::uint8_t byte)
     {
         std::string result = "FF";
         constexpr const char* nibble_to_hex = "0123456789ABCDEF";
@@ -19586,7 +19586,7 @@ class serializer
         // determine if we need to append ".0"
         const bool value_is_int_like =
             std::none_of(number_buffer.begin(), number_buffer.begin() + len + 1,
-                         [](char c)
+                         [](const char c)
         {
             return c == '.' || c == 'e';
         });
@@ -20568,7 +20568,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         /// constructor for rvalue binary arrays (internal type)
         json_value(binary_t&& value) : binary(create<binary_t>(std::move(value))) {}
 
-        void destroy(value_t t)
+        void destroy(const value_t t)
         {
             if (
                 (t == value_t::object && object == nullptr) ||
@@ -20922,8 +20922,8 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     /// @brief create a container (array or object) from an initializer list
     /// @sa https://json.nlohmann.me/api/basic_json/basic_json/
     basic_json(initializer_list_t init,
-               bool type_deduction = true,
-               value_t manual_type = value_t::array)
+               const bool type_deduction = true,
+               const value_t manual_type = value_t::array)
     {
         // check if each element is an array with two elements whose first
         // element is a string
@@ -23447,7 +23447,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
 
     /// @brief updates a JSON object from another object, overwriting existing keys
     /// @sa https://json.nlohmann.me/api/basic_json/update/
-    void update(const_reference j, bool merge_objects = false)
+    void update(const_reference j, const bool merge_objects = false)
     {
         update(j.begin(), j.end(), merge_objects);
     }
@@ -23712,7 +23712,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     }
 
   private:
-    bool compares_unordered(const_reference rhs, bool inverse = false) const noexcept
+    bool compares_unordered(const_reference rhs, const bool inverse = false) const noexcept
     {
         return compares_unordered(*this, rhs, inverse);
     }

@@ -21,15 +21,54 @@ AND Password = 'pass1';
 
 --------------------------------------
 
--- like the  opentdb 
+-- questions table 
 CREATE TABLE questions (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    question_text TEXT NOT NULL,
-    answer_1 TEXT NOT NULL,
-    answer_2 TEXT NOT NULL,
-    answer_3 TEXT NOT NULL,
-    answer_4 TEXT NOT NULL,
-    correct_answer INT NOT NULL CHECK (correct_answer BETWEEN 1 AND 4),
-    category VARCHAR(100),
-    difficulty VARCHAR(20)
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT,
+    answer_1 TEXT,
+    answer_2 TEXT,
+    answer_3 TEXT,
+    answer_4 TEXT,
+    correct_answer INTEGER,
+    difficulty TEXT,
+    category TEXT
 );
+
+
+-- statistics table
+CREATE TABLE IF NOT EXISTS statistics (
+    UserID INTEGER PRIMARY KEY,
+    TotalCorrectAnswers INTEGER DEFAULT 0,
+    TotalAnswers INTEGER DEFAULT 0,
+    TotalGames INTEGER DEFAULT 0,
+    TotalTime REAL DEFAULT 0.0,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+
+-- getNumOfCorrectAnswers(string username) :
+SELECT TotalCorrectAnswers
+FROM statistics
+JOIN Users ON Users.UserID = statistics.UserID
+WHERE Username = ?; 
+
+
+-- getNumOfTotalAnswers(string username)
+SELECT TotalAnswers
+FROM statistics
+JOIN Users ON Users.UserID = statistics.UserID
+WHERE Username = ?;
+
+
+-- getNumOfPlayerGames(string username)
+SELECT TotalGames
+FROM statistics
+JOIN Users ON Users.UserID = statistics.UserID
+WHERE Username = ?;
+
+
+-- getPlayerAverageAnswerTime(string username) - need to take (total_time / total_answers)
+SELECT TotalTime, TotalAnswers
+FROM statistics
+JOIN Users ON Users.UserID = statistics.UserID
+WHERE Username = ?;

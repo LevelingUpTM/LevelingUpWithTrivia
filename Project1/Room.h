@@ -7,9 +7,9 @@
 class Room
 {
 public:
-    Room(RoomData metadata, LoggedUser creator);
+    Room(const RoomData& metadata, const LoggedUser& creator);
 
-    void addUser(LoggedUser user);
+    void addUser(const LoggedUser& user);
     void removeUser(const std::string& username);
     std::list<std::string> getAllUsers() const;
     RoomData getMetadata() const;

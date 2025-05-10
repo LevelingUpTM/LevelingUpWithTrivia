@@ -6,7 +6,7 @@
 class RequestHandlerFactory
 {
 public:
-    RequestHandlerFactory(IDatabase* database);
+    explicit RequestHandlerFactory(IDatabase* database);
 
     LoginRequestHandler* createLoginRequestHandler();
     LoginManager& getLoginManager();
