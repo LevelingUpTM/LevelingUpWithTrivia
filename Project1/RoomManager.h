@@ -11,6 +11,7 @@ public:
     Room getRoom(unsigned int roomId);
     std::vector<RoomData> getRooms() const;
     bool getRoomState(unsigned int roomId) const; // true = active
+    unsigned int getNextRoomId();
 
 private:
     std::map<unsigned int, Room> m_rooms;

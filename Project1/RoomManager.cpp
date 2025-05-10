@@ -2,7 +2,7 @@
 
 Room RoomManager::createRoom(const LoggedUser& creator, RoomData metadata)
 {
-    metadata.id = m_nextRoomId++;
+    metadata.id = getNextRoomId();
     metadata.isActive = false;
     Room room(metadata, creator);
     m_rooms.insert({metadata.id, room});
@@ -27,6 +27,11 @@ std::vector<RoomData> RoomManager::getRooms() const
         list.push_back(pair.second.getMetadata());
     }
     return list;
+}
+
+unsigned int RoomManager::getNextRoomId()
+{
+    return m_nextRoomId++;
 }
 
 bool RoomManager::getRoomState(const unsigned int roomId) const
