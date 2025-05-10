@@ -19,13 +19,13 @@ public:
 
     virtual bool addQuestions() = 0;
 
-    virtual list<Question> getQuestions(int) = 0;
-    virtual float getPlayerAverageAnswerTime(string) = 0;
-    virtual int getNumOfCorrectAnswers(string) = 0;
-    virtual int getNumOfTotalAnswers(string) = 0;
-    virtual int getNumOfPlayerGames(string) = 0;
-    virtual int getPlayerScore(string) = 0;
-    virtual vector<string> getHighScores() = 0;
+     /*virtual list<Question> getQuestions(int) = 0;
+     virtual float getPlayerAverageAnswerTime(string) = 0;
+     virtual int getNumOfCorrectAnswers(string) = 0;
+     virtual int getNumOfTotalAnswers(string) = 0;
+     virtual int getNumOfPlayerGames(string) = 0;
+     virtual int getPlayerScore(string) = 0;
+     virtual vector<string> getHighScores() = 0;*/
  
 
 };
