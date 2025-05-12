@@ -146,7 +146,8 @@ int SqliteDatabase::addNewUser(const std::string username, const std::string pas
     return 1;
 }
 
-bool SqliteDatabase::addQuestions()
+
+sqlite3 *SqliteDatabase::getDB() const
 {
-    return false;
+    return db;
 }

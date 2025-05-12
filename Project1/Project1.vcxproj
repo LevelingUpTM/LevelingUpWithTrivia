@@ -146,6 +146,7 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDatabase.cpp" />
+    <ClCompile Include="StatisticsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h" />
