@@ -11,9 +11,30 @@ StatisticsManager::StatisticsManager(IDatabase *db) : m_database(db)
 
 std::vector<std::string> StatisticsManager::getHighScore()
 {
-    // Not implemented yet – placeholder
-    return {"High score feature not implemented."};
+    std::vector<std::string> highScores; // will be vector of string like "Name: # correct answers"
+    std::string query = R"(
+        SELECT Username, TotalCorrectAnswers
+        FROM statistics
+        JOIN Users ON Users.UserID = statistics.UserID
+        ORDER BY TotalCorrectAnswers DESC
+        LIMIT 5;
+    )";
+
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(m_database->getDB(), query.c_str(), -1, &stmt, nullptr) == SQLITE_OK)
+    {
+        while (sqlite3_step(stmt) == SQLITE_ROW)
+        {
+            std::string username = (const char *)sqlite3_column_text(stmt, 0);
+            int score = sqlite3_column_int(stmt, 1);
+            highScores.push_back(username + ": " + std::to_string(score) + " correct answers");
+        }
+    }
+
+    sqlite3_finalize(stmt);
+    return highScores;
 }
+
 
 std::vector<std::string> StatisticsManager::getUserStatistics(const std::string &username)
 {
