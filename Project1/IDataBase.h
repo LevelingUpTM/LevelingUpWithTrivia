@@ -21,13 +21,13 @@ public:
     virtual sqlite3* getDB() const = 0;
 
 
-     /*virtual list<Question> getQuestions(int) = 0;
-     virtual float getPlayerAverageAnswerTime(string) = 0;
-     virtual int getNumOfCorrectAnswers(string) = 0;
-     virtual int getNumOfTotalAnswers(string) = 0;
-     virtual int getNumOfPlayerGames(string) = 0;
-     virtual int getPlayerScore(string) = 0;
-     virtual vector<string> getHighScores() = 0;*/
+    virtual float getPlayerAverageAnswerTime(const std::string &username) = 0;
+    virtual int getNumOfCorrectAnswers(const std::string &username) = 0;
+    virtual int getNumOfTotalAnswers(const std::string &username) = 0;
+    virtual int getNumOfPlayerGames(const std::string &username) = 0;
+    virtual int getPlayerScore(const std::string &username) = 0;
+    virtual vector<string> getHighScores() = 0;
+
  
 
 };

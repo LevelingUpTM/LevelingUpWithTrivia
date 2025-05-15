@@ -18,9 +18,4 @@ class StatisticsManager
   private:
     IDatabase *m_database;
 
-    // helper funcs
-    int getNumOfCorrectAnswers(const std::string &username);
-    int getNumOfTotalAnswers(const std::string &username);
-    int getNumOfPlayerGames(const std::string &username);
-    float getPlayerAverageAnswerTime(const std::string &username);
 };

@@ -17,6 +17,13 @@ public:
     int addNewUser(std::string username, std::string password, std::string email) override;
     std::list<Question> getQuestions(int numOfQuestions) override;
 
+     float getPlayerAverageAnswerTime(const std::string &username) override;
+     int getNumOfCorrectAnswers(const std::string &username) override;
+     int getNumOfTotalAnswers(const std::string &username) override;
+     int getNumOfPlayerGames(const std::string &username) override;
+     int getPlayerScore(const std::string &username) override;
+     vector<string> getHighScores() override;
+
     sqlite3 *getDB() const;
 
 
