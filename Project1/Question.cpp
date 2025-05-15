@@ -5,7 +5,8 @@ Question::Question() : m_id(0), m_question(""), m_correctAnswer(1), m_difficulty
     m_possibleAnswers = {"", "", "", ""};
 }
 
-Question::Question(int id, string question, vector<string> answers, unsigned int correctAnswer, string difficulty, string category)
+Question::Question(int id, string question, vector<string> answers, unsigned int correctAnswer, string difficulty,
+                   string category)
     : m_id(id), m_question(question), m_possibleAnswers(answers), m_correctAnswer(correctAnswer),
       m_difficulty(difficulty), m_category(category)
 {

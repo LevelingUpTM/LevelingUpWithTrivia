@@ -156,8 +156,14 @@ sqlite3 *SqliteDatabase::getDB() const
 std::list<Question> SqliteDatabase::getQuestions(int numOfQuestions)
 {
     std::list<Question> questions;
-    std::string query = "SELECT question, answer_1, answer_2, answer_3, answer_4, correct_answer "
-                        "FROM questions ORDER BY RANDOM() LIMIT ?;";
+
+    std::string query = R"(
+        SELECT id, question, answer_1, answer_2, answer_3, answer_4,
+               correct_answer, difficulty, category
+        FROM questions
+        ORDER BY RANDOM()
+        LIMIT ?;
+    )";
 
     sqlite3_stmt *stmt = nullptr;
 
@@ -168,13 +174,19 @@ std::list<Question> SqliteDatabase::getQuestions(int numOfQuestions)
 
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
-        std::string questionText = (const char *)sqlite3_column_text(stmt, 0);
-        std::vector<std::string> answers = {
-            (const char *)sqlite3_column_text(stmt, 1), (const char *)sqlite3_column_text(stmt, 2),
-            (const char *)sqlite3_column_text(stmt, 3), (const char *)sqlite3_column_text(stmt, 4)};
-        unsigned int correctIndex = sqlite3_column_int(stmt, 5);
+        int id = sqlite3_column_int(stmt, 0);
+        std::string questionText = (const char *)sqlite3_column_text(stmt, 1);
+        std::string answer1 = (const char *)sqlite3_column_text(stmt, 2);
+        std::string answer2 = (const char *)sqlite3_column_text(stmt, 3);
+        std::string answer3 = (const char *)sqlite3_column_text(stmt, 4);
+        std::string answer4 = (const char *)sqlite3_column_text(stmt, 5);
+        unsigned int correctIndex = (unsigned int)sqlite3_column_int(stmt, 6);
+        std::string difficulty = (const char *)sqlite3_column_text(stmt, 7);
+        std::string category = (const char *)sqlite3_column_text(stmt, 8);
 
-        questions.emplace_back(questionText, answers, correctIndex);
+        std::vector<std::string> answers = {answer1, answer2, answer3, answer4};
+
+        questions.emplace_back(id, questionText, answers, correctIndex, difficulty, category);
     }
 
     sqlite3_finalize(stmt);
