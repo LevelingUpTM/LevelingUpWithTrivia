@@ -151,3 +151,32 @@ sqlite3 *SqliteDatabase::getDB() const
 {
     return db;
 }
+
+
+std::list<Question> SqliteDatabase::getQuestions(int numOfQuestions)
+{
+    std::list<Question> questions;
+    std::string query = "SELECT question, answer_1, answer_2, answer_3, answer_4, correct_answer "
+                        "FROM questions ORDER BY RANDOM() LIMIT ?;";
+
+    sqlite3_stmt *stmt = nullptr;
+
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
+        return questions;
+
+    sqlite3_bind_int(stmt, 1, numOfQuestions);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        std::string questionText = (const char *)sqlite3_column_text(stmt, 0);
+        std::vector<std::string> answers = {
+            (const char *)sqlite3_column_text(stmt, 1), (const char *)sqlite3_column_text(stmt, 2),
+            (const char *)sqlite3_column_text(stmt, 3), (const char *)sqlite3_column_text(stmt, 4)};
+        unsigned int correctIndex = sqlite3_column_int(stmt, 5);
+
+        questions.emplace_back(questionText, answers, correctIndex);
+    }
+
+    sqlite3_finalize(stmt);
+    return questions;
+}

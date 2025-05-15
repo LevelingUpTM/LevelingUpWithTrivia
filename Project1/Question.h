@@ -5,20 +5,25 @@
 
 using std::string;
 using std::vector;
+
 class Question
 {
+  public:
+    Question();
+    Question(int id, string question, vector<string> answers, unsigned int correctAnswer, string difficulty, string category);
 
-public:
-	Question();
-	Question(string question, vector<string> answers, unsigned int correctAnswer);
+    int getId() const;
+    string getQuestion() const;
+    vector<string> getPossibleAnswers() const;
+    unsigned int getCorrectAnswerId() const;
+    string getDifficulty() const;
+    string getCategory() const;
 
-	string getQuestion();
-	vector<string> getPossibleAnswers();
-	unsigned int getCorrectAnswerId();
-
-private:
-	string m_question;
-	vector<string> m_possibleAnswers;
-	unsigned int m_correctAnswer;
-
+  private:
+    int m_id;                         
+    string m_question;                
+    vector<string> m_possibleAnswers; 
+    unsigned int m_correctAnswer;     
+    string m_difficulty;              
+    string m_category;                
 };

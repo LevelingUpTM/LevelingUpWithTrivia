@@ -1,27 +1,42 @@
 #include "Question.h"
 
-Question::Question()
+Question::Question() : m_id(0), m_question(""), m_correctAnswer(1), m_difficulty(""), m_category("")
+{
+    m_possibleAnswers = {"", "", "", ""};
+}
+
+Question::Question(int id, string question, vector<string> answers, unsigned int correctAnswer, string difficulty, string category)
+    : m_id(id), m_question(question), m_possibleAnswers(answers), m_correctAnswer(correctAnswer),
+      m_difficulty(difficulty), m_category(category)
 {
 }
 
-Question::Question(string question, vector<string> answers, unsigned int correctAnswer)
+int Question::getId() const
 {
-	this->m_question = question;
-	this->m_possibleAnswers = answers;
-	this->m_correctAnswer = correctAnswer;
+    return m_id;
 }
 
-string Question::getQuestion()
+string Question::getQuestion() const
 {
-	return this->m_question;
+    return m_question;
 }
 
-vector<string> Question::getPossibleAnswers()
+vector<string> Question::getPossibleAnswers() const
 {
-	return this->m_possibleAnswers;
+    return m_possibleAnswers;
 }
 
-unsigned int Question::getCorrectAnswerId()
+unsigned int Question::getCorrectAnswerId() const
 {
-	return this->m_correctAnswer;
+    return m_correctAnswer;
+}
+
+string Question::getDifficulty() const
+{
+    return m_difficulty;
+}
+
+string Question::getCategory() const
+{
+    return m_category;
 }

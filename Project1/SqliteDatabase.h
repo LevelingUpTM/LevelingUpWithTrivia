@@ -15,6 +15,8 @@ public:
     int doesUserExist(std::string username) override;
     int doesPasswordMatch(std::string username, std::string password) override;
     int addNewUser(std::string username, std::string password, std::string email) override;
+    std::list<Question> getQuestions(int numOfQuestions) override;
+
     sqlite3 *getDB() const;
 
 
