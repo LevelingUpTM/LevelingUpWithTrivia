@@ -7,16 +7,17 @@
 #define SIGNUP_REQUEST 2
 
 LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handlerFactory)
-    : m_handlerFactory(handlerFactory)
+    : m_handlerFactory(handlerFactory),
+    m_loginManager(handlerFactory.getLoginManager())
 {
 }
 
-bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
+bool LoginRequestHandler::isRequestRelevant(const RequestInfo request)
 {
     return request.id == LOGIN_REQUEST || request.id == SIGNUP_REQUEST;
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo request)
+RequestResult LoginRequestHandler::handleRequest(const RequestInfo request)
 {
     if (!isRequestRelevant(request))
     {
@@ -27,7 +28,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo request)
     {
         return login(request);
     }
-    else if (request.id == SIGNUP_REQUEST)
+    if (request.id == SIGNUP_REQUEST)
     {
         return signup(request);
     }
@@ -35,14 +36,13 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo request)
     return { { 0xFF }, this };
 }
 
-RequestResult LoginRequestHandler::login(RequestInfo request)
+RequestResult LoginRequestHandler::login(const RequestInfo& request)
 {
-    JsonRequestPacketDeserializer deserializer;
-    LoginRequest loginData = deserializer.deserializeLoginRequest(request.buffer);
+    const LoginRequest loginData = JsonRequestPacketDeserializer::deserializeLoginRequest(request.buffer);
 
-    LoginStatus status = m_handlerFactory.getLoginManager().login(loginData.username, loginData.password);
+    const LoginStatus status = m_handlerFactory.getLoginManager().login(loginData.username, loginData.password);
 
-    LoginResponse response;
+    LoginResponse response{};
     RequestResult result;
 
     switch (status)
@@ -63,21 +63,21 @@ RequestResult LoginRequestHandler::login(RequestInfo request)
         response.status = 4;
         result.newHandler = this;
         break;
+    default:
+        throw std::logic_error("Unexpected login status");
     }
 
-    JsonResponsePacketSerializer serializer;
-    result.response = serializer.serializeLoginResponse(response);
+    result.response = JsonResponsePacketSerializer::serializeLoginResponse(response);
     return result;
 }
 
-RequestResult LoginRequestHandler::signup(RequestInfo request)
+RequestResult LoginRequestHandler::signup(const RequestInfo& request)
 {
-    JsonRequestPacketDeserializer deserializer;
-    SignupRequest signupData = deserializer.deserializeSignUpRequest(request.buffer);
-    
-    SignUpStatus status = m_handlerFactory.getLoginManager().signup(signupData.username, signupData.password, signupData.email);
+    const SignupRequest signupData = JsonRequestPacketDeserializer::deserializeSignUpRequest(request.buffer);
 
-    SignupResponse response;
+    const SignUpStatus status = m_handlerFactory.getLoginManager().signup(signupData.username, signupData.password, signupData.email);
+
+    SignupResponse response{};
     RequestResult result;
     result.newHandler = this;
 
@@ -97,7 +97,6 @@ RequestResult LoginRequestHandler::signup(RequestInfo request)
         break;
     }
 
-    JsonResponsePacketSerializer serializer;
-    result.response = serializer.serializeSignUpResponse(response);
+    result.response = JsonResponsePacketSerializer::serializeSignUpResponse(response);
     return result;
 }

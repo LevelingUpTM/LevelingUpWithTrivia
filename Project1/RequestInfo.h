@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <ctime>
 #include <chrono>
 
 using Byte = unsigned char;

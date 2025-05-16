@@ -8,13 +8,24 @@ class SqliteDatabase : public IDatabase
 {
 public:
     SqliteDatabase();
-    ~SqliteDatabase();
+    ~SqliteDatabase() override;
 
     bool open() override;
     bool close() override;
     int doesUserExist(std::string username) override;
     int doesPasswordMatch(std::string username, std::string password) override;
     int addNewUser(std::string username, std::string password, std::string email) override;
+    std::list<Question> getQuestions(int numOfQuestions) override;
+
+     float getPlayerAverageAnswerTime(const std::string &username) override;
+     int getNumOfCorrectAnswers(const std::string &username) override;
+     int getNumOfTotalAnswers(const std::string &username) override;
+     int getNumOfPlayerGames(const std::string &username) override;
+     int getPlayerScore(const std::string &username) override;
+     vector<string> getHighScores() override;
+
+    sqlite3 *getDB() const;
+
 
 private:
     sqlite3* db;
