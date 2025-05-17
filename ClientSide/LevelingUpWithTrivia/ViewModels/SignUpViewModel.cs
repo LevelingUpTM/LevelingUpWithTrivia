@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LevelingUpWithTrivia.ViewModels
 {
-    class SignUpViewModel
+    public partial class SignUpViewModel : ObservableObject
     {
     }
 }

@@ -14,6 +14,6 @@ namespace LevelingUpWithTrivia.ViewModels
         public static MainWindowViewModel? Current => Application.Current.MainWindow.DataContext as MainWindowViewModel;
 
         [ObservableProperty]
-        private UIElement content = new MainMenuView();
+        private UIElement _content = new MainMenuView();
     }
 }
