@@ -17,15 +17,15 @@ using System.Windows.Shapes;
 namespace LevelingUpWithTrivia.Views
 {
     /// <summary>
-    /// Interaction logic for JoinMenuView.xaml
+    /// Interaction logic for LogInView.xaml
     /// </summary>
-    public partial class JoinMenuView : UserControl
+    public partial class LogInView : UserControl
     {
-        public JoinMenuView()
+        public LogInView()
         {
             InitializeComponent();
 
-            DataContext = new JoinMenuViewModel();
+            DataContext = new LogInViewModel();
         }
     }
 }
