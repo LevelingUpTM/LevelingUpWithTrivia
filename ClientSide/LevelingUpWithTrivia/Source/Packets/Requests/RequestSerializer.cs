@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
-namespace LevelingUpWithTrivia.Source.Packets
+namespace LevelingUpWithTrivia.Source.Packets.Requests
 {
     public static class RequestSerializer
     {
@@ -20,9 +20,9 @@ namespace LevelingUpWithTrivia.Source.Packets
 
             buffer.Add(requestCode);
 
-            buffer.Add((byte)((length >> 24) & 0xFF));
-            buffer.Add((byte)((length >> 16) & 0xFF));
-            buffer.Add((byte)((length >> 8) & 0xFF));
+            buffer.Add((byte)(length >> 24 & 0xFF));
+            buffer.Add((byte)(length >> 16 & 0xFF));
+            buffer.Add((byte)(length >> 8 & 0xFF));
             buffer.Add((byte)(length & 0xFF));
 
             buffer.AddRange(jsonBytes);
