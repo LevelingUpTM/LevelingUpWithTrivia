@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LevelingUpWithTrivia.Source;
+using LevelingUpWithTrivia.Source.Packets.Requests;
+using LevelingUpWithTrivia.Source.Packets.Responses;
 using LevelingUpWithTrivia.Views;
 using System;
 using System.Collections.Generic;
@@ -15,5 +18,13 @@ namespace LevelingUpWithTrivia.ViewModels
 
         [ObservableProperty]
         private UIElement _content = new MainMenuView();
+
+        public MainWindowViewModel()
+        {
+            Communicator.Instance.Connect();
+            Communicator.Instance.Send(new SignupRequest("first", "pass", "adadsdsa"));
+            SignupResponse packet = (Communicator.Instance.Receive() as SignupResponse)!;
+            Console.WriteLine(packet);
+        }
     }
 }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace LevelingUpWithTrivia.Source.Packets.Requests
 {
-    public class SignupRequest
-    {
-        public string username { get; set; }
-        public string password { get; set; }
-        public string email { get; set; }
-    }
+    public record SignupRequest(
+        string Username,
+        string Password,
+        string Email
+    ) : Request(2);
 }

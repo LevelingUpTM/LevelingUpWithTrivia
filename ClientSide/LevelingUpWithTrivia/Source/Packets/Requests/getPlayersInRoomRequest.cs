@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace LevelingUpWithTrivia.Source.Packets.Requests
 {
-    public class GetPlayersInRoomRequest
-    {
-        public int roomId { get; set; }
-    }
+    public record GetPlayersInRoomRequest(
+        int RoomId
+    ) : Request(5);
 }
