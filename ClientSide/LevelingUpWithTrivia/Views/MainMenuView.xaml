@@ -19,19 +19,19 @@
             <TextBlock Text="Welcome: 'UserName'"
                        Foreground="White" FontSize="24" FontWeight="Bold"/>
 
-            <Button Content="Join Room" Height="40" FontSize="16" Padding="0" Margin="0,0,0,0"
-                    Background="#004250" Foreground="White" Cursor="Hand"/>
+            <Button Content="Join Room" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
+                    Background="#004250" Foreground="White" Command="{Binding NavToJoinCommand}"/>
 
-            <Button Content="Create Room" Height="40" FontSize="16" Padding="10"
-                    Background="#00727C" Foreground="White" Cursor="Hand"/>
+            <Button Content="Create Room" Height="40" FontSize="16" Padding="0" Margin="0, 0, 0, 10"
+                    Background="#00727C" Foreground="White" Command="{Binding NavToCreateCommand}"/>
 
             <Grid  HorizontalAlignment="Stretch" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Stats" Width="100" Height="35" Background="#005a66" Foreground="White" Cursor="Hand"/>
-                <Button Grid.Column="1" Content="Info" Width="100" Height="35" Background="#004250" Foreground="White" Cursor="Hand"/>
+                <Button Grid.Column="0" Content="Stats" Height="35" Background="#005a66" Foreground="White" Margin="0, 0, 2, 0" Command="{Binding NavToStatsCommand}"/>
+                <Button Grid.Column="1" Content="Info" Height="35" Background="#004250" Foreground="White" Margin="2, 0, 0, 0" Command="{Binding NavToInfoCommand}"/>
             </Grid>
         </StackPanel>
 

@@ -18,5 +18,13 @@ namespace LevelingUpWithTrivia.ViewModels
 
             windowModel.Content = new SignUpView();
         }
+
+        [RelayCommand]
+        private void NavToMainMenu()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+
+            windowModel.Content = new MainMenuView();
+        }
     }
 }

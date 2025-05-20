@@ -14,11 +14,31 @@ namespace LevelingUpWithTrivia.ViewModels
         [RelayCommand]
         public void NavToJoin()
         {
-            // Get the active MainWindowViewModel
+            var windowModel = MainWindowViewModel.Current!;
+            windowModel.Content = new JoinMenuView();
+        }
+
+        [RelayCommand]
+        public void NavToCreate()
+        {
             var windowModel = MainWindowViewModel.Current!;
 
-            // Set the window content to JoinMenuView
-            windowModel.Content = new JoinMenuView();
+            windowModel.Content = new CreateMenuView();
+        }
+
+        [RelayCommand]
+        public void NavToStats()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+
+            windowModel.Content = new StatisticsView();
+        }
+
+        [RelayCommand]
+        public void NavToInfo()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+            windowModel.Content = new InfoView();
         }
     }
 }
