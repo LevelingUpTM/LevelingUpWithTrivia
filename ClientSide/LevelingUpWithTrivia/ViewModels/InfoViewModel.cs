@@ -1,16 +1,15 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using LevelingUpWithTrivia.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using LevelingUpWithTrivia.Views;
-
 
 namespace LevelingUpWithTrivia.ViewModels
 {
-    public partial class JoinMenuViewModel : ObservableObject
+    public partial class InfoViewModel : ObservableObject
     {
         [RelayCommand]
         private void NavToMain()
