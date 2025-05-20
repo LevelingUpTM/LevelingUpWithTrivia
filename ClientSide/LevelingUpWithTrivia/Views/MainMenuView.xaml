@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="#001123">
+             >
 
-    <Grid>
+    <Grid Background="#001123">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="2*"/>

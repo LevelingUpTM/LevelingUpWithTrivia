@@ -6,7 +6,32 @@
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="IndianRed">
-            
+
+    <Grid Background="#001123">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel -->
+        <StackPanel Grid.Column="0" Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
+
+            <Button Content="Log In" Height="40" FontSize="16" Padding="0" Margin="0,0,0,10"
+                Background="#004250" Foreground="White" Cursor="Hand" Command="{Binding NavToLoginCommand}"/>
+
+            <Button Content="Sign Up" Height="40" FontSize="16" Padding="0" Margin="0,0,0,0"
+                Background="#00727C" Foreground="White" Cursor="Hand" Command="{Binding NavToSignupCommand}"/>
+
+     
+        </StackPanel>
+
+        <!-- Right Panel -->
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Leveling Up with Trivia" 
+                   Foreground="White" FontSize="36" FontWeight="SemiBold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+
+            <Image Source="/Assets/TriviaLogo.png" Width="250" Height="120" HorizontalAlignment="Center"/>
+        </StackPanel>
     </Grid>
+    
 </UserControl>
