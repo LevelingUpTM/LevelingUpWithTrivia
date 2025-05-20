@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace LevelingUpWithTrivia.Source.Packets.Responses
 {
-    public class GetHighScoreResponse
-    {
-        public int Status { get; set; }
-        public List<string> Statistics { get; set; }
-    }
+    public record GetHighScoreResponse(
+        int Status,
+        List<string> Statistics
+    ) : Response(110);
 }

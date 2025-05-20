@@ -8,9 +8,8 @@ using LevelingUpWithTrivia.Models;
 
 namespace LevelingUpWithTrivia.Source.Packets.Responses
 {
-    public class GetRoomsResponse
-    {
-        public int status { get; set; }
-        public List<Room> rooms { get; set; }
-    }
+    public record GetRoomsResponse(
+        int Status,
+        List<Room> rooms
+    ) : Response(105);
 }
