@@ -26,7 +26,7 @@
                            Foreground="White" FontSize="24" FontWeight="Bold"/>
 
                 <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Command="{Binding NavToStartCommand}">
-                    <Image Source="/Assets/LogOutLogo.png" Width="50" Height="70" ></Image>
+                    <Image Source="/Assets/LogOutLogo.png" Width="50" Height="70" RenderTransformOrigin="0.5,0.622" ></Image>
                 </Button>
             </Grid>
             
