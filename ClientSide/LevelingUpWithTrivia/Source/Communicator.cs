@@ -24,25 +24,14 @@ namespace LevelingUpWithTrivia.Source
             _client.Connect(IPAddress.Parse(ip), port);
             _stream = _client.GetStream();
         }
-        public void Send(Request request)
+        public void Send<T>(T request) where T : Request
         {
             if (_stream == null || !_stream.CanWrite)
                 throw new InvalidOperationException("Not connected to server.");
 
-            string json = JsonSerializer.Serialize(request);
-
-            byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
-            int length = jsonBytes.Length;
-
-            byte[] header = new byte[5];
-            header[0] = request.Code;
-            header[1] = (byte)((length >> 24) & 0xFF);
-            header[2] = (byte)((length >> 16) & 0xFF);
-            header[3] = (byte)((length >> 8) & 0xFF);
-            header[4] = (byte)(length & 0xFF);
-
-            _stream.Write(header, 0, 5);
-            _stream.Write(jsonBytes, 0, jsonBytes.Length);
+            byte[] data = RequestSerializer.SerializeRequest(request);
+            
+            _stream.Write(data, 0, data.Length);
         }
         public Response Receive()
         {

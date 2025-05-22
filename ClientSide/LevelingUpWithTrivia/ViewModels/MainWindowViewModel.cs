@@ -21,10 +21,10 @@ namespace LevelingUpWithTrivia.ViewModels
 
         public MainWindowViewModel()
         {
-            //Communicator.Instance.Connect();
-            //Communicator.Instance.Send(new SignupRequest("first", "pass", "adadsdsa"));
-            //SignupResponse packet = (Communicator.Instance.Receive() as SignupResponse)!;
-            //Console.WriteLine(packet);
+            Communicator.Instance.Connect();
+            Communicator.Instance.Send(new SignupRequest("first", "pass", "adadsdsa"));
+            SignupResponse packet = (Communicator.Instance.Receive() as SignupResponse)!;
+            Console.WriteLine(packet);
         }
     }
 }

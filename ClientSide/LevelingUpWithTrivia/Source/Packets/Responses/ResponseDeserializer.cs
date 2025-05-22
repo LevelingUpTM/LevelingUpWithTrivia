@@ -13,18 +13,26 @@ namespace LevelingUpWithTrivia.Source.Packets.Responses
         {
             return responseCode switch
             {
-                101 => JsonSerializer.Deserialize<LoginResponse>(json)!,
-                102 => JsonSerializer.Deserialize<SignupResponse>(json)!,
-                103 => JsonSerializer.Deserialize<ErrorResponse>(json)!,
-                104 => JsonSerializer.Deserialize<LogoutResponse>(json)!,
-                105 => JsonSerializer.Deserialize<GetRoomsResponse>(json)!,
-                106 => JsonSerializer.Deserialize<GetPlayersInRoomResponse>(json)!,
-                107 => JsonSerializer.Deserialize<JoinRoomResponse>(json)!,
-                108 => JsonSerializer.Deserialize<CreateRoomResponse>(json)!,
-                109 => JsonSerializer.Deserialize<GetPersonalStatsResponse>(json)!,
-                110 => JsonSerializer.Deserialize<GetHighScoreResponse>(json)!,
+                101 => Deserialize<LoginResponse>(json)!,
+                102 => Deserialize<SignupResponse>(json)!,
+                103 => Deserialize<ErrorResponse>(json)!,
+                104 => Deserialize<LogoutResponse>(json)!,
+                105 => Deserialize<GetRoomsResponse>(json)!,
+                106 => Deserialize<GetPlayersInRoomResponse>(json)!,
+                107 => Deserialize<JoinRoomResponse>(json)!,
+                108 => Deserialize<CreateRoomResponse>(json)!,
+                109 => Deserialize<GetPersonalStatsResponse>(json)!,
+                110 => Deserialize<GetHighScoreResponse>(json)!,
                 _ => throw new Exception("Unknown response code: " + responseCode),
             };
+        }
+
+        private static T Deserialize<T>(string json) where T : Response
+        {
+            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            })!;
         }
     }
 }
