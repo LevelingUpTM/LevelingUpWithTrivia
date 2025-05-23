@@ -16,8 +16,20 @@
 
         <!-- Left Panel -->
         <StackPanel Grid.Column="0" Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
-            <TextBlock Text="Welcome: 'UserName'"
-                       Foreground="White" FontSize="24" FontWeight="Bold"/>
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Welcome: UserName" Grid.Column="0" TextWrapping="Wrap"
+                           Foreground="White" FontSize="24" FontWeight="Bold"/>
+
+                <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Command="{Binding NavToStartCommand}">
+                    <Image Source="/Assets/LogOutLogo.png" Width="50" Height="70" RenderTransformOrigin="0.5,0.622" ></Image>
+                </Button>
+            </Grid>
+            
 
             <Button Content="Join Room" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
                     Background="#004250" Foreground="White" Command="{Binding NavToJoinCommand}"/>

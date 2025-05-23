@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\LogOut.png" />
+    <None Remove="Assets\LogOutLogo.png" />
     <None Remove="Assets\TriviaLogo.png" />
   </ItemGroup>
 
@@ -17,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\LogOutLogo.png" />
     <Resource Include="Assets\TriviaLogo.png" />
   </ItemGroup>
 
