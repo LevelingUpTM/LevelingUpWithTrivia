@@ -27,5 +27,11 @@ namespace LevelingUpWithTrivia.Views
 
             DataContext = new LogInViewModel();
         }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is LogInViewModel vm)
+                vm.Password = ((PasswordBox)sender).Password;
+        }
     }
 }
