@@ -24,8 +24,19 @@ namespace LevelingUpWithTrivia.Views
         public SignUpView()
         {
             InitializeComponent();
-
             DataContext = new SignUpViewModel();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SignUpViewModel vm && sender is PasswordBox pb)
+                vm.Password = pb.Password;
+        }
+
+        private void ConfirmPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SignUpViewModel vm && sender is PasswordBox pb)
+                vm.ConfirmPassword = pb.Password;
         }
     }
 }
