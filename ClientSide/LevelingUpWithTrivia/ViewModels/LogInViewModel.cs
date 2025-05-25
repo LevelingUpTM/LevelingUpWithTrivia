@@ -49,6 +49,7 @@ namespace LevelingUpWithTrivia.ViewModels
                     {
                         case 1:
                             MessageBox.Show("Login successful!");
+                            MainWindowViewModel.CurrentUser = new Models.User(Username);
                             MainWindowViewModel.Current!.Content = new MainMenuView();
                             break;
                         case 2:

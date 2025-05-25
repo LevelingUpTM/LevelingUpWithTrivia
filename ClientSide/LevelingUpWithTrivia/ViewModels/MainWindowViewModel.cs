@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LevelingUpWithTrivia.Models;
 using LevelingUpWithTrivia.Source;
 using LevelingUpWithTrivia.Source.Packets.Requests;
 using LevelingUpWithTrivia.Source.Packets.Responses;
@@ -14,6 +15,8 @@ namespace LevelingUpWithTrivia.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        public static User? CurrentUser;
+
         public static MainWindowViewModel? Current => Application.Current.MainWindow.DataContext as MainWindowViewModel;
 
         [ObservableProperty]

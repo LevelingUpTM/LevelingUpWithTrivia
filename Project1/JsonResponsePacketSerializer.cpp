@@ -87,12 +87,6 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(const
     return createBuffer(ERROR_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeLogoutResponse(const LogoutResponse& response)
-{
-    json j;
-    j["status"] = response.status;
-    return createBuffer(LOGOUT_RESPONSE, j);
-}
 
 vector<unsigned char> JsonResponsePacketSerializer::createBuffer(const unsigned char code, const json &jsonResponse)
 {
