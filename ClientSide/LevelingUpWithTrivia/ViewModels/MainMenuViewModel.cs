@@ -35,6 +35,15 @@ namespace LevelingUpWithTrivia.ViewModels
         }
 
         [RelayCommand]
+        public void NavToUserStats()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+
+            windowModel.Content = new UserStatisticsView();
+        }
+
+
+        [RelayCommand]
         public void NavToInfo()
         {
             var windowModel = MainWindowViewModel.Current!;
@@ -45,6 +54,7 @@ namespace LevelingUpWithTrivia.ViewModels
 
         public void NavToStart() 
         {
+
             var windowModel = MainWindowViewModel.Current!;
             windowModel.Content = new StartMenuView();
         }

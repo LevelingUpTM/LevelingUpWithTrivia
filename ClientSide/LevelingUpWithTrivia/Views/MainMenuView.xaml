@@ -22,9 +22,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Welcome: UserName" Grid.Column="0" TextWrapping="Wrap"
+                <Button Grid.Column="0" Background="Transparent" BorderThickness="0" Command="{Binding NavToUserStatsCommand}">
+                    <TextBlock Text="Welcome: UserName" TextWrapping="Wrap"
                            Foreground="White" FontSize="24" FontWeight="Bold"/>
-
+                </Button>
+                
                 <Button Grid.Column="1" Background="Transparent" BorderThickness="0" Command="{Binding NavToStartCommand}">
                     <Image Source="/Assets/LogOutLogo.png" Width="50" Height="70" RenderTransformOrigin="0.5,0.622" ></Image>
                 </Button>
