@@ -38,6 +38,10 @@ struct CreateRoomRequest
     unsigned int answerTimeout;
 };
 
+struct LogoutRequest
+{
+    std::string username;
+};
 class JsonRequestPacketDeserializer
 {
 public:
@@ -46,4 +50,5 @@ public:
     static GetPlayersInRoomRequest deserializeGetPlayersRequest(const vector<unsigned char>& data);
     static JoinRoomRequest deserializeJoinRoomRequest(const vector<unsigned char>& data);
     static CreateRoomRequest deserializeCreateRoomRequest(const vector<unsigned char>& data);
+    static LogoutRequest deserializeLogoutRequest(const vector<unsigned char> &data);
 };

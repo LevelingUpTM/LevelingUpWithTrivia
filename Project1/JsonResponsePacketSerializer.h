@@ -60,6 +60,11 @@ struct GetPersonalStatsResponse
     unsigned int status;
     std::vector<std::string> statistics;
 };
+
+struct LogoutResponse
+{
+    unsigned int status;
+};
 class JsonResponsePacketSerializer
 {
 public:
@@ -73,6 +78,7 @@ public:
     static std::vector<unsigned char> serializeGetPlayersInRoomResponse(const GetPlayersInRoomResponse& response);
     static std::vector<unsigned char> serializeHighScoreResponse(const GetHighScoreResponse& response);
     static std::vector<unsigned char> serializePersonalStatsResponse(const GetPersonalStatsResponse& response);
+    static std::vector<unsigned char> serializeLogoutResponse(const LogoutResponse& response);
 
 private:
     static vector<unsigned char> createBuffer(unsigned char code, const json& jsonResponse);
