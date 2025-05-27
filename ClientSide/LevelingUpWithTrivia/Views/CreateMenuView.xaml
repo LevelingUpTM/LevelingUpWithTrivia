@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views" xmlns:vm="clr-namespace:LevelingUpWithTrivia.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:CreateMenuViewModel/>
-    </UserControl.DataContext>
 
     <Grid Background="#001123">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
