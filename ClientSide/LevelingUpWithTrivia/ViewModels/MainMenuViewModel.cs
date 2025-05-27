@@ -60,7 +60,7 @@ namespace LevelingUpWithTrivia.ViewModels
         {
             try
             {
-                var logoutRequest = new LogoutRequest(MainWindowViewModel.CurrentUser.Username);
+                var logoutRequest = new LogoutRequest(MainWindowViewModel.CurrentUser!.Username);
                 Communicator.Instance.Send(logoutRequest);
 
                 var response = Communicator.Instance.Receive();
@@ -72,9 +72,9 @@ namespace LevelingUpWithTrivia.ViewModels
                 }
                 else
                 {
-                    Console.WriteLine($"Unexpected response: {response.GetType().Name}");
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
                     if (response is LogoutResponse lr)
-                        Console.WriteLine($"LogoutResponse.Status = {lr.Status}");
+                        MessageBox.Show($"LogoutResponse.Status = {lr.Status}");
                     MessageBox.Show("An error occurred.");
                 }
             }

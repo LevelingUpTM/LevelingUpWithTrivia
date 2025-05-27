@@ -40,7 +40,7 @@ namespace LevelingUpWithTrivia.ViewModels
             Communicator.Instance.Send(request);
             var response = Communicator.Instance.Receive();
 
-            if (response is CreateRoomResponse createRoomResponse && createRoomResponse.Status == 1)
+            if (response is CreateRoomResponse createRoomResponse && createRoomResponse.Status == 0)
             {
                 // success
                 MessageBox.Show("Room created successfully!");
@@ -48,7 +48,10 @@ namespace LevelingUpWithTrivia.ViewModels
             }
             else
             {
-                MessageBox.Show("Failed to create room.");
+                MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+                if (response is CreateRoomResponse crr)
+                    MessageBox.Show($"LogoutResponse.Status = {crr.Status}");
+                MessageBox.Show("An error occurred.");
             }
         }
         [RelayCommand]

@@ -3,6 +3,7 @@
 #include "JsonResponsePacketSerializer.h"
 #include "LoginManager.h"
 #include "RequestHandlerFactory.h"
+#include "MenuRequestHandler.h"
 #define LOGIN_REQUEST 1
 #define SIGNUP_REQUEST 2
 
@@ -49,7 +50,9 @@ RequestResult LoginRequestHandler::login(const RequestInfo& request)
     {
     case LoginStatus::SUCCESS:
         response.status = 1;
-        result.newHandler = this;
+        result.newHandler =
+            new MenuRequestHandler(m_loginManager.usernameToUser(loginData.username), m_handlerFactory.getRoomManager(),
+                                   m_handlerFactory.getStatisticsManager(), m_handlerFactory);
         break;
     case LoginStatus::USER_NOT_FOUND:
         response.status = 2;
