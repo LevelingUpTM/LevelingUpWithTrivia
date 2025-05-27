@@ -6,10 +6,26 @@
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="gold">
+    <Grid Background="Gold">
+        <StackPanel>
+            <TextBlock Text="Your Statistics" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+            
+            <TextBlock Text="Games Played:" FontSize="16"/>
+            <TextBlock Text="{Binding GamesPlayed}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Correct Answers:" FontSize="16"/>
+            <TextBlock Text="{Binding CorrectAnswers}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Wrong Answers:" FontSize="16"/>
+            <TextBlock Text="{Binding WrongAnswers}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Average Time Per Answer:" FontSize="16"/>
+            <TextBlock Text="{Binding AvgAnswerTime}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+        </StackPanel>
+
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
             <Button Content="BACK" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
-                Background="red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
+                    Background="Red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

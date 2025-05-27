@@ -11,6 +11,8 @@ namespace LevelingUpWithTrivia.ViewModels
 {
     public partial class UserStatisticsViewModel : ObservableObject
     {
+        
+        
         [RelayCommand]
         private void NavToMain()
         {

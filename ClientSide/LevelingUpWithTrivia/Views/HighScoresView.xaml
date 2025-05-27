@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="LevelingUpWithTrivia.Views.HighScoresView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
+             d:DesignHeight="300" d:DesignWidth="300"
+             mc:Ignorable="d"
+             xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:HighScoresViewModel}">
+    <Grid Background="LightSkyBlue">
+        <StackPanel>
+            <TextBlock Text="Top 3 High Scores" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center"/>
+
+            <ItemsControl ItemsSource="{Binding TopPlayers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Width="150"/>
+                            <TextBlock Text="{Binding Score}" FontSize="16"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="BACK" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
+                    Background="Red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
