@@ -11,12 +11,12 @@ namespace LevelingUpWithTrivia.ViewModels
 {
     public partial class WaitingRoomViewModel : ObservableObject
     {
-        private readonly int _roomId;
         private readonly bool _isHost;
 
         [ObservableProperty]
         private string roomName;
-
+        [ObservableProperty]
+        private int _roomId;
         [ObservableProperty]
         private ObservableCollection<string> players = new();
 
