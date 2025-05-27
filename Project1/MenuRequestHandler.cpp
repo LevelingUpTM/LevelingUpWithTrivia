@@ -97,9 +97,8 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo request)
     rd.numOfQuestionsInGame = data.questionCount;
     rd.isActive = false;
 
-    m_roomManager.createRoom(m_user, rd);
-
-    return {JsonResponsePacketSerializer::serializeCreateRoomResponse(CreateRoomResponse{SUCCESS}),
+    Room& room = m_roomManager.createRoom(m_user, rd);
+    return {JsonResponsePacketSerializer::serializeCreateRoomResponse(CreateRoomResponse{SUCCESS, room.getMetadata().id}),
             this};
 }
 
