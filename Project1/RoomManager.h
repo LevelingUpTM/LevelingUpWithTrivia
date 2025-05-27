@@ -6,9 +6,9 @@
 class RoomManager
 {
 public:
-    Room createRoom(const LoggedUser& creator, RoomData metadata);
+    Room& createRoom(const LoggedUser& creator, RoomData metadata);
     void deleteRoom(unsigned int roomId);
-    Room getRoom(unsigned int roomId);
+    Room& getRoom(unsigned int roomId);
     std::vector<RoomData> getRooms() const;
     bool getRoomState(unsigned int roomId) const; // true = active
     unsigned int getNextRoomId();

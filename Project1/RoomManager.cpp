@@ -1,6 +1,6 @@
 #include "RoomManager.h"
 
-Room RoomManager::createRoom(const LoggedUser& creator, RoomData metadata)
+Room& RoomManager::createRoom(const LoggedUser& creator, RoomData metadata)
 {
     metadata.id = getNextRoomId();
     metadata.isActive = false;
@@ -14,7 +14,7 @@ void RoomManager::deleteRoom(const unsigned int roomId)
     m_rooms.erase(roomId);
 }
 
-Room RoomManager::getRoom(const unsigned int roomId)
+Room& RoomManager::getRoom(const unsigned int roomId)
 {
     return m_rooms.at(roomId);
 }

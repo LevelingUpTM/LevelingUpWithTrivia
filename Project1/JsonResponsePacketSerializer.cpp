@@ -19,6 +19,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(
 {
     json j;
     j["status"] = response.status;
+    j["roomId"] = response.roomId;
     return createBuffer(CREATE_ROOM_RESPONSE, j);
 }
 
