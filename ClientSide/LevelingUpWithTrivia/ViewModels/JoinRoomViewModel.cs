@@ -37,7 +37,8 @@ namespace LevelingUpWithTrivia.ViewModels
         [RelayCommand]
         private void Back()
         {
-            MainWindowViewModel.Current!.Content = new MainMenuView();
+            var windowModel = MainWindowViewModel.Current!;
+            windowModel.Content = new MainMenuView();
         }
     }
 }
