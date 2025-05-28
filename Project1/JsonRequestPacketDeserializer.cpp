@@ -57,3 +57,18 @@ LogoutRequest JsonRequestPacketDeserializer::deserializeLogoutRequest(const vect
     request.username = jsonObj["username"];
     return request;
 }
+
+GetUserStatisticsRequest JsonRequestPacketDeserializer::deserializeGetStatisticsRequest(
+    const vector<unsigned char> &data)
+{
+    json jsonObj = json::parse(data.begin(), data.end());
+    GetUserStatisticsRequest request;
+    return request;
+}
+
+GetHighScoreRequest JsonRequestPacketDeserializer::deserializeHighScoreRequest(const vector<unsigned char> &data)
+{
+    json jsonObj = json::parse(data.begin(), data.end());
+    GetHighScoreRequest request;
+    return request;
+}
