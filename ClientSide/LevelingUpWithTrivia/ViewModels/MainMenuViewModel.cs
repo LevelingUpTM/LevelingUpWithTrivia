@@ -20,7 +20,7 @@ namespace LevelingUpWithTrivia.ViewModels
         public void NavToJoin()
         {
             var windowModel = MainWindowViewModel.Current!;
-            windowModel.Content = new JoinMenuView();
+            windowModel.Content = new JoinRoomView();
         }
 
         [RelayCommand]

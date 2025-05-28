@@ -18,5 +18,19 @@ namespace LevelingUpWithTrivia.ViewModels
 
             windowModel.Content = new MainMenuView();
         }
+
+        [RelayCommand]
+        private void NavToUserStatistics()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+            windowModel.Content = new UserStatisticsView();
+        }
+
+        [RelayCommand]
+        private void NavToHighScores()
+        {
+            var windowModel = MainWindowViewModel.Current!;
+            windowModel.Content = new HighScoresView();
+        }
     }
 }

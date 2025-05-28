@@ -44,7 +44,7 @@ namespace LevelingUpWithTrivia.ViewModels
             {
                 // success
                 MessageBox.Show("Room created successfully!");
-                MainWindowViewModel.Current.Content = new MainMenuView();
+                MainWindowViewModel.Current!.Content = new WaitingRoomView(createRoomResponse.RoomId, RoomName, true);
             }
             else
             {

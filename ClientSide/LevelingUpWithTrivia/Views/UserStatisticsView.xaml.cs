@@ -27,5 +27,12 @@ namespace LevelingUpWithTrivia.Views
 
             DataContext = new UserStatisticsViewModel();
         }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is UserStatisticsViewModel vm)
+            {
+                vm.LoadPersonalStatsCommand.Execute(null);
+            }
+        }
     }
 }
