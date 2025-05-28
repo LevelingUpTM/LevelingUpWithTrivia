@@ -8,25 +8,36 @@
              mc:Ignorable="d"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:HighScoresViewModel}">
-    <Grid Background="LightSkyBlue">
-        <StackPanel>
-            <TextBlock Text="Top 3 High Scores" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <ItemsControl ItemsSource="{Binding TopPlayers}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Width="150"/>
-                            <TextBlock Text="{Binding Score}" FontSize="16"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+        <TextBlock Text="High Scores"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10" />
 
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <Button Content="BACK" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
-                    Background="Red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Statistics}"
+                 Margin="0,20"
+                 FontSize="18" />
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10">
+            <Button Content="Load High Scores"
+                    Command="{Binding LoadHighScoresCommand}"
+                    Width="150"
+                    Margin="10,0" />
+            <Button Content="Back to Main Menu"
+                    Command="{Binding NavToMainCommand}"
+                    Width="150"
+                    Margin="10,0" />
         </StackPanel>
     </Grid>
 </UserControl>
