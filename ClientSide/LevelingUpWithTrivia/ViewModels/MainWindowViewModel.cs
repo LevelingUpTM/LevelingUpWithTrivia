@@ -25,9 +25,16 @@ namespace LevelingUpWithTrivia.ViewModels
         public MainWindowViewModel()
         {
             Communicator.Instance.Connect();
-            Communicator.Instance.Send(new SignupRequest("first", "pass", "adadsdsa"));
-            SignupResponse packet = (Communicator.Instance.Receive() as SignupResponse)!;
-            Console.WriteLine(packet);
+        }
+
+        public void CloseCommunicator()
+        {
+            if (CurrentUser != null)
+            {
+                Communicator.Instance.Send(new LogoutRequest(CurrentUser.Username));
+                LogoutResponse packet = (Communicator.Instance.Receive() as LogoutResponse)!;
+            }
+            Communicator.Instance.Close();
         }
     }
 }

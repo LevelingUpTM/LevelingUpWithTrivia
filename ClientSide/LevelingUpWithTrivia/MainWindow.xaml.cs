@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,6 +24,12 @@ namespace LevelingUpWithTrivia
             InitializeComponent();
 
             DataContext = new MainWindowViewModel();
+        }
+        
+
+        private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+        {
+            MainWindowViewModel.Current!.CloseCommunicator();
         }
     }
 }

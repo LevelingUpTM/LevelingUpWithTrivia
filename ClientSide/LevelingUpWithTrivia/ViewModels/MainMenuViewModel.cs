@@ -56,7 +56,7 @@ namespace LevelingUpWithTrivia.ViewModels
         }
 
         [RelayCommand]
-        public void NavToStart() 
+        public void LogoutAndNavToStart() 
         {
             try
             {
@@ -68,6 +68,7 @@ namespace LevelingUpWithTrivia.ViewModels
                 if (response is LogoutResponse logoutResponse && logoutResponse.Status == 0)
                 {
                     var windowModel = MainWindowViewModel.Current!;
+                    MainWindowViewModel.CurrentUser = null;
                     windowModel.Content = new StartMenuView();
                 }
                 else
