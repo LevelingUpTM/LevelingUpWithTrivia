@@ -38,6 +38,7 @@ namespace LevelingUpWithTrivia.ViewModels
                 MessageBox.Show("All fields must be filled and greater than 0.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            
             var request = new CreateRoomRequest(
                 RoomName,
                 MaxPlayers,
