@@ -30,6 +30,14 @@ namespace LevelingUpWithTrivia.ViewModels
         [RelayCommand]
         public void CreateRoom()
         {
+            if (string.IsNullOrWhiteSpace(RoomName) ||
+                MaxPlayers <= 0 ||
+                QuestionCount <= 0 ||
+                TimePerQuestion <= 0)
+            {
+                MessageBox.Show("All fields must be filled and greater than 0.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var request = new CreateRoomRequest(
                 RoomName,
                 MaxPlayers,
