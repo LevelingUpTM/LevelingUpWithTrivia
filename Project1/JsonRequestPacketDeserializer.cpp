@@ -49,3 +49,26 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(co
     request.answerTimeout = jsonObj["answerTimeout"];
     return request;
 }
+
+LogoutRequest JsonRequestPacketDeserializer::deserializeLogoutRequest(const vector<unsigned char> &data)
+{
+    json jsonObj = json::parse(data.begin(), data.end());
+    LogoutRequest request;
+    request.username = jsonObj["username"];
+    return request;
+}
+
+GetUserStatisticsRequest JsonRequestPacketDeserializer::deserializeGetStatisticsRequest(
+    const vector<unsigned char> &data)
+{
+    json jsonObj = json::parse(data.begin(), data.end());
+    GetUserStatisticsRequest request;
+    return request;
+}
+
+GetHighScoreRequest JsonRequestPacketDeserializer::deserializeHighScoreRequest(const vector<unsigned char> &data)
+{
+    json jsonObj = json::parse(data.begin(), data.end());
+    GetHighScoreRequest request;
+    return request;
+}

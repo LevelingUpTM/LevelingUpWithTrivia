@@ -19,6 +19,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(
 {
     json j;
     j["status"] = response.status;
+    j["roomId"] = response.roomId;
     return createBuffer(CREATE_ROOM_RESPONSE, j);
 }
 
@@ -86,6 +87,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(const
     j["message"] = response.message;
     return createBuffer(ERROR_RESPONSE, j);
 }
+
 
 vector<unsigned char> JsonResponsePacketSerializer::createBuffer(const unsigned char code, const json &jsonResponse)
 {

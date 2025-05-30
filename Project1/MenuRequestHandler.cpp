@@ -13,7 +13,7 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo request)
     return request.id == LOGOUT_REQUEST || request.id == GET_ROOMS_REQUEST ||
            request.id == GET_PLAYERS_IN_ROOM_REQUEST || request.id == JOIN_ROOM_REQUEST ||
            request.id == CREATE_ROOM_REQUEST || request.id == GET_HIGHSCORE_REQUEST ||
-           request.id == GET_PERSONAL_STATS_REQUEST;
+               request.id == GET_PERSONAL_STATS_REQUEST;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo request)
@@ -97,9 +97,8 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo request)
     rd.numOfQuestionsInGame = data.questionCount;
     rd.isActive = false;
 
-    m_roomManager.createRoom(m_user, rd);
-
-    return {JsonResponsePacketSerializer::serializeCreateRoomResponse(CreateRoomResponse{SUCCESS}),
+    Room& room = m_roomManager.createRoom(m_user, rd);
+    return {JsonResponsePacketSerializer::serializeCreateRoomResponse(CreateRoomResponse{SUCCESS, room.getMetadata().id}),
             this};
 }
 

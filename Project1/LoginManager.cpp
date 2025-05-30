@@ -8,7 +8,7 @@ LoginManager::LoginManager(IDatabase* db)
 LoginStatus LoginManager::login(const std::string& username, const std::string& password)
 {
     // Already logged in?
-    for (const LoggedUser& user : m_loggedUsers)
+    for (const LoggedUser &user : m_loggedUsers)
     {
         if (user.getUsername() == username)
         {
@@ -30,6 +30,7 @@ LoginStatus LoginManager::login(const std::string& username, const std::string& 
 
     // Add to logged users
     m_loggedUsers.push_back(LoggedUser(username));
+    m_usernameToUser.emplace(username, &m_loggedUsers.at(m_loggedUsers.size() - 1));
     return LoginStatus::SUCCESS;
 }
 
@@ -50,6 +51,7 @@ SignUpStatus LoginManager::signup(const std::string& username, const std::string
 
 void LoginManager::logout(const std::string& username)
 {
+    m_usernameToUser.erase(username);
     for (auto it = m_loggedUsers.begin(); it != m_loggedUsers.end(); ++it)
     {
         if (it->getUsername() == username)
@@ -58,4 +60,9 @@ void LoginManager::logout(const std::string& username)
             return;
         }
     }
+}
+
+LoggedUser &LoginManager::usernameToUser(const std::string &username)
+{
+    return *m_usernameToUser.at(username);
 }

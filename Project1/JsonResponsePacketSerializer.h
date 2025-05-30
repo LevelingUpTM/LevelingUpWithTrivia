@@ -36,6 +36,7 @@ struct JoinRoomResponse
 struct CreateRoomResponse
 {
     unsigned int status;
+    unsigned int roomId;
 };
 
 struct GetRoomsResponse
@@ -60,6 +61,7 @@ struct GetPersonalStatsResponse
     unsigned int status;
     std::vector<std::string> statistics;
 };
+
 class JsonResponsePacketSerializer
 {
 public:

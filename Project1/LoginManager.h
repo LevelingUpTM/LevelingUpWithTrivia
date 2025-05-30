@@ -4,6 +4,7 @@
 #include "LoggedUser.h"
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 enum class LoginStatus
 {
@@ -28,8 +29,10 @@ public:
     LoginStatus login(const std::string& username, const std::string& password);
     SignUpStatus signup(const std::string& username, const std::string& password, const std::string& email) const;
     void logout(const std::string& username);
+    LoggedUser &usernameToUser(const std::string &username);
 
 private:
     IDatabase* m_database;
     std::vector<LoggedUser> m_loggedUsers;
+    std::unordered_map<std::string, LoggedUser *> m_usernameToUser;
 };
