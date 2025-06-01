@@ -67,6 +67,39 @@ vector<unsigned char> JsonResponsePacketSerializer::serializePersonalStatsRespon
     return createBuffer(GET_PERSONAL_STATS_RESPONSE, j);
 }
 
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeCloseRoomResponse(const CloseRoomResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    return createBuffer(CLOSE_ROOM_RESPONSE, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeStartGameResponse(const StartGameResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    return createBuffer(START_GAME_RESPONSE, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomStateResponse(
+    const GetRoomStateResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    j["answerTimeOut"] = response.answerTimeOut;
+    j["hasGameBegun"] = response.hasGameBegun;
+    j["players"] = response.players;
+    j["questionCount"] = response.questionCount;
+    return createBuffer(GET_ROOM_STATE_RESPONSE, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeLeaveRoomResponse(const LeaveRoomResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    return createBuffer(LEAVE_ROOM_RESPONSE, j);
+}
+
 vector<unsigned char> JsonResponsePacketSerializer::serializeLoginResponse(const LoginResponse &response)
 {
     json j;
