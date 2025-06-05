@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\loginLogo.png" />
     <None Remove="Assets\LogOut.png" />
     <None Remove="Assets\LogOutLogo.png" />
+    <None Remove="Assets\signUpLogo.png" />
     <None Remove="Assets\TriviaLogo.png" />
   </ItemGroup>
 
@@ -19,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\loginLogo.png" />
     <Resource Include="Assets\LogOutLogo.png" />
+    <Resource Include="Assets\signUpLogo.png" />
     <Resource Include="Assets\TriviaLogo.png" />
   </ItemGroup>
 
