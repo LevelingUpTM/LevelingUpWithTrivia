@@ -21,6 +21,16 @@ MenuRequestHandler *RequestHandlerFactory::createMenuRequestHandler(const Logged
     return new MenuRequestHandler(user, getRoomManager(), getStatisticsManager(), *this);
 }
 
+RoomAdminRequestHandler *RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser& user, Room &room)
+{
+    return new RoomAdminRequestHandler(user, room, m_roomManager, *this);
+}
+
+RoomMemberRequestHandler *RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser& user, Room &room)
+{
+    return new RoomMemberRequestHandler(user, room, m_roomManager, *this);
+}
+
 RoomManager &RequestHandlerFactory::getRoomManager()
 {
     return m_roomManager;
