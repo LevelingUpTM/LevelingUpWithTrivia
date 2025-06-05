@@ -18,13 +18,26 @@
         <!-- Left Panel -->
         <StackPanel Grid.Column="0" Margin="30" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
 
-            <Button Content="Log In" Height="40" FontSize="16" Padding="0" Margin="0,0,0,10"
-                Background="#004250" Foreground="White" Cursor="Hand" Command="{Binding NavToLoginCommand}"/>
+            <Button Height="40" FontSize="16" Padding="0" Margin="0,0,0,10"
+                Background="#004250" Foreground="White" Cursor="Hand" Command="{Binding NavToLoginCommand}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Log In" VerticalAlignment="Center"/>
+                    <Image Source="/Assets/loginLogo.png" Width="30" Height="30" Margin="40,0,0,0"/>
+                </StackPanel>
+            </Button>
 
-            <Button Content="Sign Up" Height="40" FontSize="16" Padding="0" Margin="0,0,0,0"
-                Background="#00727C" Foreground="White" Cursor="Hand" Command="{Binding NavToSignupCommand}"/>
 
-     
+
+            <Button Height="40" FontSize="16" Padding="0" Margin="0,0,0,0"
+                Background="#00727C" Foreground="White" Cursor="Hand" Command="{Binding NavToSignupCommand}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Sign Up" VerticalAlignment="Center"/>
+                    <Image Source="/Assets/signUpLogo.png" Width="30" Height="30" Margin="30,0,0,0"/>
+                    
+                </StackPanel>
+            </Button>
+
+
         </StackPanel>
 
         <!-- Right Panel -->
