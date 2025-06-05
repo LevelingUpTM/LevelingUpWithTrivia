@@ -9,8 +9,8 @@ class LoginRequestHandler : public IRequestHandler
 public:
     explicit LoginRequestHandler(RequestHandlerFactory& handlerFactory);
 
-    bool isRequestRelevant(RequestInfo request) override;
-    RequestResult handleRequest(RequestInfo request) override;
+    bool isRequestRelevant(RequestInfo& request) override;
+    RequestResult handleRequest(RequestInfo& request) override;
 
 private:
     RequestHandlerFactory& m_handlerFactory;

@@ -3,20 +3,22 @@
 #include "JsonResponsePacketSerializer.h"
 #include "StatusCodes.h"
 
-MenuRequestHandler::MenuRequestHandler(LoggedUser user, RoomManager &roomManager, StatisticsManager &statisticsManager, RequestHandlerFactory &handlerFactory)
+MenuRequestHandler::MenuRequestHandler(const LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager, RequestHandlerFactory &handlerFactory)
     : m_user(user), m_roomManager(roomManager), m_statisticsManager(statisticsManager), m_handlerFactory(handlerFactory)
 {
 }
 
-bool MenuRequestHandler::isRequestRelevant(RequestInfo request)
+bool MenuRequestHandler::isRequestRelevant(RequestInfo& request)
 {
     return request.id == LOGOUT_REQUEST || request.id == GET_ROOMS_REQUEST ||
            request.id == GET_PLAYERS_IN_ROOM_REQUEST || request.id == JOIN_ROOM_REQUEST ||
            request.id == CREATE_ROOM_REQUEST || request.id == GET_HIGHSCORE_REQUEST ||
-               request.id == GET_PERSONAL_STATS_REQUEST;
+           request.id == GET_PERSONAL_STATS_REQUEST || request.id == CLOSE_ROOM_REQUEST ||
+           request.id == START_GAME_REQUEST || request.id == GET_ROOM_STATE_REQUEST || 
+           request.id == LEAVE_ROOM_REQUEST;
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo request)
+RequestResult MenuRequestHandler::handleRequest(RequestInfo& request)
 {
     switch (request.id)
     {

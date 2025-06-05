@@ -8,11 +8,11 @@
 class MenuRequestHandler : public IRequestHandler
 {
   public:
-    MenuRequestHandler(LoggedUser user, RoomManager &roomManager, StatisticsManager &statisticsManager,
+    MenuRequestHandler(const LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager,
                        RequestHandlerFactory &handlerFactory);
 
-    bool isRequestRelevant(RequestInfo request) override;
-    RequestResult handleRequest(RequestInfo request) override;
+    bool isRequestRelevant(RequestInfo& request) override;
+    RequestResult handleRequest(RequestInfo& request) override;
 
   private:
     RequestResult signout(RequestInfo request);

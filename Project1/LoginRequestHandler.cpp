@@ -13,12 +13,12 @@ LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handlerFactory)
 {
 }
 
-bool LoginRequestHandler::isRequestRelevant(const RequestInfo request)
+bool LoginRequestHandler::isRequestRelevant(RequestInfo& request)
 {
     return request.id == LOGIN_REQUEST || request.id == SIGNUP_REQUEST;
 }
 
-RequestResult LoginRequestHandler::handleRequest(const RequestInfo request)
+RequestResult LoginRequestHandler::handleRequest(RequestInfo& request)
 {
     if (!isRequestRelevant(request))
     {
