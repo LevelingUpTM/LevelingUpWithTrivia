@@ -7,11 +7,10 @@
              mc:Ignorable="d"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:LogInViewModel}">
-    <StackPanel Background="red">
-        <Grid>
-            <Border Background="Olive" Padding="40" CornerRadius="20" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Background="#004250">
+            <Border Background="#00727C" Padding="40" CornerRadius="20" Width="400" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel >
-                    <TextBlock Text="Login page" FontSize="28" Foreground="White" FontWeight="Bold" TextAlignment="Center"/>
+                    <TextBlock Text="Login page" FontSize="28" Foreground="White" FontWeight="Bold" TextAlignment="Center" Margin="0, 0, 0, 10"/>
 
                     <!-- Username -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -27,12 +26,11 @@
                          PasswordChanged="PasswordBox_PasswordChanged" />
                     </StackPanel>
 
-                    <Button Content="Login" Background="#007ACC" Foreground="White" Height="40" FontSize="16" Cursor="Hand" Command="{Binding LogInCommand}" />
+                <Button Content="Login" Background="#005a66" Foreground="White" Height="40" FontSize="16" Cursor="Hand" BorderBrush="#1a7569" Margin="0, 10, 0, 0" Command="{Binding LogInCommand}" />
 
-                    <TextBlock Text="Don't have an account?" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                    <Button Content="Sign Up" Background="#444" Foreground="White" Height="35" Cursor="Hand" Command="{Binding NavToSignupCommand}"/>
+                    <TextBlock Text="Don't have an account?" Foreground="White" HorizontalAlignment="Center" Margin="0,15,0,4"/>
+                <Button Content="Sign Up" Background="#006671" Foreground="White" Height="35" Cursor="Hand" BorderBrush="#1a7569" Command="{Binding NavToSignupCommand}"/>
                 </StackPanel>
             </Border>
         </Grid>
-    </StackPanel>
 </UserControl>
