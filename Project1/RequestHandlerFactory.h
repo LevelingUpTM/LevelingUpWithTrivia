@@ -4,9 +4,8 @@
 #include "LoginRequestHandler.h"
 #include "RoomManager.h"
 #include "StatisticsManager.h"
-#include "RoomAdminRequestHandler.h"
-#include "RoomMemberRequestHandler.h"
-
+class RoomMemberRequestHandler;
+class RoomAdminRequestHandler;
 class LoggedUser;
 class MenuRequestHandler;
 class RequestHandlerFactory
