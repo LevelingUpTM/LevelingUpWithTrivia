@@ -26,7 +26,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo &requestInfo)
         return startGame(requestInfo);
     case GET_ROOM_STATE_REQUEST:
         return getRoomState(requestInfo);
-    default:;
+    default:
         return {JsonResponsePacketSerializer::serializeErrorResponse({"Invalid request for admin."}), nullptr};
     }
 }
@@ -65,12 +65,15 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo &requestInfo)
     GetRoomStateResponse response;
     response.status = 1;
     response.hasGameBegun = false; // Game logic not implemented yet
+    response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
+    response.answerTimeOut = m_room.getMetadata().timePerQuestion;
 
-    std::vector<std::string> users(m_room.getAllUsers().begin(), m_room.getAllUsers().end());
+    std::list<std::string> usersList = m_room.getAllUsers();
+    std::vector<std::string> users(usersList.begin(), usersList.end());
     response.players = users;
 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeGetRoomStateResponse(response);
-    result.newHandler = nullptr;
+    result.newHandler = this;
     return result;
 }

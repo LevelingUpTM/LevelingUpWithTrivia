@@ -6,7 +6,7 @@ Room& RoomManager::createRoom(const LoggedUser& creator, RoomData metadata)
     metadata.isActive = false;
     Room room(metadata, creator);
     m_rooms.insert({metadata.id, room});
-    return room;
+    return m_rooms.at(metadata.id);
 }
 
 void RoomManager::deleteRoom(const unsigned int roomId)

@@ -2,6 +2,8 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
 #include "StatusCodes.h"
+#include "RoomAdminRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 
 MenuRequestHandler::MenuRequestHandler(const LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager, RequestHandlerFactory &handlerFactory)
     : m_user(user), m_roomManager(roomManager), m_statisticsManager(statisticsManager), m_handlerFactory(handlerFactory)
@@ -76,9 +78,10 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo request)
     JoinRoomRequest data = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(request.buffer);
     try
     {
-        m_roomManager.getRoom(data.roomId).addUser(m_user);
+        Room &room = m_roomManager.getRoom(data.roomId);
+        room.addUser(m_user);
         return {JsonResponsePacketSerializer::serializeJoinRoomResponse(JoinRoomResponse{SUCCESS}),
-                this};
+                m_handlerFactory.createRoomMemberRequestHandler(m_user, room)};
     }
     catch (...)
     {
@@ -99,7 +102,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo request)
 
     Room& room = m_roomManager.createRoom(m_user, rd);
     return {JsonResponsePacketSerializer::serializeCreateRoomResponse(CreateRoomResponse{SUCCESS, room.getMetadata().id}),
-            this};
+        m_handlerFactory.createRoomAdminRequestHandler(m_user, room)};
 }
 
 RequestResult MenuRequestHandler::getHighScore(RequestInfo request)
