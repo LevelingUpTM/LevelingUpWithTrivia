@@ -6,6 +6,7 @@ using LevelingUpWithTrivia.Source.Packets.Responses;
 using LevelingUpWithTrivia.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace LevelingUpWithTrivia.ViewModels
 {
@@ -19,6 +20,7 @@ namespace LevelingUpWithTrivia.ViewModels
         private int _roomId;
         [ObservableProperty]
         private ObservableCollection<string> players = new();
+        private readonly DispatcherTimer _refreshTimer = new();
 
         public bool IsHost => _isHost;
 
@@ -28,19 +30,31 @@ namespace LevelingUpWithTrivia.ViewModels
             RoomName = roomName;
             _isHost = isHost;
 
+            _refreshTimer.Interval = TimeSpan.FromSeconds(2);
+            _refreshTimer.Tick += (s, e) => RefreshPlayers();
+            _refreshTimer.Start();
+            
             RefreshPlayers();
         }
 
         private void RefreshPlayers()
         {
-            Communicator.Instance.Send(new GetPlayersInRoomRequest(_roomId));
+            Communicator.Instance.Send(new GetRoomStateRequest());
             var response = Communicator.Instance.Receive();
 
-            if (response is GetPlayersInRoomResponse playersResponse)
+            if (response is GetRoomStateResponse roomState)
             {
+                if (roomState.HasGameBegun)
+                {
+                    MessageBox.Show("Game has already started!");
+                    return;
+                }
+
                 Players.Clear();
-                foreach (var player in playersResponse.players)
+                foreach (var player in roomState.Players)
+                {
                     Players.Add(player);
+                }
             }
         }
 
@@ -58,6 +72,7 @@ namespace LevelingUpWithTrivia.ViewModels
         private void LeaveRoom()
         {
             // Optional: send a leave-room request
+            _refreshTimer.Stop();
             MainWindowViewModel.Current.Content = new MainMenuView();
         }
     }
