@@ -47,7 +47,7 @@
                 <Button  BorderBrush="#1a7569" Height="35" FontSize="16" Padding="0" Margin="0,0,0,0"
                     Background="#006671" Foreground="White" Cursor="Hand" Command="{Binding NavToSignupCommand}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="Sign Up" VerticalAlignment="Center"/>
+                        <TextBlock Text="Back to Sign Up" VerticalAlignment="Center"/>
                         <Image Source="/Assets/signUpLogo.png" Width="30" Height="30" Margin="30,0,0,0"/>
                     </StackPanel>
                 </Button>
