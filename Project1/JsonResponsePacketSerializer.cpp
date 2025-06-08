@@ -1,21 +1,21 @@
 #include "JsonResponsePacketSerializer.h"
 #include "statusCodes.h"
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeLogoutResponse(const LogoutResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeLogoutResponse(const LogoutResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(LOGOUT_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeJoinRoomResponse(const JoinRoomResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeJoinRoomResponse(const JoinRoomResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(JOIN_ROOM_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(const CreateRoomResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeCreateRoomResponse(const CreateRoomResponse &response)
 {
     json j;
     j["status"] = response.status;
@@ -23,7 +23,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeCreateRoomResponse(
     return createBuffer(CREATE_ROOM_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomsResponse(const GetRoomsResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeGetRoomsResponse(const GetRoomsResponse &response)
 {
     json j;
     j["status"] = response.status;
@@ -42,7 +42,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomsResponse(co
     return createBuffer(GET_ROOMS_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(
+vector<Byte> JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(
     const GetPlayersInRoomResponse &response)
 {
     json j;
@@ -50,7 +50,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeGetPlayersInRoomRes
     return createBuffer(GET_PLAYERS_IN_ROOM_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreResponse(const GetHighScoreResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeHighScoreResponse(const GetHighScoreResponse &response)
 {
     json j;
     j["status"] = response.status;
@@ -58,7 +58,7 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeHighScoreResponse(c
     return createBuffer(GET_HIGHSCORE_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializePersonalStatsResponse(
+vector<Byte> JsonResponsePacketSerializer::serializePersonalStatsResponse(
     const GetPersonalStatsResponse &response)
 {
     json j;
@@ -67,21 +67,21 @@ vector<unsigned char> JsonResponsePacketSerializer::serializePersonalStatsRespon
     return createBuffer(GET_PERSONAL_STATS_RESPONSE, j);
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeCloseRoomResponse(const CloseRoomResponse &response)
+std::vector<Byte> JsonResponsePacketSerializer::serializeCloseRoomResponse(const CloseRoomResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(CLOSE_ROOM_RESPONSE, j);
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeStartGameResponse(const StartGameResponse &response)
+std::vector<Byte> JsonResponsePacketSerializer::serializeStartGameResponse(const StartGameResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(START_GAME_RESPONSE, j);
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomStateResponse(
+std::vector<Byte> JsonResponsePacketSerializer::serializeGetRoomStateResponse(
     const GetRoomStateResponse &response)
 {
     json j;
@@ -93,28 +93,28 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeGetRoomStateRe
     return createBuffer(GET_ROOM_STATE_RESPONSE, j);
 }
 
-std::vector<unsigned char> JsonResponsePacketSerializer::serializeLeaveRoomResponse(const LeaveRoomResponse &response)
+std::vector<Byte> JsonResponsePacketSerializer::serializeLeaveRoomResponse(const LeaveRoomResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(LEAVE_ROOM_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeLoginResponse(const LoginResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeLoginResponse(const LoginResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(LOGIN_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeSignUpResponse(const SignupResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeSignUpResponse(const SignupResponse &response)
 {
     json j;
     j["status"] = response.status;
     return createBuffer(SIGNUP_RESPONSE, j);
 }
 
-vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(const ErrorResponse &response)
+vector<Byte> JsonResponsePacketSerializer::serializeErrorResponse(const ErrorResponse &response)
 {
     json j;
     j["message"] = response.message;
@@ -122,12 +122,12 @@ vector<unsigned char> JsonResponsePacketSerializer::serializeErrorResponse(const
 }
 
 
-vector<unsigned char> JsonResponsePacketSerializer::createBuffer(const unsigned char code, const json &jsonResponse)
+vector<Byte> JsonResponsePacketSerializer::createBuffer(const Byte code, const json &jsonResponse)
 {
     string jsonStr = jsonResponse.dump(); // Convert JSON to string
     const size_t size = jsonStr.size();
 
-    vector<unsigned char> buffer;
+    vector<Byte> buffer;
     buffer.push_back(code); // First byte is the response code
 
     // Add 4 bytes for message size (big-endian format)
