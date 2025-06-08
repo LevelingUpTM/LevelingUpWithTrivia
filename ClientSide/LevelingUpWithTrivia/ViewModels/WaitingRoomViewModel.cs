@@ -56,6 +56,12 @@ namespace LevelingUpWithTrivia.ViewModels
                     Players.Add(player);
                 }
             }
+            else
+            {
+                _refreshTimer.Stop();
+                MessageBox.Show("Room was closed by the host.");
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
         }
 
         [RelayCommand]
@@ -69,11 +75,55 @@ namespace LevelingUpWithTrivia.ViewModels
         }
 
         [RelayCommand]
+        private void PerformLeaveRoom()
+        {
+            if (IsHost)
+            {
+                CloseRoom();
+            }
+            else
+            {
+                LeaveRoom();
+            }
+        }
+
         private void LeaveRoom()
         {
-            // Optional: send a leave-room request
-            _refreshTimer.Stop();
-            MainWindowViewModel.Current.Content = new MainMenuView();
+            Communicator.Instance.Send(new LeaveRoomRequest());
+            var response = Communicator.Instance.Receive();
+
+            if (response is LeaveRoomResponse leaveRoomResponse && leaveRoomResponse.Status == 1)
+            {
+                _refreshTimer.Stop();
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
+            else
+            {
+                MessageBox.Show("Failed to leave the room.");
+                if (response is LeaveRoomResponse lrr)
+                    MessageBox.Show($"LeaveRoomResponse.Status = {lrr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
+        }
+
+        private void CloseRoom()
+        {
+            Communicator.Instance.Send(new CloseRoomRequest());
+            var response = Communicator.Instance.Receive();
+            if (response is CloseRoomResponse closeRoomResponse && closeRoomResponse.Status == 1)
+            {
+                _refreshTimer.Stop();
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
+            else
+            {
+                MessageBox.Show("Failed to close the room.");
+                if (response is CloseRoomResponse crr)
+                    MessageBox.Show($"CloseRoomResponse.Status = {crr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
         }
     }
 }
