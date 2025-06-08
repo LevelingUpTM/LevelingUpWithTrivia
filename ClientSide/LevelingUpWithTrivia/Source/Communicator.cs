@@ -8,6 +8,7 @@ using System.Net;
 using System.IO;
 using LevelingUpWithTrivia.Source.Packets.Requests;
 using System.Text.Json;
+using System.Windows;
 using LevelingUpWithTrivia.Source.Packets.Responses;
 
 namespace LevelingUpWithTrivia.Source
@@ -49,6 +50,8 @@ namespace LevelingUpWithTrivia.Source
 
             string json = Encoding.UTF8.GetString(body);
 
+            Console.WriteLine($"Received code: {messageCode}");
+            Console.WriteLine($"Received JSON: {json}");
             return ResponseDeserializer.DeserializeResponse(messageCode, json);
             
             
