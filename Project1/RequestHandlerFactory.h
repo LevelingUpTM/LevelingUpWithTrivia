@@ -15,7 +15,7 @@ public:
 
     LoginRequestHandler* createLoginRequestHandler();
     LoginManager& getLoginManager();
-    MenuRequestHandler* createMenuRequestHandler(const LoggedUser& user);
+    MenuRequestHandler* createMenuRequestHandler(LoggedUser& user);
     RoomAdminRequestHandler *createRoomAdminRequestHandler(LoggedUser& user, Room &room);
     RoomMemberRequestHandler *createRoomMemberRequestHandler(LoggedUser& user, Room &room);
 

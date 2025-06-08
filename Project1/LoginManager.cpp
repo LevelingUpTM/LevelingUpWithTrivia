@@ -8,12 +8,9 @@ LoginManager::LoginManager(IDatabase* db)
 LoginStatus LoginManager::login(const std::string& username, const std::string& password)
 {
     // Already logged in?
-    for (const LoggedUser &user : m_loggedUsers)
+    if (m_usernameToUser.find(username) != m_usernameToUser.end())
     {
-        if (user.getUsername() == username)
-        {
-            return LoginStatus::ALREADY_LOGGED_IN;
-        }
+        return LoginStatus::ALREADY_LOGGED_IN;
     }
 
     // Check if user exists
@@ -29,8 +26,7 @@ LoginStatus LoginManager::login(const std::string& username, const std::string& 
     }
 
     // Add to logged users
-    m_loggedUsers.push_back(LoggedUser(username));
-    m_usernameToUser.emplace(username, &m_loggedUsers.at(m_loggedUsers.size() - 1));
+    m_usernameToUser.emplace(username, LoggedUser(username));
     return LoginStatus::SUCCESS;
 }
 
@@ -52,17 +48,9 @@ SignUpStatus LoginManager::signup(const std::string& username, const std::string
 void LoginManager::logout(const std::string& username)
 {
     m_usernameToUser.erase(username);
-    for (auto it = m_loggedUsers.begin(); it != m_loggedUsers.end(); ++it)
-    {
-        if (it->getUsername() == username)
-        {
-            m_loggedUsers.erase(it);
-            return;
-        }
-    }
 }
 
 LoggedUser &LoginManager::usernameToUser(const std::string &username)
 {
-    return *m_usernameToUser.at(username);
+    return m_usernameToUser.at(username);
 }

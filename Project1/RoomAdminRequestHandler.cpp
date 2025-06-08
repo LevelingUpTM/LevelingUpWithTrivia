@@ -68,6 +68,7 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo &requestInfo)
     response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
     response.answerTimeOut = m_room.getMetadata().timePerQuestion;
 
+    m_handlerFactory.getLoginManager();
     std::list<std::string> usersList = m_room.getAllUsers();
     std::vector<std::string> users(usersList.begin(), usersList.end());
     response.players = users;

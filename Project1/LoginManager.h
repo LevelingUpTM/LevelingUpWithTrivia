@@ -33,6 +33,5 @@ public:
 
 private:
     IDatabase* m_database;
-    std::vector<LoggedUser> m_loggedUsers;
-    std::unordered_map<std::string, LoggedUser *> m_usernameToUser;
+    std::unordered_map<std::string, LoggedUser> m_usernameToUser;
 };

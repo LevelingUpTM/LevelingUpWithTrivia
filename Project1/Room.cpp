@@ -1,20 +1,20 @@
 #include "Room.h"
 
-Room::Room(const RoomData& metadata, const LoggedUser& creator)
+Room::Room(const RoomData& metadata, LoggedUser& creator)
     : m_metadata(metadata)
 {
-    m_users.push_back(creator);
+    m_users.push_back(&creator);
 }
 
-void Room::addUser(const LoggedUser& user)
+void Room::addUser(LoggedUser& user)
 {
-    m_users.push_back(user);
+    m_users.push_back(&user);
 }
 
 void Room::removeUser(const std::string& username)
 {
-    m_users.remove_if([&](const LoggedUser& u) {
-        return u.getUsername() == username;
+    m_users.remove_if([&](const LoggedUser* u) {
+        return u->getUsername() == username;
         });
 }
 
@@ -22,7 +22,7 @@ std::list<std::string> Room::getAllUsers() const
 {
     std::list<std::string> names;
     for (const auto& user : m_users)
-        names.push_back(user.getUsername());
+        names.push_back(user->getUsername());
     return names;
 }
 

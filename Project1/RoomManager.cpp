@@ -1,11 +1,14 @@
 #include "RoomManager.h"
 
-Room& RoomManager::createRoom(const LoggedUser& creator, RoomData metadata)
+Room& RoomManager::createRoom(LoggedUser& creator, RoomData metadata)
 {
     metadata.id = getNextRoomId();
     metadata.isActive = false;
-    Room room(metadata, creator);
-    m_rooms.insert({metadata.id, room});
+    m_rooms.emplace(
+        std::piecewise_construct,
+        std::forward_as_tuple(metadata.id),
+        std::forward_as_tuple(metadata, creator)
+    );
     return m_rooms.at(metadata.id);
 }
 

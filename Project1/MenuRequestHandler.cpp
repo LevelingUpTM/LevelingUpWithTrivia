@@ -5,7 +5,7 @@
 #include "RoomAdminRequestHandler.h"
 #include "RoomMemberRequestHandler.h"
 
-MenuRequestHandler::MenuRequestHandler(const LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager, RequestHandlerFactory &handlerFactory)
+MenuRequestHandler::MenuRequestHandler(LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager, RequestHandlerFactory &handlerFactory)
     : m_user(user), m_roomManager(roomManager), m_statisticsManager(statisticsManager), m_handlerFactory(handlerFactory)
 {
 }

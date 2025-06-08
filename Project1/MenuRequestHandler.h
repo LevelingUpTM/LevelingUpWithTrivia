@@ -8,7 +8,7 @@
 class MenuRequestHandler : public IRequestHandler
 {
   public:
-    MenuRequestHandler(const LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager,
+    MenuRequestHandler(LoggedUser& user, RoomManager &roomManager, StatisticsManager &statisticsManager,
                        RequestHandlerFactory &handlerFactory);
 
     bool isRequestRelevant(RequestInfo& request) override;
@@ -23,7 +23,7 @@ class MenuRequestHandler : public IRequestHandler
     RequestResult getPersonalStats(RequestInfo request);
     RequestResult getHighScore(RequestInfo request);
 
-    LoggedUser m_user;
+    LoggedUser& m_user;
     RoomManager &m_roomManager;
     StatisticsManager &m_statisticsManager;
     RequestHandlerFactory &m_handlerFactory;

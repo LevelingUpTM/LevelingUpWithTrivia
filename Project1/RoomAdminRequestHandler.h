@@ -15,8 +15,8 @@ public:
     RequestResult handleRequest(RequestInfo& requestInfo) override;
 
 private:
-    Room m_room;
-    LoggedUser m_user;
+    Room& m_room;
+    LoggedUser& m_user;
     RoomManager& m_roomManager;
     RequestHandlerFactory& m_handlerFactory;
 

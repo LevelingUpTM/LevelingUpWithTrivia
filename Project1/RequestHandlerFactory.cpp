@@ -18,7 +18,7 @@ LoginManager& RequestHandlerFactory::getLoginManager()
     return m_loginManager;
 }
 
-MenuRequestHandler *RequestHandlerFactory::createMenuRequestHandler(const LoggedUser& user)
+MenuRequestHandler *RequestHandlerFactory::createMenuRequestHandler(LoggedUser& user)
 {
     return new MenuRequestHandler(user, getRoomManager(), getStatisticsManager(), *this);
 }
