@@ -106,5 +106,5 @@ public:
     static std::vector<Byte> serializeLeaveRoomResponse(const LeaveRoomResponse &response);
 
 private:
-    static vector<unsigned char> createBuffer(unsigned char code, const json& jsonResponse);
+    static vector<Byte> createBuffer(const Byte code, const json &jsonResponse);
 };
