@@ -23,6 +23,7 @@ namespace LevelingUpWithTrivia.Source.Packets.Responses
                 108 => Deserialize<CreateRoomResponse>(json)!,
                 109 => Deserialize<GetPersonalStatsResponse>(json)!,
                 110 => Deserialize<GetHighScoreResponse>(json)!,
+                113 => Deserialize<GetRoomStateResponse>(json)!,
                 _ => throw new Exception("Unknown response code: " + responseCode),
             };
         }
