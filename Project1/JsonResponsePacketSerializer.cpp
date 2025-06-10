@@ -124,19 +124,23 @@ vector<Byte> JsonResponsePacketSerializer::serializeErrorResponse(const ErrorRes
 
 vector<Byte> JsonResponsePacketSerializer::createBuffer(const Byte code, const json &jsonResponse)
 {
-    string jsonStr = jsonResponse.dump(); // Convert JSON to string
-    const size_t size = jsonStr.size();
+    std::string jsonStr = jsonResponse.dump();
+    const unsigned int size = jsonStr.size();
 
-    vector<Byte> buffer;
-    buffer.push_back(code); // First byte is the response code
+    std::vector<Byte> buffer;
+    buffer.push_back(code); // sending the response code first
 
-    // Add 4 bytes for message size (big-endian format)
-    buffer.push_back((size >> 24) & 0xFF);
-    buffer.push_back((size >> 16) & 0xFF);
-    buffer.push_back((size >> 8) & 0xFF);
-    buffer.push_back(size & 0xFF);
+    // 4 bytes for length of the json
+    Byte sizeBytes[4];
+    std::memcpy(sizeBytes, &size, 4); // Copies size into sizeBytes (little-endian)
 
-    // Add the JSON string data
+    //convert to big-endian and push to buffer
+    for (int i = 3; i >= 0; i--)
+    {
+        buffer.push_back(sizeBytes[i]);
+    }
+
+    // Add the data of the JSON
     buffer.insert(buffer.end(), jsonStr.begin(), jsonStr.end());
 
     return buffer;

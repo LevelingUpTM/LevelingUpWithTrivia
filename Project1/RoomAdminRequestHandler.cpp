@@ -44,19 +44,12 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo &requestInfo)
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo &requestInfo)
 {
-    if (m_room.getAllUsers().size() < m_room.getMetadata().maxPlayers)
-    {
-        RequestResult result;
-        result.response = JsonResponsePacketSerializer::serializeErrorResponse({"Not enough players to start."});
-        result.newHandler = nullptr;
-        return result;
-    }
     StartGameResponse response;
     response.status = 1;
 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeStartGameResponse(response);
-    result.newHandler = nullptr; // Game handler not implemented yet
+    result.newHandler = this;
     return result;
 }
 

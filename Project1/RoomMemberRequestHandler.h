@@ -20,6 +20,7 @@ class RoomMemberRequestHandler : public IRequestHandler
     LoggedUser& m_user;
     RoomManager &m_roomManager;
     RequestHandlerFactory &m_handlerFactory;
+    unsigned int m_roomId;
 
     RequestResult leaveRoom(RequestInfo requestInfo);
     RequestResult getRoomState(RequestInfo requestInfo);

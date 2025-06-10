@@ -2,10 +2,11 @@
 #include "JsonResponsePacketSerializer.h"
 #include "statusCodes.h"
 #include "MenuRequestHandler.h"
+#include "RoomManager.h"
 
 RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser& user, Room& room, RoomManager &roomManager,
                                                    RequestHandlerFactory &handlerFactory)
-    : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+    : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory), m_roomId(room.getMetadata().id)
 {
 }
 
@@ -29,8 +30,11 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo &requestInfo)
 
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 {
-    m_room.removeUser(m_user.getUsername());
-
+    if (m_handlerFactory.getRoomManager().contains(m_roomId))
+    {
+        m_room.removeUser(m_user.getUsername());
+    }
+    
     LeaveRoomResponse response;
     response.status = 1;
 
@@ -42,6 +46,13 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 {
+    if (!m_handlerFactory.getRoomManager().contains(m_roomId))
+    {
+        RequestResult result;
+        result.response = JsonResponsePacketSerializer::serializeErrorResponse({"room is palestine"});
+        result.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);
+        return result;
+    }
     GetRoomStateResponse response;
     response.status = 1;
     response.hasGameBegun = false;

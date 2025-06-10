@@ -12,6 +12,7 @@ public:
     std::vector<RoomData> getRooms() const;
     bool getRoomState(unsigned int roomId) const; // true = active
     unsigned int getNextRoomId();
+    bool contains(unsigned int id) const;
 
 private:
     std::map<unsigned int, Room> m_rooms;

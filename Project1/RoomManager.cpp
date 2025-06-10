@@ -37,6 +37,11 @@ unsigned int RoomManager::getNextRoomId()
     return m_nextRoomId++;
 }
 
+bool RoomManager::contains(unsigned int id) const
+{
+    return m_rooms.find(id) != m_rooms.end();
+}
+
 bool RoomManager::getRoomState(const unsigned int roomId) const
 {
     return m_rooms.at(roomId).isActive();
