@@ -22,7 +22,7 @@
             </ItemsControl>
 
             <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Center">
-                <Button Content="Back to Menu" Command="{Binding LeaveRoomCommand}" Margin="0,0,10,0"
+                <Button Content="Back to Menu" Command="{Binding PerformLeaveRoomCommand}" Margin="0,0,10,0"
                         Background="#444" Foreground="White" Padding="10,5"/>
                 <Button Content="Start Game" Command="{Binding StartGameCommand}" 
                         Background="#00727C" Foreground="White" Padding="10,5" 

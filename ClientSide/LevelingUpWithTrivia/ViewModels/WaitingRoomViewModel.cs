@@ -30,7 +30,7 @@ namespace LevelingUpWithTrivia.ViewModels
             RoomName = roomName;
             _isHost = isHost;
 
-            _refreshTimer.Interval = TimeSpan.FromSeconds(2);
+            _refreshTimer.Interval = TimeSpan.FromSeconds(1);
             _refreshTimer.Tick += (s, e) => RefreshPlayers();
             _refreshTimer.Start();
             
@@ -56,6 +56,12 @@ namespace LevelingUpWithTrivia.ViewModels
                     Players.Add(player);
                 }
             }
+            else
+            {
+                _refreshTimer.Stop();
+                MessageBox.Show("Room was closed by the host.");
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
         }
 
         [RelayCommand]
@@ -63,17 +69,72 @@ namespace LevelingUpWithTrivia.ViewModels
         {
             if (!_isHost)
                 return;
-
-            // TODO: Add start game request logic here
-            MessageBox.Show("Game started!");
+            Communicator.Instance.Send(new StartGameRequest());
+            var response =  Communicator.Instance.Receive();
+            if (response is StartGameResponse startGameResponse && startGameResponse.Status == 1)
+            {
+                MessageBox.Show("Game started!");
+            }
+            else
+            {
+                MessageBox.Show("Failed to start the game.");
+                if (response is StartGameResponse sgr)
+                    MessageBox.Show($"StartGameResponse.Status = {sgr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
         }
 
         [RelayCommand]
+        private void PerformLeaveRoom()
+        {
+            if (IsHost)
+            {
+                CloseRoom();
+            }
+            else
+            {
+                LeaveRoom();
+            }
+        }
+
         private void LeaveRoom()
         {
-            // Optional: send a leave-room request
-            _refreshTimer.Stop();
-            MainWindowViewModel.Current.Content = new MainMenuView();
+            Communicator.Instance.Send(new LeaveRoomRequest());
+            var response = Communicator.Instance.Receive();
+
+            if (response is LeaveRoomResponse leaveRoomResponse && leaveRoomResponse.Status == 1)
+            {
+                _refreshTimer.Stop();
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
+            else
+            {
+                MessageBox.Show("Failed to leave the room.");
+                if (response is LeaveRoomResponse lrr)
+                    MessageBox.Show($"LeaveRoomResponse.Status = {lrr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
+        }
+
+        private void CloseRoom()
+        {
+            Communicator.Instance.Send(new CloseRoomRequest());
+            var response = Communicator.Instance.Receive();
+            if (response is CloseRoomResponse closeRoomResponse && closeRoomResponse.Status == 1)
+            {
+                _refreshTimer.Stop();
+                MainWindowViewModel.Current!.Content = new MainMenuView();
+            }
+            else
+            {
+                MessageBox.Show("Failed to close the room.");
+                if (response is CloseRoomResponse crr)
+                    MessageBox.Show($"CloseRoomResponse.Status = {crr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
         }
     }
 }
