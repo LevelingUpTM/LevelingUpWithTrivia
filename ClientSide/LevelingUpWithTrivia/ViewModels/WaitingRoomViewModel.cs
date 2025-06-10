@@ -30,7 +30,7 @@ namespace LevelingUpWithTrivia.ViewModels
             RoomName = roomName;
             _isHost = isHost;
 
-            _refreshTimer.Interval = TimeSpan.FromSeconds(2);
+            _refreshTimer.Interval = TimeSpan.FromSeconds(1);
             _refreshTimer.Tick += (s, e) => RefreshPlayers();
             _refreshTimer.Start();
             
@@ -69,9 +69,20 @@ namespace LevelingUpWithTrivia.ViewModels
         {
             if (!_isHost)
                 return;
-
-            // TODO: Add start game request logic here
-            MessageBox.Show("Game started!");
+            Communicator.Instance.Send(new StartGameRequest());
+            var response =  Communicator.Instance.Receive();
+            if (response is StartGameResponse startGameResponse && startGameResponse.Status == 1)
+            {
+                MessageBox.Show("Game started!");
+            }
+            else
+            {
+                MessageBox.Show("Failed to start the game.");
+                if (response is StartGameResponse sgr)
+                    MessageBox.Show($"StartGameResponse.Status = {sgr.Status}");
+                else
+                    MessageBox.Show($"Unexpected response: {response.GetType().Name}");
+            }
         }
 
         [RelayCommand]
