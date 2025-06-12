@@ -344,3 +344,52 @@ std::vector<std::string> SqliteDatabase::getHighScores()
     sqlite3_finalize(stmt);
     return highScores;
 }
+
+void SqliteDatabase::submitStatistics(const std::string &userName, int correctAnswerCount, int wrongAnswerCount,
+                                      int avarageAnswerTime)
+{
+    char *errMsg = nullptr;
+
+    std::string getUserIdQuery = "SELECT UserID FROM Users WHERE Username = '" + userName + "';";
+    int userID = -1;
+
+    sqlite3_exec(
+        db, getUserIdQuery.c_str(),
+        [](void *data, int argc, char **argv, char **azColName) -> int {
+            int *id = static_cast<int *>(data);
+            if (argc > 0 && argv[0])
+                *id = std::stoi(argv[0]);
+            return 0;
+        },
+        &userID, &errMsg);
+
+    if (userID == -1)
+    {
+        std::cerr << "Failed to find user ID for: " << userName << std::endl;
+        if (errMsg)
+            sqlite3_free(errMsg);
+        return;
+    }
+
+    int totalAnswersToAdd = correctAnswerCount + wrongAnswerCount;
+
+    std::string updateStatisticsQuery = "UPDATE statistics SET "
+                                        "TotalCorrectAnswers = TotalCorrectAnswers + " +
+                                        std::to_string(correctAnswerCount) +
+                                        ", "
+                                        "TotalAnswers = TotalAnswers + " +
+                                        std::to_string(totalAnswersToAdd) +
+                                        ", "
+                                        "TotalGames = TotalGames + 1, "
+                                        "TotalTime = TotalTime + " +
+                                        std::to_string(avarageAnswerTime) +
+                                        " WHERE UserID = " + std::to_string(userID) + ";";
+
+    int result = sqlite3_exec(db, updateStatisticsQuery.c_str(), nullptr, nullptr, &errMsg);
+    if (result != SQLITE_OK)
+    {
+        std::cerr << "Failed to update statistics: " << (errMsg ? errMsg : "Unknown error") << std::endl;
+        if (errMsg)
+            sqlite3_free(errMsg);
+    }
+}

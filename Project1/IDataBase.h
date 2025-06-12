@@ -19,6 +19,8 @@ public:
     virtual int addNewUser(string username, string password, string email) = 0;
     virtual std::list<Question> getQuestions(int numOfQuestions) = 0;
     virtual sqlite3* getDB() const = 0;
+    virtual void submitStatistics(const std::string &userName, int correctAnswerCount, int wrongAnswerCount,
+                                  int avarageAnswerTime) = 0;
 
 
     virtual float getPlayerAverageAnswerTime(const std::string &username) = 0;

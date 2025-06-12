@@ -6,7 +6,8 @@ class LoggedUser
 public:
     explicit LoggedUser(const std::string& username);
     std::string getUsername() const;
+    bool operator<(const LoggedUser &other) const;
 
-private:
+  private:
     std::string m_username;
 };

@@ -26,6 +26,7 @@ class Game
 
   private:
     void loadQuestions();
+    void submitGameStatsToDB(const LoggedUser &user);
     std::vector<Question> m_questions;
     std::map<LoggedUser, GameData> m_players;
     unsigned int m_gameId;
