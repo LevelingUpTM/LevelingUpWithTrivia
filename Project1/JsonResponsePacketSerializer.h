@@ -102,6 +102,12 @@ struct GetQuestionResponse
     map<unsigned int, string> answers;
 };
 
+struct SubmitAnswerResponse
+{
+    unsigned int status;
+    unsigned int correctAnswerId;
+};
+
 struct PlayerResults
 {
     string username;
@@ -123,17 +129,24 @@ public:
     static vector<Byte> serializeSignUpResponse(const SignupResponse& response);
     static vector<Byte> serializeErrorResponse(const ErrorResponse& response);
     static vector<Byte> serializeLoginResponse(const LoginResponse& response);
-    static std::vector<Byte> serializeLogoutResponse(const LogoutResponse& response);
-    static std::vector<Byte> serializeJoinRoomResponse(const JoinRoomResponse& response);
-    static std::vector<Byte> serializeCreateRoomResponse(const CreateRoomResponse& response);
-    static std::vector<Byte> serializeGetRoomsResponse(const GetRoomsResponse& response);
-    static std::vector<Byte> serializeGetPlayersInRoomResponse(const GetPlayersInRoomResponse& response);
-    static std::vector<Byte> serializeHighScoreResponse(const GetHighScoreResponse& response);
-    static std::vector<Byte> serializePersonalStatsResponse(const GetPersonalStatsResponse& response);
-    static std::vector<Byte> serializeCloseRoomResponse(const CloseRoomResponse &response);
-    static std::vector<Byte> serializeStartGameResponse(const StartGameResponse &response);
-    static std::vector<Byte> serializeGetRoomStateResponse(const GetRoomStateResponse &response);
-    static std::vector<Byte> serializeLeaveRoomResponse(const LeaveRoomResponse &response);
+
+    static vector<Byte> serializeLogoutResponse(const LogoutResponse& response);
+    static vector<Byte> serializeJoinRoomResponse(const JoinRoomResponse& response);
+    static vector<Byte> serializeCreateRoomResponse(const CreateRoomResponse& response);
+    static vector<Byte> serializeGetRoomsResponse(const GetRoomsResponse& response);
+    static vector<Byte> serializeGetPlayersInRoomResponse(const GetPlayersInRoomResponse& response);
+    static vector<Byte> serializeHighScoreResponse(const GetHighScoreResponse& response);
+    static vector<Byte> serializePersonalStatsResponse(const GetPersonalStatsResponse& response);
+
+    static vector<Byte> serializeCloseRoomResponse(const CloseRoomResponse &response);
+    static vector<Byte> serializeStartGameResponse(const StartGameResponse &response);
+    static vector<Byte> serializeGetRoomStateResponse(const GetRoomStateResponse &response);
+    static vector<Byte> serializeLeaveRoomResponse(const LeaveRoomResponse &response);
+
+    static vector<Byte> serializeGetGameResultsResponse(const GetGameResultsResponse &response);
+    static vector<Byte> serializeSubmitAnswerResponse(const SubmitAnswerResponse &response);
+    static vector<Byte> serializeGetQuestionResponse(const GetQuestionResponse &response);
+    static vector<Byte> serializeLeaveGameResponse(const LeaveGameResponse &response);
 
 private:
     static vector<Byte> createBuffer(const Byte code, const json &jsonResponse);
