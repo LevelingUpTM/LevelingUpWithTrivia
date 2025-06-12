@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "JsonResponsePacketSerializer.h"
 Game::Game(Room room, IDatabase *database)
     : m_database(database), m_gameId(room.getMetadata().id), m_roomData(room.getMetadata())
 {
@@ -57,6 +57,23 @@ void Game::removePlayer(const LoggedUser &user)
 {
     submitGameStatsToDB(user);
     m_players.erase(user);
+}
+
+std::vector<PlayerResults> Game::getPlayersResults() const
+{
+    std::vector<PlayerResults> results;
+
+    for (const auto &player : m_players)
+    {
+        PlayerResults res;
+        res.username = player.first.getUsername();
+        res.correctAnswerCount = player.second.correctAnswerCount;
+        res.wrongAnswerCount = player.second.wrongAnswerCount;
+        res.averageAnswerTime = player.second.averageAnswerTime;
+        results.push_back(res);
+    }
+
+    return results;
 }
 
 void Game::submitGameStatsToDB(const LoggedUser &user)

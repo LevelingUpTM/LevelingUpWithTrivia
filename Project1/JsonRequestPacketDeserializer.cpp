@@ -79,5 +79,6 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
     json jsonObj = json::parse(jsonStr);
     SubmitAnswerRequest request{};
     request.answerId = jsonObj["answerId"];
+    request.answerTime = jsonObj["answerTime"];
     return request;
 }

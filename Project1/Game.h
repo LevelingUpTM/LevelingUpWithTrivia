@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "LoggedUser.h"
 #include "IDatabase.h"
+#include "JsonResponsePacketSerializer.h"
 
 struct GameData
 {
@@ -15,6 +16,7 @@ struct GameData
     unsigned int averageAnswerTime = 0;
 };
 
+
 class Game
 {
   public:
@@ -23,6 +25,7 @@ class Game
     Question getQuestionForUser(const LoggedUser &user);
     bool submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime);
     void removePlayer(const LoggedUser &user);
+    std::vector<PlayerResults> getPlayersResults() const;
 
   private:
     void loadQuestions();

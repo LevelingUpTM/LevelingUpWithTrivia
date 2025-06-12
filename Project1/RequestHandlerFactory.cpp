@@ -4,7 +4,7 @@
 #include "RoomMemberRequestHandler.h"
 
 RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) : 
-    m_loginManager(database), m_database(database), m_StatisticsManager(database)
+    m_loginManager(database), m_database(database), m_StatisticsManager(database), m_gameManager(database)
 {
 }
 

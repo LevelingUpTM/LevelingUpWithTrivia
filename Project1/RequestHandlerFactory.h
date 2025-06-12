@@ -4,6 +4,7 @@
 #include "LoginRequestHandler.h"
 #include "RoomManager.h"
 #include "StatisticsManager.h"
+#include "GameManager.h"
 class RoomMemberRequestHandler;
 class RoomAdminRequestHandler;
 class LoggedUser;
@@ -28,4 +29,5 @@ private:
     IDatabase* m_database;
     RoomManager m_roomManager;
     StatisticsManager m_StatisticsManager;
+    GameManager m_gameManager;
 };
