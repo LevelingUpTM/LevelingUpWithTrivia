@@ -7,6 +7,7 @@
 using json = nlohmann::json;
 using std::vector;
 using std::string;
+using std::map;
 
 using Byte = unsigned char;
 
@@ -87,6 +88,35 @@ struct LeaveRoomResponse
 {
     unsigned int status;
 };
+
+
+struct LeaveGameResponse
+{
+    unsigned int status;
+};
+
+struct GetQuestionResponse
+{
+    unsigned int status;
+    string question;
+    map<unsigned int, string> answers;
+};
+
+struct PlayerResults
+{
+    string username;
+    unsigned int correctAnswerCount;
+    unsigned int wrongAnswerCount;
+    unsigned int averageAnswerTime;
+};
+
+struct GetGameResultsResponse
+{
+    unsigned int status;
+    vector<PlayerResults> result;
+};
+
+
 class JsonResponsePacketSerializer
 {
 public:
