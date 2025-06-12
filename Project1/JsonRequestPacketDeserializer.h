@@ -50,6 +50,10 @@ struct GetHighScoreRequest
 {
 };
 
+struct SubmitAnswerRequest
+{
+    unsigned int answerId;
+};
 
 class JsonRequestPacketDeserializer
 {
@@ -62,4 +66,5 @@ public:
     static LogoutRequest deserializeLogoutRequest(const vector<unsigned char> &data);
     static GetUserStatisticsRequest deserializeGetStatisticsRequest(const vector<unsigned char> &data);
     static GetHighScoreRequest deserializeHighScoreRequest(const vector<unsigned char> &data);
+    static SubmitAnswerRequest deserializeSubmitAnswerRequest(const vector<unsigned char> &data);
 };
