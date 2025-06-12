@@ -72,3 +72,12 @@ GetHighScoreRequest JsonRequestPacketDeserializer::deserializeHighScoreRequest(c
     GetHighScoreRequest request;
     return request;
 }
+
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(const vector<unsigned char> &data)
+{
+    std::string jsonStr(data.begin(), data.end());
+    json jsonObj = json::parse(jsonStr);
+    SubmitAnswerRequest request{};
+    request.answerId = jsonObj["answerId"];
+    return request;
+}

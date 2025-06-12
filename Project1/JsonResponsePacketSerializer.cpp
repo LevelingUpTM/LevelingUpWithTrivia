@@ -121,6 +121,57 @@ vector<Byte> JsonResponsePacketSerializer::serializeErrorResponse(const ErrorRes
     return createBuffer(ERROR_RESPONSE, j);
 }
 
+vector<Byte> JsonResponsePacketSerializer::serializeGetGameResultsResponse(const GetGameResultsResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    j["results"] = json::array();
+
+    for (const auto &playerResult : response.result)
+    {
+        json pr;
+        pr["username"] = playerResult.username;
+        pr["correctAnswerCount"] = playerResult.correctAnswerCount;
+        pr["wrongAnswerCount"] = playerResult.wrongAnswerCount;
+        pr["averageAnswerTime"] = playerResult.averageAnswerTime;
+        j["results"].push_back(pr);
+    }
+
+    return createBuffer(GET_GAME_RESULTS_RESPONSE, j);
+}
+
+
+vector<Byte> JsonResponsePacketSerializer::serializeSubmitAnswerResponse(const SubmitAnswerResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    j["correctAnswerId"] = response.correctAnswerId;
+    return createBuffer(SUBMIT_ANSWER_RESPONSE, j);
+}
+
+vector<Byte> JsonResponsePacketSerializer::serializeGetQuestionResponse(const GetQuestionResponse &response)
+{
+    json j;
+    j["status"] = response.status;
+    j["question"] = response.question;
+    j["answers"] = json::object();
+
+    for (auto it = response.answers.begin(); it != response.answers.end(); ++it)
+    {
+        j["answers"][std::to_string(it->first)] = it->second;
+    }
+
+    return createBuffer(GET_QUESTION_RESPONSE, j);
+}
+
+
+vector<Byte> JsonResponsePacketSerializer::serializeLeaveGameResponse(const LeaveGameResponse& response)
+{
+    json j;
+    j["status"] = response.status;
+    return createBuffer(LEAVE_GAME_RESPONSE, j);
+}
+
 
 vector<Byte> JsonResponsePacketSerializer::createBuffer(const Byte code, const json &jsonResponse)
 {
@@ -130,7 +181,7 @@ vector<Byte> JsonResponsePacketSerializer::createBuffer(const Byte code, const j
     vector<Byte> buffer;
     buffer.push_back(code); // First byte is the response code
 
-    // Add 4 bytes for message size (big-endian format)
+    // Add 4 bytes for message size
     buffer.push_back((size >> 24) & 0xFF);
     buffer.push_back((size >> 16) & 0xFF);
     buffer.push_back((size >> 8) & 0xFF);
