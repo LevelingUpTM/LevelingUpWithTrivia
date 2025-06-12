@@ -15,8 +15,10 @@ class GameManager
     Game &createGame(Room room);
     void deleteGame(unsigned int gameId);
     Game &getGame(unsigned int gameId);
+    Game &getGameByUser(const LoggedUser &user);
 
   private:
     IDatabase *m_database;
     std::vector<Game> m_games;
+    std::map<std::string, unsigned int> m_usersToGames;
 };

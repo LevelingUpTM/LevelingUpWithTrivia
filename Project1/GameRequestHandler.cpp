@@ -10,13 +10,13 @@ GameRequestHandler::GameRequestHandler(Game &game, LoggedUser user, GameManager 
 {
 }
 
-bool GameRequestHandler::isRequestRelevent(RequestInfo &request)
+bool GameRequestHandler::isRequestRelevant(RequestInfo &request)
 {
     return request.id == GET_QUESTION_REQUEST || request.id == SUBMIT_ANSWER_REQUEST ||
            request.id == GET_GAME_RESULTS_REQUEST || request.id == LEAVE_GAME_REQUEST;
 }
 
-RequestResult GameRequestHandler::HandleRequest(RequestInfo &request)
+RequestResult GameRequestHandler::handleRequest(RequestInfo &request)
 {
     switch (request.id)
     {

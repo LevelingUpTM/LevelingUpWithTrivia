@@ -5,6 +5,9 @@
 #include "RoomManager.h"
 #include "StatisticsManager.h"
 #include "GameManager.h"
+#include "Game.h"
+#include "GameManager.h"
+class GameRequestHandler;
 class RoomMemberRequestHandler;
 class RoomAdminRequestHandler;
 class LoggedUser;
@@ -19,8 +22,10 @@ public:
     MenuRequestHandler* createMenuRequestHandler(LoggedUser& user);
     RoomAdminRequestHandler *createRoomAdminRequestHandler(LoggedUser& user, Room &room);
     RoomMemberRequestHandler *createRoomMemberRequestHandler(LoggedUser& user, Room &room);
+    GameRequestHandler *createGameRequestHandler(LoggedUser &user);
+ 
 
-
+    GameManager &getGameManager();
     RoomManager& getRoomManager();
     StatisticsManager& getStatisticsManager();
 
