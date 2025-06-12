@@ -49,6 +49,8 @@ struct GetUserStatisticsRequest
 struct GetHighScoreRequest
 {
 };
+
+
 class JsonRequestPacketDeserializer
 {
 public:
