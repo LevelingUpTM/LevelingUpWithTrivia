@@ -46,14 +46,16 @@
                        FontSize="24" FontWeight="Bold" Foreground="White" TextAlignment="Center" TextWrapping="Wrap"/>
 
             <!-- Answers -->
+            <!-- Answers -->
             <Button Content="{Binding Answer1}" Height="40" FontSize="16" Margin="0, 0, 0, 10"
-                    Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="1"/>
+        Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="0"/>
             <Button Content="{Binding Answer2}" Height="40" FontSize="16" Margin="0, 0, 0, 10"
-                    Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="2"/>
+        Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="1"/>
             <Button Content="{Binding Answer3}" Height="40" FontSize="16" Margin="0, 0, 0, 10"
-                    Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="3"/>
+        Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="2"/>
             <Button Content="{Binding Answer4}" Height="40" FontSize="16" Margin="0, 0, 0, 10"
-                    Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="4"/>
+        Background="#004250" Foreground="White" Command="{Binding SelectAnswerCommand}" CommandParameter="3"/>
+
         </StackPanel>
 
         <!-- Leave Room -->

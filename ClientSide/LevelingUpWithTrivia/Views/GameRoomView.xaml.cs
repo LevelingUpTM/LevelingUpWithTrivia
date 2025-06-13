@@ -21,11 +21,10 @@ namespace LevelingUpWithTrivia.Views
     /// </summary>
     public partial class GameRoomView : UserControl
     {
-        public GameRoomView()
+        public GameRoomView(int totalQuestions, int timePerQuestion)
         {
             InitializeComponent();
-
-            DataContext = new GameRoomViewModel();
+            DataContext = new GameRoomViewModel(totalQuestions, timePerQuestion);
         }
     }
 }
