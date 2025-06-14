@@ -24,7 +24,15 @@ namespace LevelingUpWithTrivia.ViewModels
             {
                 MessageBox.Show("Successfully joined the room!");
                     //get room name from server
-                MainWindowViewModel.Current!.Content = new WaitingRoomView(RoomId, "Room #" + RoomId, false);
+                MainWindowViewModel.Current!.Content = new WaitingRoomView(new Models.Room
+                {
+                    Id = RoomId,
+                    IsActive = true,
+                    MaxPlayers = joinRoomResponse.MaxPlayers,
+                    Name = joinRoomResponse.RoomName,
+                    QuestionCount = joinRoomResponse.QuestionCount,
+                    TimePerQuestion = joinRoomResponse.TimePerQuestion
+                }, "Room #" + RoomId, false);
             }
             else
             {

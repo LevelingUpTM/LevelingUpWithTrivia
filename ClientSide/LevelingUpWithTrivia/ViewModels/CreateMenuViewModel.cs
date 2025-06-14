@@ -10,6 +10,7 @@ using LevelingUpWithTrivia.Source.Packets.Requests;
 using LevelingUpWithTrivia.Source.Packets.Responses;
 using LevelingUpWithTrivia.Source;
 using LevelingUpWithTrivia.Views;
+using LevelingUpWithTrivia.Models;
 
 namespace LevelingUpWithTrivia.ViewModels
 {
@@ -53,7 +54,15 @@ namespace LevelingUpWithTrivia.ViewModels
             {
                 // success
                 MessageBox.Show("Room created successfully!");
-                MainWindowViewModel.Current!.Content = new WaitingRoomView(createRoomResponse.RoomId, RoomName, true);
+                MainWindowViewModel.Current!.Content = new WaitingRoomView(new Room
+                {
+                    Id = createRoomResponse.RoomId,
+                    IsActive = true,
+                    MaxPlayers = MaxPlayers,
+                    QuestionCount = QuestionCount,
+                    TimePerQuestion = TimePerQuestion,
+                    Name = RoomName
+                }, RoomName, true);
             }
             else
             {

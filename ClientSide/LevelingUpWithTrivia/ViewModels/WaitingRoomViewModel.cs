@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LevelingUpWithTrivia.Models;
 using LevelingUpWithTrivia.Source;
 using LevelingUpWithTrivia.Source.Packets.Requests;
 using LevelingUpWithTrivia.Source.Packets.Responses;
@@ -17,16 +18,16 @@ namespace LevelingUpWithTrivia.ViewModels
         [ObservableProperty]
         private string roomName;
         [ObservableProperty]
-        private int _roomId;
+        private Room _roomObj;
         [ObservableProperty]
         private ObservableCollection<string> players = new();
         private readonly DispatcherTimer _refreshTimer = new();
 
         public bool IsHost => _isHost;
 
-        public WaitingRoomViewModel(int roomId, string roomName, bool isHost)
+        public WaitingRoomViewModel(Room room, string roomName, bool isHost)
         {
-            _roomId = roomId;
+            _roomObj = room;
             RoomName = roomName;
             _isHost = isHost;
 
@@ -46,7 +47,7 @@ namespace LevelingUpWithTrivia.ViewModels
             {
                 if (roomState.HasGameBegun)
                 {
-                    MessageBox.Show("Game has already started!");
+                    MainWindowViewModel.Current!.Content = new GameRoomView(RoomObj.QuestionCount, RoomObj.TimePerQuestion);
                     return;
                 }
 
@@ -70,9 +71,10 @@ namespace LevelingUpWithTrivia.ViewModels
             if (!_isHost)
                 return;
             Communicator.Instance.Send(new StartGameRequest());
-            var response =  Communicator.Instance.Receive();
+            var response = Communicator.Instance.Receive();
             if (response is StartGameResponse startGameResponse && startGameResponse.Status == 1)
             {
+                MainWindowViewModel.Current!.Content = new GameRoomView(RoomObj.QuestionCount, RoomObj.TimePerQuestion);
                 MessageBox.Show("Game started!");
             }
             else
@@ -125,7 +127,6 @@ namespace LevelingUpWithTrivia.ViewModels
             if (response is CloseRoomResponse closeRoomResponse && closeRoomResponse.Status == 1)
             {
                 _refreshTimer.Stop();
-                MainWindowViewModel.Current!.Content = new MainMenuView();
             }
             else
             {
