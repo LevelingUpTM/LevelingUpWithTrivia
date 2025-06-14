@@ -1,7 +1,6 @@
 #include "Room.h"
 
-Room::Room(const RoomData& metadata, LoggedUser& creator)
-    : m_metadata(metadata)
+Room::Room(const RoomData& metadata, LoggedUser& creator) : m_metadata(metadata), m_game(nullptr)
 {
     m_users.push_back(&creator);
 }
@@ -9,6 +8,7 @@ Room::Room(const RoomData& metadata, LoggedUser& creator)
 void Room::addUser(LoggedUser& user)
 {
     m_users.push_back(&user);
+    user.setRoom(*this);
 }
 
 void Room::removeUser(const std::string& username)
@@ -18,12 +18,9 @@ void Room::removeUser(const std::string& username)
         });
 }
 
-std::list<std::string> Room::getAllUsers() const
+const std::list<LoggedUser*>& Room::getAllUsers() const
 {
-    std::list<std::string> names;
-    for (const auto& user : m_users)
-        names.push_back(user->getUsername());
-    return names;
+    return m_users;
 }
 
 RoomData Room::getMetadata() const
@@ -34,4 +31,19 @@ RoomData Room::getMetadata() const
 bool Room::isActive() const
 {
     return m_metadata.isActive;
+}
+
+Game *Room::getGame() const
+{
+    return m_game;
+}
+
+void Room::setGame(Game &game)
+{
+    m_game = &game;
+}
+
+void Room::unsetGame()
+{
+    m_game = nullptr;
 }

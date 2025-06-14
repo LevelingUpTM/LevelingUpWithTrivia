@@ -57,14 +57,18 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo &requestInfo)
 {
     GetRoomStateResponse response;
     response.status = 1;
-    response.hasGameBegun = false; // Game logic not implemented yet
+    response.hasGameBegun = m_room.getGame() != nullptr;
     response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
     response.answerTimeOut = m_room.getMetadata().timePerQuestion;
 
     m_handlerFactory.getLoginManager();
-    std::list<std::string> usersList = m_room.getAllUsers();
-    std::vector<std::string> users(usersList.begin(), usersList.end());
-    response.players = users;
+    const std::list<LoggedUser*> users = m_room.getAllUsers();    
+    std::vector<std::string> usersVector;
+    for (LoggedUser *user : users)
+    {
+        usersVector.push_back(user->getUsername());
+    }
+    response.players = usersVector;
 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeGetRoomStateResponse(response);

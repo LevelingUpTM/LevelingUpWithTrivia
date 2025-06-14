@@ -4,16 +4,22 @@ Room& RoomManager::createRoom(LoggedUser& creator, RoomData metadata)
 {
     metadata.id = getNextRoomId();
     metadata.isActive = false;
-    m_rooms.emplace(
+    Room& room = m_rooms.emplace(
         std::piecewise_construct,
         std::forward_as_tuple(metadata.id),
         std::forward_as_tuple(metadata, creator)
-    );
-    return m_rooms.at(metadata.id);
+    ).first->second;
+    creator.setRoom(room);
+    return room;
 }
 
 void RoomManager::deleteRoom(const unsigned int roomId)
 {
+    const std::list<LoggedUser *> &users = m_rooms.at(roomId).getAllUsers();
+    for (LoggedUser* user : users)
+    {
+        user->unsetRoom();
+    }
     m_rooms.erase(roomId);
 }
 

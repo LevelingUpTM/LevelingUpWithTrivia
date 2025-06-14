@@ -12,6 +12,10 @@ vector<Byte> JsonResponsePacketSerializer::serializeJoinRoomResponse(const JoinR
 {
     json j;
     j["status"] = response.status;
+    j["maxPlayers"] = response.maxPlayers;
+    j["questionCount"] = response.questionCount;
+    j["roomName"] = response.roomName;
+    j["timePerQuestion"] = response.timePerQuestion;
     return createBuffer(JOIN_ROOM_RESPONSE, j);
 }
 

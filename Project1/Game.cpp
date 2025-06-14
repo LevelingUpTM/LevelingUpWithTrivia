@@ -1,13 +1,12 @@
 #include "Game.h"
 #include "JsonResponsePacketSerializer.h"
-Game::Game(Room room, IDatabase *database)
-    : m_database(database), m_gameId(room.getMetadata().id), m_roomData(room.getMetadata())
+Game::Game(Room& room, IDatabase *database)
+    : m_database(database), m_gameId(room.getMetadata().id), m_roomData(room.getMetadata()), m_room(room)
 {
     // Initialize players
-    for (const auto &username : room.getAllUsers())
+    for (const LoggedUser* user : room.getAllUsers())
     {
-        LoggedUser user(username);
-        m_players[user] = GameData();
+        m_players.emplace(user, GameData());
     }
     loadQuestions();
 }
@@ -19,7 +18,7 @@ unsigned int Game::getGameId() const
 
 Question Game::getQuestionForUser(const LoggedUser &user)
 {
-    auto &data = m_players[user];
+    GameData &data = m_players.at(&user);
 
     if (data.currentQuestion.getQuestion().empty())
     {
@@ -34,7 +33,7 @@ Question Game::getQuestionForUser(const LoggedUser &user)
 
 bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime)
 {
-    auto &data = m_players[user];
+    GameData& data = m_players.at(&user);
 
     bool isCorrect = (answerId == data.currentQuestion.getCorrectAnswerId());
 
@@ -56,29 +55,34 @@ bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned 
 void Game::removePlayer(const LoggedUser &user)
 {
     submitGameStatsToDB(user);
-    m_players.erase(user);
+    m_players.erase(&user);
 }
 
 std::vector<PlayerResults> Game::getPlayersResults() const
 {
     std::vector<PlayerResults> results;
 
-    for (const auto &player : m_players)
+    for (const auto &pair : m_players)
     {
         PlayerResults res;
-        res.username = player.first.getUsername();
-        res.correctAnswerCount = player.second.correctAnswerCount;
-        res.wrongAnswerCount = player.second.wrongAnswerCount;
-        res.averageAnswerTime = player.second.averageAnswerTime;
+        res.username = pair.first->getUsername();
+        res.correctAnswerCount = pair.second.correctAnswerCount;
+        res.wrongAnswerCount = pair.second.wrongAnswerCount;
+        res.averageAnswerTime = pair.second.averageAnswerTime;
         results.push_back(res);
     }
 
     return results;
 }
 
+Room &Game::getRoom() const
+{
+    return m_room;
+}
+
 void Game::submitGameStatsToDB(const LoggedUser &user)
 {
-    auto &data = m_players[user];
+    GameData &data = m_players.at(&user);
     m_database->submitStatistics(user.getUsername(), data.correctAnswerCount, data.wrongAnswerCount,
                                  data.averageAnswerTime);
 }

@@ -12,13 +12,13 @@ class GameManager
   public:
     GameManager(IDatabase *database);
 
-    Game &createGame(Room room);
+    Game &createGame(Room& room);
     void deleteGame(unsigned int gameId);
     Game &getGame(unsigned int gameId);
-    Game &getGameByUser(const LoggedUser &user);
+    Game* getGameByUser(const LoggedUser &user);
 
   private:
     IDatabase *m_database;
-    std::vector<Game> m_games;
+    std::map<unsigned int, Game> m_games;
     std::map<std::string, unsigned int> m_usersToGames;
 };

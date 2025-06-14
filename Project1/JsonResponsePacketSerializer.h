@@ -34,6 +34,10 @@ struct LogoutResponse
 struct JoinRoomResponse
 {
     unsigned int status;
+    unsigned int maxPlayers;
+    unsigned int questionCount;
+    unsigned int timePerQuestion;
+    std::string roomName;
 };
 
 struct CreateRoomResponse

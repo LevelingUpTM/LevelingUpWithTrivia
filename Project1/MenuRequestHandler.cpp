@@ -62,8 +62,12 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo request)
     GetPlayersInRoomRequest data = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(request.buffer);
     try
     {
-        std::list<std::string> users = m_roomManager.getRoom(data.roomId).getAllUsers();
-        std::vector<std::string> usersVector(users.begin(), users.end());
+        const std::list<LoggedUser*>& users = m_roomManager.getRoom(data.roomId).getAllUsers();
+        std::vector<std::string> usersVector;
+        for (LoggedUser* user : users)
+        {
+            usersVector.push_back(user->getUsername());
+        }
         return {JsonResponsePacketSerializer::serializeGetPlayersInRoomResponse(GetPlayersInRoomResponse{usersVector}),
                 this};
     }
@@ -80,7 +84,8 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo request)
     {
         Room &room = m_roomManager.getRoom(data.roomId);
         room.addUser(m_user);
-        return {JsonResponsePacketSerializer::serializeJoinRoomResponse(JoinRoomResponse{SUCCESS}),
+        return {JsonResponsePacketSerializer::serializeJoinRoomResponse(JoinRoomResponse{SUCCESS, room.getMetadata().maxPlayers, room.getMetadata().numOfQuestionsInGame,
+                                     room.getMetadata().timePerQuestion, room.getMetadata().name}),
                 m_handlerFactory.createRoomMemberRequestHandler(m_user, room)};
     }
     catch (...)

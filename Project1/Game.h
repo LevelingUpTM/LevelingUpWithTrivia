@@ -20,19 +20,21 @@ struct GameData
 class Game
 {
   public:
-    Game(Room room, IDatabase *database);
+    Game(Room& room, IDatabase *database);
     unsigned int getGameId() const;
     Question getQuestionForUser(const LoggedUser &user);
     bool submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime);
     void removePlayer(const LoggedUser &user);
     std::vector<PlayerResults> getPlayersResults() const;
+    Room &getRoom() const;
 
   private:
     void loadQuestions();
     void submitGameStatsToDB(const LoggedUser &user);
     std::vector<Question> m_questions;
-    std::map<LoggedUser, GameData> m_players;
+    std::map<const LoggedUser*, GameData> m_players;
     unsigned int m_gameId;
     IDatabase* m_database;
     RoomData m_roomData;
+    Room& m_room;
 };

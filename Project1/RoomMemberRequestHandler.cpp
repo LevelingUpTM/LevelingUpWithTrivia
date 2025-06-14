@@ -48,9 +48,13 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
     response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
     response.answerTimeOut = m_room.getMetadata().timePerQuestion;
 
-    std::list<std::string> usersList = m_room.getAllUsers();
-    std::vector<std::string> users(usersList.begin(), usersList.end());
-    response.players = users;
+    const std::list<LoggedUser*> users = m_room.getAllUsers();
+    std::vector<std::string> usersVector;
+    for (LoggedUser *user : users)
+    {
+        usersVector.push_back(user->getUsername());
+    }
+    response.players = usersVector;
 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeGetRoomStateResponse(response);

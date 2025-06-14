@@ -7,48 +7,32 @@ GameManager::GameManager(IDatabase* database)
 {
 }
 
-Game& GameManager::createGame(Room room)
+Game& GameManager::createGame(Room& room)
 {
-    Game newGame(room, m_database);
-    m_games.push_back(newGame);
-    Game &createdGame = m_games.back();
-    unsigned int gameId = createdGame.getGameId();
-
-    for (const std::string& userName : room.getAllUsers())
-    {
-        m_usersToGames[userName] = gameId;
-    }
-
-    return createdGame;
+    return m_games.emplace(
+        std::piecewise_construct, 
+        std::forward_as_tuple(room.getMetadata().id),
+        std::forward_as_tuple(room, m_database)
+    ).first->second;
 }
 
 void GameManager::deleteGame(unsigned int gameId)
 {
-    auto it = std::remove_if(m_games.begin(), m_games.end(),
-        [gameId](const Game& game) { return game.getGameId() == gameId; });
-
-    if (it != m_games.end())
-        m_games.erase(it, m_games.end());
+    m_games.at(gameId).getRoom().unsetGame();
+    m_games.erase(gameId);
 }
 
-Game& GameManager::getGame(unsigned int gameId)
+Game &GameManager::getGame(unsigned int gameId)
 {
-    for (auto& game : m_games)
-    {
-        if (game.getGameId() == gameId)
-            return game;
-    }
-    throw std::exception("Game not found");
+    return m_games.at(gameId);
 }
 
-Game &GameManager::getGameByUser(const LoggedUser &user)
+Game* GameManager::getGameByUser(const LoggedUser &user)
 {
-    std::string username = user.getUsername();
-    if (m_usersToGames.find(username) == m_usersToGames.end())
-    {
-        throw std::exception("User not in any game");
-    }
+    if (user.getRoom() == nullptr)
+        return nullptr;
+    if (user.getRoom()->getGame() == nullptr)
+        return nullptr;
 
-    unsigned int gameId = m_usersToGames[username];
-    return getGame(gameId);
+    return user.getRoom()->getGame();
 }

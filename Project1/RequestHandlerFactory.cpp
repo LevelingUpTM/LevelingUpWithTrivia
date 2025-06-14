@@ -36,8 +36,8 @@ RoomMemberRequestHandler *RequestHandlerFactory::createRoomMemberRequestHandler(
 
 GameRequestHandler *RequestHandlerFactory::createGameRequestHandler(LoggedUser &user)
 {
-    Game &game = m_gameManager.getGameByUser(user);
-    return new GameRequestHandler(game, user, m_gameManager, *this);
+    Game *game = m_gameManager.getGameByUser(user);
+    return new GameRequestHandler(*game, user, m_gameManager, *this);
 }
 
 GameManager &RequestHandlerFactory::getGameManager()
