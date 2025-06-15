@@ -4,40 +4,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="450" d:DesignWidth="800"
              mc:Ignorable="d"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:HighScoresViewModel}">
-    <Grid Margin="20">
+    
+    <Grid Background="#001123">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Title -->
         <TextBlock Text="High Scores"
                    FontSize="32"
-                   FontWeight="Bold"
+                   FontWeight="SemiBold"
+                   Foreground="White"
                    HorizontalAlignment="Center"
-                   Margin="0,10" />
+                   Margin="0, 10"/>
 
-        <ListBox Grid.Row="1"
-                 ItemsSource="{Binding Statistics}"
-                 Margin="0,20"
-                 FontSize="18" />
+        <!-- Scores List -->
+        <Border Grid.Row="1" BorderBrush="#004250" BorderThickness="2" CornerRadius="8" Padding="10" Margin="20,20">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListBox ItemsSource="{Binding Statistics}" FontSize="18" Foreground="White" Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <TextBlock Text="{Binding Username}" Width="200" />
+                                <TextBlock Text="{Binding Score}" Width="100" TextAlignment="Right" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Border>
 
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="0,10">
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10">
+            
             <Button Content="Load High Scores"
                     Command="{Binding LoadHighScoresCommand}"
-                    Width="150"
-                    Margin="10,0" />
+                    Background="#004250"
+                    Foreground="White"
+                    FontSize="16"
+                    Width="160"
+                    Margin="100,0"/>
+
             <Button Content="Back to Main Menu"
                     Command="{Binding NavToMainCommand}"
-                    Width="150"
-                    Margin="10,0" />
+                    Background="#00727C"
+                    Foreground="White"
+                    FontSize="16"
+                    Width="160"
+                    Margin="50, 0, 20, 0"/>
+            
         </StackPanel>
     </Grid>
 </UserControl>
