@@ -28,4 +28,5 @@ namespace LevelingUpWithTrivia.Views
 
             DataContext = new InfoViewModel();
         }
+    }
 }
