@@ -1,6 +1,7 @@
 ﻿using LevelingUpWithTrivia.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace LevelingUpWithTrivia.Views
 {
-    /// <summary>
-    /// Interaction logic for InfoView.xaml
-    /// </summary>
     public partial class InfoView : UserControl
     {
         public InfoView()
@@ -26,6 +24,15 @@ namespace LevelingUpWithTrivia.Views
             InitializeComponent();
 
             DataContext = new InfoViewModel();
+        }
+        private void GitLabLogo_Click()
+        {
+            Process.Start(new ProcessStartInfo("https://gitlab.com/Tomgluz/Trivia_Eliran_Maor_2025") {UseShellExecute = true });
+        }
+
+        private void YoutubeLogo_Click()
+        {
+            Process.Start(new ProcessStartInfo("https://www.youtube.com/watch?v=dQw4w9WgXcQ ") {UseShellExecute = true });
         }
     }
 }
