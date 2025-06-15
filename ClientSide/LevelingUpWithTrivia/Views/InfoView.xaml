@@ -7,10 +7,85 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid Background="Green">
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <Button Content="BACK" Height="40" FontSize="16" Padding="0" Margin="0,10,0,10"
-                Background="red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
+    <Grid Background="#001123">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Text="Info Page"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,10"/>
+
+        <!-- Main content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,20">
+            <StackPanel Margin="10,0,0,0">
+                <TextBlock Text="🎉 Welcome to Leveling Up With Trivia!" 
+                           FontSize="20" 
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="🧠 Test your knowledge across various topics in leveling up with trivia!"
+                           TextWrapping="Wrap"
+                           Foreground="White"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="🎮 How to Play:" 
+                           FontWeight="Bold"
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,10,0,5"/>
+                <TextBlock Text="- Join or create a trivia room." Foreground="White"/>
+                <TextBlock Text="- Answer multiple-choice questions under the time limit." Foreground="White"/>
+                <TextBlock Text="- Score points for every correct answer!" Foreground="White"/>
+                <TextBlock Text="- Ascend your knowledge." Foreground="White"/>
+                <TextBlock Text="- Compete with friends." Foreground="White"/>
+
+
+                <TextBlock Text="Created by: Eliran and Maor" 
+                           Foreground="LightGray" 
+                           FontStyle="Italic"
+                           Margin="0,20,0,10"/>
+
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="center" Margin="0,20,0,0">
+                    <!-- GitLab -->
+                    <Image Source="/Assets/GitLab.png"
+                           Margin="20, 0, 0, 0"
+                           Width="40"
+                           Height="40"
+                           Cursor="Hand"
+                           MouseLeftButtonUp="GitLabLogo_Click"
+                           ToolTip="View the project on GitLab"/>
+                    <!-- Yutube -->
+                    <Image Source="/Assets/YoutubeLogo.png"
+                        Margin="50, 0, 0, 0"
+                        Width="40"
+                        Height="40"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="YoutubeLogo_Click"
+                        ToolTip="View the project on Youtube"
+                          />
+
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Back button -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="Back to Menu"
+                    Command="{Binding NavToMainCommand}"
+                    Background="#004250"
+                    Foreground="White"
+                    FontSize="16"
+                    Width="160"
+                    Margin="10,0"/>
         </StackPanel>
     </Grid>
 </UserControl>
