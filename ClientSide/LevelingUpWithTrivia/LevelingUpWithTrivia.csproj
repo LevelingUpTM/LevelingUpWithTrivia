@@ -9,11 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\GitLab.png" />
     <None Remove="Assets\loginLogo.png" />
     <None Remove="Assets\LogOut.png" />
     <None Remove="Assets\LogOutLogo.png" />
     <None Remove="Assets\signUpLogo.png" />
     <None Remove="Assets\TriviaLogo.png" />
+    <None Remove="Assets\YoutubeLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\GitLab.png" />
     <Resource Include="Assets\loginLogo.png" />
     <Resource Include="Assets\LogOutLogo.png" />
     <Resource Include="Assets\signUpLogo.png" />
     <Resource Include="Assets\TriviaLogo.png" />
+    <Resource Include="Assets\YoutubeLogo.png" />
   </ItemGroup>
 
 </Project>

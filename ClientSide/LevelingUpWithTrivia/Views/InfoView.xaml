@@ -61,7 +61,6 @@
                            Width="40"
                            Height="40"
                            Cursor="Hand"
-                           MouseLeftButtonUp="GitLabLogo_Click"
                            ToolTip="View the project on GitLab"/>
                     <!-- Yutube -->
                     <Image Source="/Assets/YoutubeLogo.png"
@@ -69,7 +68,6 @@
                         Width="40"
                         Height="40"
                         Cursor="Hand"
-                        MouseLeftButtonUp="YoutubeLogo_Click"
                         ToolTip="View the project on Youtube"
                           />
 
