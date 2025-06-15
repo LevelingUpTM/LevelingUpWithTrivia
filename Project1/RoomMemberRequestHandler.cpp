@@ -44,7 +44,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 {
     GetRoomStateResponse response;
     response.status = 1;
-    response.hasGameBegun = false;
+    response.hasGameBegun = m_room.getGame() != nullptr;
     response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
     response.answerTimeOut = m_room.getMetadata().timePerQuestion;
 

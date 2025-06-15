@@ -11,7 +11,7 @@
     <Grid Background="#001123">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
             <TextBlock Text="{Binding RoomName}" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-            <TextBlock Text="{Binding RoomId}" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="{Binding RoomObj.Id}" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
             <TextBlock Text="Players in Room:" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <ItemsControl ItemsSource="{Binding Players}">
                 <ItemsControl.ItemTemplate>
