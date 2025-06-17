@@ -16,26 +16,27 @@ unsigned int Game::getGameId() const
     return m_gameId;
 }
 
-Question Game::getQuestionForUser(const LoggedUser &user)
+Question* Game::getQuestionForUser(const LoggedUser &user)
 {
     GameData &data = m_players.at(&user);
 
-    if (data.currentQuestion.getQuestion().empty())
-    {
-        if (m_questions.empty())
-            throw std::exception("No more questions");
+    if (m_questions.size() <= data.currentQuestion)
+        return nullptr;
 
-        data.currentQuestion = m_questions.back();
-        m_questions.pop_back();
-    }
-    return data.currentQuestion;
+    Question &currentQuestion = m_questions.at(data.currentQuestion++);
+    
+    return &currentQuestion;
 }
 
 bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime)
 {
     GameData& data = m_players.at(&user);
-
-    bool isCorrect = (answerId == data.currentQuestion.getCorrectAnswerId());
+    Question *question = getQuestionForUser(user);
+    if (question == nullptr)
+    {
+        throw std::exception("got to last question");
+    }
+    bool isCorrect = (answerId == question->getCorrectAnswerId());
 
     if (isCorrect)
         data.correctAnswerCount++;
@@ -46,8 +47,6 @@ bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned 
         data.averageAnswerTime = answerTime;
     else
         data.averageAnswerTime = (data.averageAnswerTime + answerTime) / 2;
-
-    data.currentQuestion = Question();
 
     return isCorrect;
 }

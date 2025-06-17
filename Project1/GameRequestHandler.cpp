@@ -4,7 +4,7 @@
 #include "MenuRequestHandler.h"
 #include "StatusCodes.h"
 
-GameRequestHandler::GameRequestHandler(Game &game, LoggedUser user, GameManager &gameManager,
+GameRequestHandler::GameRequestHandler(Game &game, LoggedUser& user, GameManager &gameManager,
                                        RequestHandlerFactory &handlerFactory)
     : m_game(game), m_user(user), m_gameManager(gameManager), m_handlerFactory(handlerFactory)
 {
@@ -37,12 +37,18 @@ RequestResult GameRequestHandler::getQuestion(RequestInfo request)
 {
     try
     {
-        Question question = m_game.getQuestionForUser(m_user);
-
+        Question* question = m_game.getQuestionForUser(m_user);
+        if (question == nullptr)
+        {
+            RequestResult rr;
+            rr.response = JsonResponsePacketSerializer::serializeErrorResponse({"end of questions"});
+            rr.newHandler = this;
+            return rr;
+        }
         GetQuestionResponse response;
         response.status = SUCCESS;
-        response.question = question.getQuestion();
-        std::vector<std::string> answersVec = question.getPossibleAnswers();
+        response.question = question->getQuestion();
+        std::vector<std::string> answersVec = question->getPossibleAnswers();
         for (unsigned int i = 0; i < answersVec.size(); ++i)
         {
             response.answers[i] = answersVec[i];

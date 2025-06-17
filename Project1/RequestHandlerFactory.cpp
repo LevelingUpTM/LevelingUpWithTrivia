@@ -40,6 +40,7 @@ GameRequestHandler *RequestHandlerFactory::createGameRequestHandler(LoggedUser &
     return new GameRequestHandler(*game, user, m_gameManager, *this);
 }
 
+
 GameManager &RequestHandlerFactory::getGameManager()
 {
     return m_gameManager;

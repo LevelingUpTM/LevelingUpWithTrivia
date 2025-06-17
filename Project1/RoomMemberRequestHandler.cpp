@@ -2,6 +2,7 @@
 #include "JsonResponsePacketSerializer.h"
 #include "statusCodes.h"
 #include "MenuRequestHandler.h"
+#include "GameRequestHandler.h"
 
 RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser& user, Room& room, RoomManager &roomManager,
                                                    RequestHandlerFactory &handlerFactory)
@@ -58,6 +59,9 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeGetRoomStateResponse(response);
-    result.newHandler = this;
+    if (response.hasGameBegun)
+        result.newHandler = m_handlerFactory.createGameRequestHandler(m_user);
+    else
+        result.newHandler = this;
     return result;
 }

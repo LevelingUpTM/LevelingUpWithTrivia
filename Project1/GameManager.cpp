@@ -9,11 +9,15 @@ GameManager::GameManager(IDatabase* database)
 
 Game& GameManager::createGame(Room& room)
 {
-    return m_games.emplace(
+    Game& game = m_games.emplace(
         std::piecewise_construct, 
         std::forward_as_tuple(room.getMetadata().id),
         std::forward_as_tuple(room, m_database)
     ).first->second;
+
+    room.setGame(game);
+
+    return game;
 }
 
 void GameManager::deleteGame(unsigned int gameId)

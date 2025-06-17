@@ -57,7 +57,7 @@ namespace LevelingUpWithTrivia.ViewModels
                 Communicator.Instance.Send(request);
                 var response = Communicator.Instance.Receive();
 
-                if (response is GetQuestionResponse questionResponse && questionResponse.Status == 1)
+                if (response is GetQuestionResponse questionResponse && questionResponse.Status == 0)
                 {
                     CurrentQuestion = questionResponse.Question;
                     Answer1 = questionResponse.Answers["0"];
@@ -100,9 +100,9 @@ namespace LevelingUpWithTrivia.ViewModels
                 Communicator.Instance.Send(request);
                 var response = Communicator.Instance.Receive();
 
-                if (response is SubmitAnswerResponse submitResponse && submitResponse.Status == 1)
+                if (response is SubmitAnswerResponse submitResponse && submitResponse.Status == 0)
                 {
-                    if (submitResponse.CorrectAnswerId == answerId)
+                    if (submitResponse.CorrectAnswerId != -1 && submitResponse.CorrectAnswerId == answerId)
                     {
                         CorrectAnswers++;
                     }
@@ -139,7 +139,7 @@ namespace LevelingUpWithTrivia.ViewModels
                 Communicator.Instance.Send(request);
                 var response = Communicator.Instance.Receive();
 
-                if (response is LeaveGameResponse leaveResponse && leaveResponse.Status == 1)
+                if (response is LeaveGameResponse leaveResponse && leaveResponse.Status == 0)
                 {
                     MainWindowViewModel.Current!.Content = new MainMenuView();
                 }

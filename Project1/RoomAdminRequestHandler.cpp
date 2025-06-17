@@ -3,6 +3,7 @@
 #include "JsonResponsePacketSerializer.h"
 #include "json.hpp"
 #include "MenuRequestHandler.h"
+#include "GameRequestHandler.h"
 RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser &user, Room &room, RoomManager &roomManager,
                                                  RequestHandlerFactory &handlerFactory)
     : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
@@ -36,6 +37,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo &requestInfo)
     m_roomManager.deleteRoom(m_room.getMetadata().id);
     CloseRoomResponse response;
     response.status = 1;
+
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeCloseRoomResponse(response);
     result.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);
@@ -47,9 +49,10 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo &requestInfo)
     StartGameResponse response;
     response.status = 1;
 
+    m_handlerFactory.getGameManager().createGame(m_room); 
     RequestResult result;
     result.response = JsonResponsePacketSerializer::serializeStartGameResponse(response);
-    result.newHandler = this;
+    result.newHandler = m_handlerFactory.createGameRequestHandler(m_user);
     return result;
 }
 

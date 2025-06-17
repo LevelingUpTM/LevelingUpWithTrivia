@@ -42,11 +42,11 @@ namespace LevelingUpWithTrivia.ViewModels
         {
             Communicator.Instance.Send(new GetRoomStateRequest());
             var response = Communicator.Instance.Receive();
-
             if (response is GetRoomStateResponse roomState)
             {
                 if (roomState.HasGameBegun)
                 {
+                    _refreshTimer.Stop();
                     MainWindowViewModel.Current!.Content = new GameRoomView(RoomObj.QuestionCount, RoomObj.TimePerQuestion);
                     return;
                 }
@@ -74,8 +74,8 @@ namespace LevelingUpWithTrivia.ViewModels
             var response = Communicator.Instance.Receive();
             if (response is StartGameResponse startGameResponse && startGameResponse.Status == 1)
             {
+                _refreshTimer.Stop();
                 MainWindowViewModel.Current!.Content = new GameRoomView(RoomObj.QuestionCount, RoomObj.TimePerQuestion);
-                MessageBox.Show("Game started!");
             }
             else
             {
