@@ -28,5 +28,15 @@ namespace LevelingUpWithTrivia.Views
 
             DataContext = new InfoViewModel();
         }
+
+        private void GitLabImage_Click(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://gitlab.com/Tomgluz/Trivia_Eliran_Maor_2025") { UseShellExecute = true });
+        }
+
+        private void YoutubeImage_Click(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://www.youtube.com/watch?v=dQw4w9WgXcQ") { UseShellExecute = true });
+        }
     }
 }

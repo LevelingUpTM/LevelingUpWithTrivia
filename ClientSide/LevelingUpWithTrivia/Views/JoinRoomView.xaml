@@ -22,7 +22,7 @@
 
             <Button Content="Back"
                     Command="{Binding BackCommand}"
-                    Background="#555" Foreground="White" Padding="10" FontSize="14"/>
+                    Background="#004250" Foreground="White" Padding="10" FontSize="14"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -8,14 +8,36 @@
              mc:Ignorable="d"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:StatisticsViewModel}">
-    <Grid Background="Chocolate">
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Personal Statistics" Height="40" FontSize="16" Margin="0,0,0,10"
-                    Background="Tan" Foreground="Black" Command="{Binding NavToUserStatisticsCommand}"/>
-            <Button Content="High Scores" Height="40" FontSize="16" Margin="0,0,0,10"
-                    Background="Tan" Foreground="Black" Command="{Binding NavToHighScoresCommand}"/>
-            <Button Content="BACK" Height="40" FontSize="16"
-                    Background="Red" Foreground="Black" Command="{Binding NavToMainCommand}"/>
+
+    <Grid Background="#001123">
+
+        <StackPanel HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,90">
+                <Image Source="/Assets/statisticsLogo.png"
+           Width="60"
+           Height="60"
+           Margin="0,0,15,0"/>
+                <TextBlock Text="Statistics Menu"
+               FontSize="36"
+               FontWeight="Bold"
+               Foreground="White"
+               VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <Button Content="Personal Statistics"
+                    Height="45" FontSize="16" Margin="0,0,0,15"
+                    Background="#005a66" Foreground="White"
+                    Command="{Binding NavToUserStatisticsCommand}"/>
+
+            <Button Content="High Scores"
+                    Height="45" FontSize="16" Margin="0,0,0,15"
+                    Background="#006671" Foreground="White"
+                    Command="{Binding NavToHighScoresCommand}"/>
+
+            <Button Content="Back to Main Menu"
+                    Height="45" FontSize="16" Margin="0, 50, 0, 0"
+                    Background="#004250" Foreground="White"
+                    Command="{Binding NavToMainCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
