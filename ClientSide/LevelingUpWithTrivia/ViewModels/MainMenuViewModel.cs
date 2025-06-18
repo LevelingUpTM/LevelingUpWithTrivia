@@ -55,6 +55,8 @@ namespace LevelingUpWithTrivia.ViewModels
             windowModel.Content = new InfoView();
         }
 
+        public string Username => MainWindowViewModel.CurrentUser!.Username;
+        
         [RelayCommand]
         public void LogoutAndNavToStart() 
         {

@@ -24,7 +24,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Background="Transparent" BorderThickness="0" Command="{Binding NavToUserStatsCommand}">
-                    <TextBlock Text="Welcome: UserName" TextWrapping="Wrap"
+                    <TextBlock Text="{Binding Username}"   TextWrapping="Wrap"
                            Foreground="White" FontSize="24" FontWeight="Bold"/>
                 </Button>
                 
