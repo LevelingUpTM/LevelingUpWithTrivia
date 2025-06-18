@@ -1,6 +1,13 @@
-﻿namespace LevelingUpWithTrivia.Views;
+﻿using System.Windows.Controls;
+using LevelingUpWithTrivia.ViewModels;
 
-public class WaitingForOthersView_xaml
+namespace LevelingUpWithTrivia.Views;
+
+public partial class WaitingForOthersView : UserControl
 {
-    
+    public WaitingForOthersView()
+    {
+        InitializeComponent();
+        DataContext = new WaitingForOthersViewModel();
+    }
 }

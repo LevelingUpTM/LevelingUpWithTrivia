@@ -1,6 +1,4 @@
-﻿namespace LevelingUpWithTrivia.Source.Packets.Requests;
-
-public class GetGameResultsRequest
+﻿namespace LevelingUpWithTrivia.Source.Packets.Requests
 {
-    
+    public record GetGameResultsRequest() : Request(17);
 }
