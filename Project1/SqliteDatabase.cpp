@@ -410,6 +410,13 @@ void SqliteDatabase::submitStatistics(const string &userName, int correctAnswerC
         return;
     }
 
+    string insertIfMissing = "INSERT OR IGNORE INTO statistics (UserID) VALUES (" + std::to_string(userID) + ");";
+    if (sqlite3_prepare_v2(db, insertIfMissing.c_str(), -1, &stmt, nullptr) == SQLITE_OK)
+    {
+        sqlite3_step(stmt);
+        sqlite3_finalize(stmt);
+    }
+
     int totalAnswers = correctAnswerCount + wrongAnswerCount;
     string updateQuery = "UPDATE statistics SET "
                          "TotalCorrectAnswers = TotalCorrectAnswers + " + std::to_string(correctAnswerCount) + ", "

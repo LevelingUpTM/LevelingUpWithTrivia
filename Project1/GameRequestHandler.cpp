@@ -13,11 +13,15 @@ GameRequestHandler::GameRequestHandler(Game &game, LoggedUser& user, GameManager
 bool GameRequestHandler::isRequestRelevant(RequestInfo &request)
 {
     return request.id == GET_QUESTION_REQUEST || request.id == SUBMIT_ANSWER_REQUEST ||
-           request.id == GET_GAME_RESULTS_REQUEST || request.id == LEAVE_GAME_REQUEST;
+           request.id == GET_GAME_RESULTS_REQUEST || request.id == LEAVE_GAME_REQUEST ||
+           request.id == LOGOUT_REQUEST;
 }
 
 RequestResult GameRequestHandler::handleRequest(RequestInfo &request)
 {
+    if (request.id == LOGOUT_REQUEST)
+        return this->signout(request);
+
     switch (request.id)
     {
     case GET_QUESTION_REQUEST:
@@ -31,6 +35,13 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo &request)
     default:
         return {JsonResponsePacketSerializer::serializeErrorResponse({"Invalid request for game."}), nullptr};
     }
+}
+
+RequestResult GameRequestHandler::signout(RequestInfo request)
+{
+    m_handlerFactory.getLoginManager().logout(m_user.getUsername());
+    return {JsonResponsePacketSerializer::serializeLogoutResponse(LogoutResponse{SUCCESS}),
+            m_handlerFactory.createLoginRequestHandler()};
 }
 
 RequestResult GameRequestHandler::getQuestion(RequestInfo request)

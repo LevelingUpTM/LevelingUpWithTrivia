@@ -11,8 +11,9 @@ public:
 
     bool isRequestRelevant(RequestInfo& request) override;
     RequestResult handleRequest(RequestInfo& request) override;
+    RequestResult signout(RequestInfo request) override;
 
-private:
+  private:
     RequestHandlerFactory& m_handlerFactory;
     LoginManager& m_loginManager;
 

@@ -12,11 +12,15 @@ RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser& user, Room& room,
 
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo &requestInfo)
 {
-    return requestInfo.id == LEAVE_ROOM_REQUEST || requestInfo.id == GET_ROOM_STATE_REQUEST;
+    return requestInfo.id == LEAVE_ROOM_REQUEST || requestInfo.id == GET_ROOM_STATE_REQUEST ||
+           requestInfo.id == LOGOUT_REQUEST;
 }
 
 RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo &requestInfo)
 {
+    if (requestInfo.id == LOGOUT_REQUEST)
+        return this->signout(requestInfo);
+
     switch (requestInfo.id)
     {
     case LEAVE_ROOM_REQUEST:
@@ -26,6 +30,13 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo &requestInfo)
     default:
         return {JsonResponsePacketSerializer::serializeErrorResponse({"Invalid request for member."}), nullptr}; 
     }
+}
+
+RequestResult RoomMemberRequestHandler::signout(RequestInfo request)
+{
+    m_handlerFactory.getLoginManager().logout(m_user.getUsername());
+    return {JsonResponsePacketSerializer::serializeLogoutResponse(LogoutResponse{SUCCESS}),
+            m_handlerFactory.createLoginRequestHandler()};
 }
 
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)

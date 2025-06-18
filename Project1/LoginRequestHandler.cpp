@@ -37,6 +37,11 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo& request)
     return { { 0xFF }, this };
 }
 
+RequestResult LoginRequestHandler::signout(RequestInfo request)
+{
+    return RequestResult();
+}
+
 RequestResult LoginRequestHandler::login(const RequestInfo& request)
 {
     const LoginRequest loginData = JsonRequestPacketDeserializer::deserializeLoginRequest(request.buffer);

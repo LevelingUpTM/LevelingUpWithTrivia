@@ -43,7 +43,7 @@ std::vector<std::string> StatisticsManager::getUserStatistics(const std::string 
     int correctAnswers = m_database->getNumOfCorrectAnswers(username);
     int totalAnswers = m_database->getNumOfTotalAnswers(username);
     int totalGames = m_database->getNumOfPlayerGames(username);
-    float avgAnswerTime = m_database->getPlayerAverageAnswerTime(username);
+    int avgAnswerTime = m_database->getPlayerAverageAnswerTime(username);
 
     stats.push_back("Correct Answers: " + std::to_string(correctAnswers));
     stats.push_back("Total Answers: " + std::to_string(totalAnswers));

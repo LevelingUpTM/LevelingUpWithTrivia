@@ -12,6 +12,7 @@ class GameRequestHandler : public IRequestHandler
     GameRequestHandler(Game &game, LoggedUser& user, GameManager &gameManager, RequestHandlerFactory &handlerFactory);
     bool isRequestRelevant(RequestInfo &request) override;
     RequestResult handleRequest(RequestInfo &request) override;
+    RequestResult signout(RequestInfo request) override;
   private:
     Game &m_game;
     LoggedUser& m_user;

@@ -14,6 +14,7 @@ class RoomMemberRequestHandler : public IRequestHandler
 
     bool isRequestRelevant(RequestInfo &requestInfo) override;
     RequestResult handleRequest(RequestInfo &requestInfo) override;
+    RequestResult signout(RequestInfo request) override;
 
   private:
     Room& m_room;

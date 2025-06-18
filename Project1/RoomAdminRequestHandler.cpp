@@ -14,11 +14,14 @@ RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser &user, Room &room, R
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo &requestInfo)
 {
     return requestInfo.id == CLOSE_ROOM_REQUEST || requestInfo.id == START_GAME_REQUEST ||
-           requestInfo.id == GET_ROOM_STATE_REQUEST;
+           requestInfo.id == GET_ROOM_STATE_REQUEST || requestInfo.id == LOGOUT_REQUEST;
 }
 
 RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo &requestInfo)
 {
+    if (requestInfo.id == LOGOUT_REQUEST)
+        return this->signout(requestInfo);
+
     switch (requestInfo.id)
     {
     case CLOSE_ROOM_REQUEST:
@@ -30,6 +33,13 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo &requestInfo)
     default:
         return {JsonResponsePacketSerializer::serializeErrorResponse({"Invalid request for admin."}), nullptr};
     }
+}
+
+RequestResult RoomAdminRequestHandler::signout(RequestInfo request)
+{
+    m_handlerFactory.getLoginManager().logout(m_user.getUsername());
+    return {JsonResponsePacketSerializer::serializeLogoutResponse(LogoutResponse{SUCCESS}),
+            m_handlerFactory.createLoginRequestHandler()};
 }
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo &requestInfo)
