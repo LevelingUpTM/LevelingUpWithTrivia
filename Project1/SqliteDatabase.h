@@ -4,6 +4,9 @@
 #include "sqlite3.h"
 #include <string>
 
+using std::string;
+using std::vector;
+
 class SqliteDatabase : public IDatabase
 {
 public:
@@ -12,18 +15,18 @@ public:
 
     bool open() override;
     bool close() override;
-    int doesUserExist(std::string username) override;
-    int doesPasswordMatch(std::string username, std::string password) override;
-    int addNewUser(std::string username, std::string password, std::string email) override;
+    int doesUserExist(string username) override;
+    int doesPasswordMatch(string username, string password) override;
+    int addNewUser(string username, string password, string email) override;
     std::list<Question> getQuestions(int numOfQuestions) override;
 
-     float getPlayerAverageAnswerTime(const std::string &username) override;
-     int getNumOfCorrectAnswers(const std::string &username) override;
-     int getNumOfTotalAnswers(const std::string &username) override;
-     int getNumOfPlayerGames(const std::string &username) override;
-     int getPlayerScore(const std::string &username) override;
+     float getPlayerAverageAnswerTime(const string &username) override;
+     int getNumOfCorrectAnswers(const string &username) override;
+     int getNumOfTotalAnswers(const string &username) override;
+     int getNumOfPlayerGames(const string &username) override;
+     int getPlayerScore(const string &username) override;
      vector<string> getHighScores() override;
-     void submitStatistics(const std::string &userName, int correctAnswerCount, int wrongAnswerCount,
+     void submitStatistics(const string &userName, int correctAnswerCount, int wrongAnswerCount,
                            int avarageAnswerTime) override;
 
     sqlite3 *getDB() const;
