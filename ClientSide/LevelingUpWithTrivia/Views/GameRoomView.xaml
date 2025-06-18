@@ -60,7 +60,7 @@
 
         <!-- Leave Room -->
         <Button Grid.Row="2" Content="Leave Room" HorizontalAlignment="Right" Margin="0,20,10,10"
-                Background="#770000" Foreground="White" Padding="10,5" Command="{Binding LeaveRoomCommand}"/>
+                Background="#6a141a" Foreground="White" Padding="10,5" Command="{Binding LeaveRoomCommand}"/>
     </Grid>
 
 </UserControl>

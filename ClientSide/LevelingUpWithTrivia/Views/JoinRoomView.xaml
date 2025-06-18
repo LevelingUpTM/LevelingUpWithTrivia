@@ -20,9 +20,9 @@
                     Command="{Binding JoinRoomCommand}"
                     Background="#00727C" Foreground="White" Padding="10" FontSize="16" Margin="0,0,0,10"/>
 
-            <Button Content="Back"
+            <Button Content="Back to Main Menu"
                     Command="{Binding BackCommand}"
-                    Background="#004250" Foreground="White" Padding="10" FontSize="14"/>
+                    Background="#6a141a" Foreground="White" Padding="10" FontSize="14"/>
         </StackPanel>
     </Grid>
 </UserControl>

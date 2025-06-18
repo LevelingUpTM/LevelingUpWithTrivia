@@ -36,7 +36,7 @@
 
             <Button Content="Back to Main Menu"
                     Height="45" FontSize="16" Margin="0, 50, 0, 0"
-                    Background="#004250" Foreground="White"
+                    Background="#6a141a" Foreground="White"
                     Command="{Binding NavToMainCommand}"/>
         </StackPanel>
     </Grid>

@@ -52,7 +52,7 @@
 
             <Button Content="Back to Main Menu"
                     Command="{Binding NavToMainCommand}"
-                    Background="#00727C"
+                    Background="#6a141a"
                     Foreground="White"
                     FontSize="16"
                     Width="160"

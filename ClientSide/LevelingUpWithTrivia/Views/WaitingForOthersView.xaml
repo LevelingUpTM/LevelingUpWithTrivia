@@ -11,7 +11,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Waiting for other players to finish..." 
                        FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-            <ProgressBar IsIndeterminate="True" Width="250" Height="20" Margin="0,20,0,0"/>
+            <ProgressBar IsIndeterminate="True" Width="250" Height="20" Margin="0,20,0,0" Background="#00C8FF" Foreground="#334455"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -8,9 +8,48 @@
              mc:Ignorable="d"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:UserStatisticsViewModel}">
-    <StackPanel Margin="20">
-        <Button Content="Back to Main Menu" Command="{Binding NavToMainCommand}" Margin="0,0,0,10"/>
-        <Button Content="Load My Stats" Command="{Binding LoadPersonalStatsCommand}" Margin="0,0,0,10"/>
-        <ListBox ItemsSource="{Binding Statistics}" Height="300"/>
-    </StackPanel>
+    
+    <Grid Background="#001123" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Text="My Statistics"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"
+                   Grid.Row="0"/>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <Button Content="Load My Stats"
+                    Command="{Binding LoadPersonalStatsCommand}"
+                    Background="#004250"
+                    Foreground="White"
+                    FontSize="20"
+                    Margin="10,0"/>
+
+            <Button Content="Back to Main Menu"
+                    Command="{Binding NavToMainCommand}"
+                    Background="#7a1e1e"
+                    Foreground="White"
+                    FontSize="20"
+                    Margin="10,0"/>
+        </StackPanel>
+
+        <!-- Stats List -->
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding Statistics}"
+                 Background="#002240"
+                 Foreground="White"
+                 BorderBrush="#004250"
+                 FontSize="16"
+                 Padding="10"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+    </Grid>
 </UserControl>
