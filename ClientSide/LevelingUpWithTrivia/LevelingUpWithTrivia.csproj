@@ -14,7 +14,6 @@
     <None Remove="Assets\LogOut.png" />
     <None Remove="Assets\LogOutLogo.png" />
     <None Remove="Assets\signUpLogo.png" />
-    <None Remove="Assets\statisticsLogo.png" />
     <None Remove="Assets\TriviaLogo.png" />
     <None Remove="Assets\YoutubeLogo.png" />
   </ItemGroup>
@@ -28,7 +27,6 @@
     <Resource Include="Assets\loginLogo.png" />
     <Resource Include="Assets\LogOutLogo.png" />
     <Resource Include="Assets\signUpLogo.png" />
-    <Resource Include="Assets\statisticsLogo.png" />
     <Resource Include="Assets\TriviaLogo.png" />
     <Resource Include="Assets\YoutubeLogo.png" />
   </ItemGroup>

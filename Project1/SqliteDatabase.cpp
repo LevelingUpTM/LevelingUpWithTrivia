@@ -418,11 +418,13 @@ void SqliteDatabase::submitStatistics(const string &userName, int correctAnswerC
     }
 
     int totalAnswers = correctAnswerCount + wrongAnswerCount;
+    float totalTimeForGame = averageAnswerTime * (correctAnswerCount + wrongAnswerCount);
     string updateQuery = "UPDATE statistics SET "
                          "TotalCorrectAnswers = TotalCorrectAnswers + " + std::to_string(correctAnswerCount) + ", "
                          "TotalAnswers = TotalAnswers + " + std::to_string(totalAnswers) + ", "
                          "TotalGames = TotalGames + 1, "
-                         "TotalTime = TotalTime + " + std::to_string(averageAnswerTime) + 
+                         "TotalTime = TotalTime + " +
+                         std::to_string(totalTimeForGame) + 
                          " WHERE UserID = " + std::to_string(userID) + ";";
 
     if (sqlite3_prepare_v2(db, updateQuery.c_str(), -1, &stmt, nullptr) == SQLITE_OK)

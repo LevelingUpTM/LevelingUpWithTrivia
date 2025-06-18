@@ -27,11 +27,6 @@ Question* Game::getQuestionForUser(const LoggedUser &user)
     }
 
     Question &currentQuestion = m_questions.at(data.currentQuestion++);
-
-    if (m_questions.size() <= data.currentQuestion)
-    {
-        m_playersFinished++;
-    }
     
     return &currentQuestion;
 }
@@ -59,6 +54,11 @@ bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned 
     
 
     data.averageAnswerTime = data.totalAnswers > 0 ? (float)(data.totalAnswerTime) / data.totalAnswers : 0;
+
+     if (data.currentQuestion == m_questions.size())
+    {
+        m_playersFinished++;
+    }
 
     return isCorrect;
 }

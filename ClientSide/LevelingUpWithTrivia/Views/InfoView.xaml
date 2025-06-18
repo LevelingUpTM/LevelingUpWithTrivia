@@ -57,16 +57,13 @@
                        Width="40"
                        Height="40"
                        Cursor="Hand"
-                       ToolTip="View the project on GitLab"
-                       MouseLeftButtonUp="GitLabImage_Click"/>
-
+                       ToolTip="View the project on GitLab"/>
                 <Image Source="/Assets/YoutubeLogo.png"
                        Margin="50,0,0,0"
                        Width="40"
                        Height="40"
                        Cursor="Hand"
-                       ToolTip="View the project on Youtube"
-                       MouseLeftButtonUp="YoutubeImage_Click"/>
+                       ToolTip="View the project on Youtube"/>
             </StackPanel>
         </StackPanel>
 
