@@ -5,26 +5,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
              xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels"
-             mc:Ignorable="d">
-    
+             mc:Ignorable="d"
+             Background="#001123">
+
     <UserControl.DataContext>
-        <viewmodels:GameResultsViewModel x:Name="ViewModel"/>
+        <viewmodels:GameResultsViewModel x:Name="ViewModel" />
     </UserControl.DataContext>
 
-    <Grid>
-        <StackPanel HorizontalAlignment="Center">
-            <TextBlock Text="Game Results" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <DataGrid ItemsSource="{Binding Results}" AutoGenerateColumns="False" IsReadOnly="True" Width="600" Margin="0,0,0,20">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
-                    <DataGridTextColumn Header="Correct Answers" Binding="{Binding CorrectAnswers}" Width="*"/>
-                    <DataGridTextColumn Header="Wrong Answers" Binding="{Binding WrongAnswers}" Width="*"/>
-                    <DataGridTextColumn Header="Avg. Time (s)" Binding="{Binding AverageAnswerTime}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+        <!-- Header -->
+        <TextBlock Text="Game Results"
+                   Grid.Row="0"
+                   FontSize="32"
+                   FontWeight="SemiBold"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
 
-            <Button Content="Back to Main Menu" Command="{Binding BackToMainCommand}" Width="200" Height="40"/>
+        <!-- Results Grid -->
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Results}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  RowBackground="#002240"
+                  AlternatingRowBackground="#00305a"
+                  Foreground="White"
+                  BorderBrush="#004250"
+                  BorderThickness="1"
+                  Margin="0,0,0,20"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False">
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#004250"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Padding" Value="8,4"/>
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="Correct Answers" Binding="{Binding CorrectAnswers}" Width="*"/>
+                <DataGridTextColumn Header="Wrong Answers" Binding="{Binding WrongAnswers}" Width="*"/>
+                <DataGridTextColumn Header="Avg. Time (s)" Binding="{Binding AverageAnswerTime}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Back Button -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,10">
+            <Button Content="Back to Main Menu"
+                    Command="{Binding BackToMainCommand}"
+                    Background="#004250"
+                    Foreground="White"
+                    FontSize="16"
+                    Width="180"
+                    Height="45"/>
         </StackPanel>
     </Grid>
 </UserControl>

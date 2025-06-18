@@ -23,57 +23,49 @@
                    Margin="0,10"/>
 
         <!-- Main content -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,20">
-            <StackPanel Margin="10,0,0,0">
-                <TextBlock Text="🎉 Welcome to Leveling Up With Trivia!" 
-                           FontSize="20" 
-                           Foreground="White"
-                           FontWeight="Bold"
-                           Margin="0,0,0,10"/>
+        <StackPanel Grid.Row="1" Margin="10,20,10,20" VerticalAlignment="Top">
+            <TextBlock Text="🎉 Welcome to Leveling Up With Trivia!" 
+                       FontSize="20" 
+                       Foreground="White"
+                       FontWeight="Bold"
+                       Margin="0,0,0,10"/>
 
-                <TextBlock Text="🧠 Test your knowledge across various topics in leveling up with trivia!"
-                           TextWrapping="Wrap"
-                           Foreground="White"
-                           Margin="0,0,0,10"/>
+            <TextBlock Text="🧠 Test your knowledge across various topics in leveling up with trivia!"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       Margin="0,0,0,10"/>
 
-                <TextBlock Text="🎮 How to Play:" 
-                           FontWeight="Bold"
-                           FontSize="18"
-                           Foreground="White"
-                           Margin="0,10,0,5"/>
-                <TextBlock Text="- Join or create a trivia room." Foreground="White"/>
-                <TextBlock Text="- Answer multiple-choice questions under the time limit." Foreground="White"/>
-                <TextBlock Text="- Score points for every correct answer!" Foreground="White"/>
-                <TextBlock Text="- Ascend your knowledge." Foreground="White"/>
-                <TextBlock Text="- Compete with friends." Foreground="White"/>
+            <TextBlock Text="🎮 How to Play:" 
+                       FontWeight="Bold"
+                       FontSize="18"
+                       Foreground="White"
+                       Margin="0,10,0,5"/>
 
+            <TextBlock Text="- Join or create rooms, and challenge friends!" Foreground="White"/>
+            <TextBlock Text="- Answer timed multiple-choice questions to score points." Foreground="White"/>
+            <TextBlock Text="- Climb the leaderboard with every correct answer!" Foreground="White"/>
+            <TextBlock Text="- Rise through the ranks with your knowledge!" Foreground="White"/>
 
-                <TextBlock Text="Created by: Eliran and Maor" 
-                           Foreground="LightGray" 
-                           FontStyle="Italic"
-                           Margin="0,20,0,10"/>
+            <TextBlock Text="Created by: Eliran and Maor" 
+                       Foreground="LightGray" 
+                       FontStyle="Italic"
+                       Margin="0,20,0,10"/>
 
-                
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="center" Margin="0,20,0,0">
-                    <!-- GitLab -->
-                    <Image Source="/Assets/GitLab.png"
-                           Margin="20, 0, 0, 0"
-                           Width="40"
-                           Height="40"
-                           Cursor="Hand"
-                           ToolTip="View the project on GitLab"/>
-                    <!-- Yutube -->
-                    <Image Source="/Assets/YoutubeLogo.png"
-                        Margin="50, 0, 0, 0"
-                        Width="40"
-                        Height="40"
-                        Cursor="Hand"
-                        ToolTip="View the project on Youtube"
-                          />
-
-                </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Image Source="/Assets/GitLab.png"
+                       Margin="20,0,0,0"
+                       Width="40"
+                       Height="40"
+                       Cursor="Hand"
+                       ToolTip="View the project on GitLab"/>
+                <Image Source="/Assets/YoutubeLogo.png"
+                       Margin="50,0,0,0"
+                       Width="40"
+                       Height="40"
+                       Cursor="Hand"
+                       ToolTip="View the project on Youtube"/>
             </StackPanel>
-        </ScrollViewer>
+        </StackPanel>
 
         <!-- Back button -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
