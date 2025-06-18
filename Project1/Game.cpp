@@ -96,6 +96,15 @@ int Game::getPlayersFinished() const
     return m_playersFinished;
 }
 
+void Game::submitAllPlayersStatsToDB()
+{
+    for (const auto &pair : m_players)
+    {
+        const LoggedUser *user = pair.first;
+        submitGameStatsToDB(*user);
+    }
+}
+
 void Game::submitGameStatsToDB(const LoggedUser &user)
 {
     GameData &data = m_players.at(&user);

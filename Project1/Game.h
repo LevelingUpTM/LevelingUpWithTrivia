@@ -30,6 +30,7 @@ class Game
     std::vector<PlayerResults> getPlayersResults() const;
     Room &getRoom() const;
     int getPlayersFinished() const;
+    void submitAllPlayersStatsToDB();
 
   private:
     void loadQuestions();

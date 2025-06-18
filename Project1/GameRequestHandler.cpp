@@ -77,6 +77,8 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo request)
 {
     if (m_game.getRoom().getAllUsers().size() == m_game.getPlayersFinished())
     {
+        m_game.submitAllPlayersStatsToDB();
+
         GetGameResultsResponse response;
         response.status = SUCCESS;
         const auto &playersStats = m_game.getPlayersResults();
