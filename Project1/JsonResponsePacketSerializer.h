@@ -117,7 +117,7 @@ struct PlayerResults
     string username;
     unsigned int correctAnswerCount;
     unsigned int wrongAnswerCount;
-    unsigned int averageAnswerTime;
+    int averageAnswerTime;
 };
 
 struct GetGameResultsResponse

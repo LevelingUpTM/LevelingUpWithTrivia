@@ -1,7 +1,8 @@
 #include "Game.h"
 #include "JsonResponsePacketSerializer.h"
 Game::Game(Room& room, IDatabase *database)
-    : m_database(database), m_gameId(room.getMetadata().id), m_roomData(room.getMetadata()), m_room(room)
+    : m_database(database), m_gameId(room.getMetadata().id), m_roomData(room.getMetadata()), m_room(room),
+      m_playersFinished(0)
 {
     // Initialize players
     for (const LoggedUser* user : room.getAllUsers())
@@ -21,9 +22,16 @@ Question* Game::getQuestionForUser(const LoggedUser &user)
     GameData &data = m_players.at(&user);
 
     if (m_questions.size() <= data.currentQuestion)
+    {
         return nullptr;
+    }
 
     Question &currentQuestion = m_questions.at(data.currentQuestion++);
+
+    if (m_questions.size() <= data.currentQuestion)
+    {
+        m_playersFinished++;
+    }
     
     return &currentQuestion;
 }
@@ -31,22 +39,26 @@ Question* Game::getQuestionForUser(const LoggedUser &user)
 bool Game::submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime)
 {
     GameData& data = m_players.at(&user);
-    Question *question = getQuestionForUser(user);
-    if (question == nullptr)
+
+    if (data.currentQuestion == 0 || data.currentQuestion > m_questions.size())
     {
-        throw std::exception("got to last question");
+        throw std::exception("Invalid question index.");
     }
-    bool isCorrect = (answerId == question->getCorrectAnswerId());
+
+    Question &question = m_questions.at(data.currentQuestion - 1);
+
+    bool isCorrect = (answerId == question.getCorrectAnswerId());
 
     if (isCorrect)
         data.correctAnswerCount++;
     else
         data.wrongAnswerCount++;
 
-    if (data.averageAnswerTime == 0)
-        data.averageAnswerTime = answerTime;
-    else
-        data.averageAnswerTime = (data.averageAnswerTime + answerTime) / 2;
+    data.totalAnswerTime += answerTime;
+    data.totalAnswers++;
+    
+
+    data.averageAnswerTime = data.totalAnswers > 0 ? (float)(data.totalAnswerTime) / data.totalAnswers : 0;
 
     return isCorrect;
 }
@@ -77,6 +89,11 @@ std::vector<PlayerResults> Game::getPlayersResults() const
 Room &Game::getRoom() const
 {
     return m_room;
+}
+
+int Game::getPlayersFinished() const
+{
+    return m_playersFinished;
 }
 
 void Game::submitGameStatsToDB(const LoggedUser &user)
