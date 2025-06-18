@@ -19,39 +19,20 @@ namespace LevelingUpWithTrivia.ViewModels
             [ObservableProperty] private float averageAnswerTime;
         }
 
-        [ObservableProperty]
-        private ObservableCollection<PlayerResult> results = new();
+        [ObservableProperty] private ObservableCollection<PlayerResult> results = new();
 
-        public void LoadGameResults()
+        public void LoadGameResults(GetGameResultsResponse resultResponse)
         {
-            try
+            Results.Clear();
+            foreach (var player in resultResponse.Results)
             {
-                var request = new GetGameResultsRequest();
-                Communicator.Instance.Send(request);
-                var response = Communicator.Instance.Receive();
-
-                if (response is GetGameResultsResponse resultResponse && resultResponse.Status == 0)
+                Results.Add(new PlayerResult
                 {
-                    Results.Clear();
-                    foreach (var player in resultResponse.Results)
-                    {
-                        Results.Add(new PlayerResult
-                        {
-                            Username = player.Username,
-                            CorrectAnswers = player.CorrectAnswerCount,
-                            WrongAnswers = player.WrongAnswerCount,
-                            AverageAnswerTime = player.AverageAnswerTime
-                        });
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Failed to get game results.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error getting game results: " + ex.Message);
+                    Username = player.Username,
+                    CorrectAnswers = player.CorrectAnswerCount,
+                    WrongAnswers = player.WrongAnswerCount,
+                    AverageAnswerTime = player.AverageAnswerTime
+                });
             }
         }
 

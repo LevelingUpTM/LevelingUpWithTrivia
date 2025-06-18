@@ -83,7 +83,8 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo request)
         response.status = SUCCESS;
         const auto &playersStats = m_game.getPlayersResults();
         response.result = playersStats;
-        return {JsonResponsePacketSerializer::serializeGetGameResultsResponse(response), this};
+        return {JsonResponsePacketSerializer::serializeGetGameResultsResponse(response),
+                m_handlerFactory.createMenuRequestHandler(m_user)};
     }
     return {JsonResponsePacketSerializer::serializeErrorResponse({"waiting for all players to finish the game..."}),
             this};

@@ -30,7 +30,7 @@ namespace LevelingUpWithTrivia.ViewModels
                 {
                     checkTimer.Stop();
                     var vm = new GameResultsViewModel();
-                    vm.LoadGameResults();
+                    vm.LoadGameResults(r);
                     MainWindowViewModel.Current!.Content = new GameResultsView { DataContext = vm };
                 }
             }

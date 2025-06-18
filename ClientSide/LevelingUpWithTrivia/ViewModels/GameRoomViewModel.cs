@@ -115,7 +115,6 @@ namespace LevelingUpWithTrivia.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show("Game finished!");
                         MainWindowViewModel.Current!.Content = new WaitingForOthersView();
                     }
                 }
