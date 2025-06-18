@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="LevelingUpWithTrivia.Views.GameResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
+             xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels"
+             mc:Ignorable="d">
+    
+    <UserControl.DataContext>
+        <viewmodels:GameResultsViewModel x:Name="ViewModel"/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock Text="Game Results" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+            <DataGrid ItemsSource="{Binding Results}" AutoGenerateColumns="False" IsReadOnly="True" Width="600" Margin="0,0,0,20">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                    <DataGridTextColumn Header="Correct Answers" Binding="{Binding CorrectAnswers}" Width="*"/>
+                    <DataGridTextColumn Header="Wrong Answers" Binding="{Binding WrongAnswers}" Width="*"/>
+                    <DataGridTextColumn Header="Avg. Time (s)" Binding="{Binding AverageAnswerTime}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Content="Back to Main Menu" Command="{Binding BackToMainCommand}" Width="200" Height="40"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

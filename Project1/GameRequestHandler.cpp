@@ -75,12 +75,19 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo request)
 
 RequestResult GameRequestHandler::getGameResults(RequestInfo request)
 {
-    GetGameResultsResponse response;
-    response.status = SUCCESS;
-    const auto &playersStats = m_game.getPlayersResults();
-    response.result = playersStats;
+    if (m_game.getRoom().getAllUsers().size() == m_game.getPlayersFinished())
+    {
+        m_game.submitAllPlayersStatsToDB();
 
-    return {JsonResponsePacketSerializer::serializeGetGameResultsResponse(response), this};
+        GetGameResultsResponse response;
+        response.status = SUCCESS;
+        const auto &playersStats = m_game.getPlayersResults();
+        response.result = playersStats;
+        return {JsonResponsePacketSerializer::serializeGetGameResultsResponse(response),
+                m_handlerFactory.createMenuRequestHandler(m_user)};
+    }
+    return {JsonResponsePacketSerializer::serializeErrorResponse({"waiting for all players to finish the game..."}),
+            this};
 }
 
 RequestResult GameRequestHandler::leaveGame(RequestInfo request)

@@ -31,4 +31,11 @@
     <Resource Include="Assets\YoutubeLogo.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\WaitingForOthersView.xaml.cs">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>WaitingForOthersView.xaml</DependentUpon>
+    </Page>
+  </ItemGroup>
+
 </Project>

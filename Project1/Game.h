@@ -13,7 +13,9 @@ struct GameData
     int currentQuestion;
     unsigned int correctAnswerCount = 0;
     unsigned int wrongAnswerCount = 0;
-    unsigned int averageAnswerTime = 0;
+    float totalAnswerTime = 0;
+    int totalAnswers = 0;
+    float averageAnswerTime = 0;
 };
 
 
@@ -27,6 +29,8 @@ class Game
     void removePlayer(const LoggedUser &user);
     std::vector<PlayerResults> getPlayersResults() const;
     Room &getRoom() const;
+    int getPlayersFinished() const;
+    void submitAllPlayersStatsToDB();
 
   private:
     void loadQuestions();
@@ -37,4 +41,5 @@ class Game
     IDatabase* m_database;
     RoomData m_roomData;
     Room& m_room;
+    int m_playersFinished;
 };

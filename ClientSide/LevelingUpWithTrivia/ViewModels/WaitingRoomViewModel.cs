@@ -127,6 +127,7 @@ namespace LevelingUpWithTrivia.ViewModels
             if (response is CloseRoomResponse closeRoomResponse && closeRoomResponse.Status == 1)
             {
                 _refreshTimer.Stop();
+                MainWindowViewModel.Current!.Content = new MainMenuView();
             }
             else
             {
