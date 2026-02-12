@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="LevelingUpWithTrivia.Views.StatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LevelingUpWithTrivia.Views"
+             d:DesignHeight="450" d:DesignWidth="800"
+             mc:Ignorable="d"
+             xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:StatisticsViewModel}">
+
+    <Grid Background="#001123">
+
+        <StackPanel HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,90">
+                <Image Source="/Assets/statisticsLogo.png"
+           Width="60"
+           Height="60"
+           Margin="0,0,15,0"/>
+                <TextBlock Text="Statistics Menu"
+               FontSize="36"
+               FontWeight="Bold"
+               Foreground="White"
+               VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <Button Content="Personal Statistics"
+                    Height="45" FontSize="16" Margin="0,0,0,15"
+                    Background="#005a66" Foreground="White"
+                    Command="{Binding NavToUserStatisticsCommand}"/>
+
+            <Button Content="High Scores"
+                    Height="45" FontSize="16" Margin="0,0,0,15"
+                    Background="#006671" Foreground="White"
+                    Command="{Binding NavToHighScoresCommand}"/>
+
+            <Button Content="Back to Main Menu"
+                    Height="45" FontSize="16" Margin="0, 50, 0, 0"
+                    Background="#6a141a" Foreground="White"
+                    Command="{Binding NavToMainCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

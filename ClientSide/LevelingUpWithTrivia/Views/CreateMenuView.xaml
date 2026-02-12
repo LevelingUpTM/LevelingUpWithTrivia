@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="LevelingUpWithTrivia.Views.CreateMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             mc:Ignorable="d"
+             xmlns:viewmodels="clr-namespace:LevelingUpWithTrivia.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:CreateMenuViewModel}">
+
+    <Grid Background="#001123">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+
+            <TextBlock Text="Create Room" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Room Name:" Foreground="White"/>
+            <TextBox Text="{Binding RoomName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+            <TextBlock Text="Max Players:" Foreground="White"/>
+            <TextBox Text="{Binding MaxPlayers, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+            <TextBlock Text="Question Count:" Foreground="White"/>
+            <TextBox Text="{Binding QuestionCount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Padding="6"/>
+
+            <TextBlock Text="Time Per Question (sec):" Foreground="White"/>
+            <TextBox Text="{Binding TimePerQuestion, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20" Padding="6"/>
+
+            <Button Content="Create Room"
+                    Command="{Binding CreateRoomCommand}"
+                    Background="#00727C" Foreground="White" Padding="10" FontSize="16" Margin="0,0,0,10"/>
+
+            <Button Content="Back to Main Menu"
+                    Command="{Binding BackCommand}"
+                    Background="#6a141a" Foreground="White" Padding="10" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

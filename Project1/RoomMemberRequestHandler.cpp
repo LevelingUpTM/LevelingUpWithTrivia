@@ -1,0 +1,78 @@
+#include "RoomMemberRequestHandler.h"
+#include "JsonResponsePacketSerializer.h"
+#include "statusCodes.h"
+#include "MenuRequestHandler.h"
+#include "GameRequestHandler.h"
+
+RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser& user, Room& room, RoomManager &roomManager,
+                                                   RequestHandlerFactory &handlerFactory)
+    : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+{
+}
+
+bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo &requestInfo)
+{
+    return requestInfo.id == LEAVE_ROOM_REQUEST || requestInfo.id == GET_ROOM_STATE_REQUEST ||
+           requestInfo.id == LOGOUT_REQUEST;
+}
+
+RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo &requestInfo)
+{
+    if (requestInfo.id == LOGOUT_REQUEST)
+        return this->signout(requestInfo);
+
+    switch (requestInfo.id)
+    {
+    case LEAVE_ROOM_REQUEST:
+        return leaveRoom(requestInfo);
+    case GET_ROOM_STATE_REQUEST:
+        return getRoomState(requestInfo);
+    default:
+        return {JsonResponsePacketSerializer::serializeErrorResponse({"Invalid request for member."}), nullptr}; 
+    }
+}
+
+RequestResult RoomMemberRequestHandler::signout(RequestInfo request)
+{
+    m_handlerFactory.getLoginManager().logout(m_user.getUsername());
+    return {JsonResponsePacketSerializer::serializeLogoutResponse(LogoutResponse{SUCCESS}),
+            m_handlerFactory.createLoginRequestHandler()};
+}
+
+RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo requestInfo)
+{
+    m_room.removeUser(m_user.getUsername());
+
+    LeaveRoomResponse response;
+    response.status = 1;
+
+    RequestResult result;
+    result.response = JsonResponsePacketSerializer::serializeLeaveRoomResponse(response);
+    result.newHandler = m_handlerFactory.createMenuRequestHandler(m_user);
+    return result;
+}
+
+RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo requestInfo)
+{
+    GetRoomStateResponse response;
+    response.status = 1;
+    response.hasGameBegun = m_room.getGame() != nullptr;
+    response.questionCount = m_room.getMetadata().numOfQuestionsInGame;
+    response.answerTimeOut = m_room.getMetadata().timePerQuestion;
+
+    const std::list<LoggedUser*> users = m_room.getAllUsers();
+    std::vector<std::string> usersVector;
+    for (LoggedUser *user : users)
+    {
+        usersVector.push_back(user->getUsername());
+    }
+    response.players = usersVector;
+
+    RequestResult result;
+    result.response = JsonResponsePacketSerializer::serializeGetRoomStateResponse(response);
+    if (response.hasGameBegun)
+        result.newHandler = m_handlerFactory.createGameRequestHandler(m_user);
+    else
+        result.newHandler = this;
+    return result;
+}

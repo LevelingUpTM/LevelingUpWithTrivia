@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\GitLab.png" />
+    <None Remove="Assets\loginLogo.png" />
+    <None Remove="Assets\LogOut.png" />
+    <None Remove="Assets\LogOutLogo.png" />
+    <None Remove="Assets\signUpLogo.png" />
+    <None Remove="Assets\TriviaLogo.png" />
+    <None Remove="Assets\YoutubeLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\GitLab.png" />
+    <Resource Include="Assets\loginLogo.png" />
+    <Resource Include="Assets\LogOutLogo.png" />
+    <Resource Include="Assets\signUpLogo.png" />
+    <Resource Include="Assets\TriviaLogo.png" />
+    <Resource Include="Assets\YoutubeLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\WaitingForOthersView.xaml.cs">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>WaitingForOthersView.xaml</DependentUpon>
+    </Page>
+  </ItemGroup>
+
+</Project>

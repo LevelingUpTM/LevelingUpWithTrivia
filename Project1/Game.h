@@ -1,0 +1,45 @@
+#pragma once
+
+#include <vector>
+#include <map>
+#include "Question.h"
+#include "Room.h"
+#include "LoggedUser.h"
+#include "IDatabase.h"
+#include "JsonResponsePacketSerializer.h"
+
+struct GameData
+{
+    int currentQuestion;
+    unsigned int correctAnswerCount = 0;
+    unsigned int wrongAnswerCount = 0;
+    float totalAnswerTime = 0;
+    int totalAnswers = 0;
+    float averageAnswerTime = 0;
+};
+
+
+class Game
+{
+  public:
+    Game(Room& room, IDatabase *database);
+    unsigned int getGameId() const;
+    Question* getQuestionForUser(const LoggedUser &user);
+    bool submitAnswer(const LoggedUser &user, unsigned int answerId, unsigned int answerTime);
+    void removePlayer(const LoggedUser &user);
+    std::vector<PlayerResults> getPlayersResults() const;
+    Room &getRoom() const;
+    int getPlayersFinished() const;
+    void submitAllPlayersStatsToDB();
+
+  private:
+    void loadQuestions();
+    void submitGameStatsToDB(const LoggedUser &user);
+    std::vector<Question> m_questions;
+    std::map<const LoggedUser*, GameData> m_players;
+    unsigned int m_gameId;
+    IDatabase* m_database;
+    RoomData m_roomData;
+    Room& m_room;
+    int m_playersFinished;
+};

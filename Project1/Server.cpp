@@ -1,0 +1,42 @@
+#include "Server.h"
+#include <WinSock2.h>
+#include <iostream>
+#include <thread>
+#include "SqliteDatabase.h"
+#pragma comment(lib, "Ws2_32.lib")
+
+void Server::run()
+{
+    WSADATA wsaData;
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+
+    thread serverThread(&Communicator::startHandleRequest, &m_communicator);
+    serverThread.detach();
+
+    std::string command;
+    while (true)
+    {
+        std::getline(std::cin, command);
+        if (command == "EXIT")
+        {
+            cout << "Shutting down server...\n";
+            WSACleanup();
+            break;
+        }
+    }
+}
+
+Server::Server()
+    :m_database(new SqliteDatabase()), m_handlerFactory(m_database), m_communicator(m_handlerFactory)
+{
+    if (!m_database->open())
+    {
+        std::cerr << "Failed to open database!" << std::endl;
+        exit(1);
+    }
+}
+
+Server::~Server()
+{
+    delete m_database;
+}

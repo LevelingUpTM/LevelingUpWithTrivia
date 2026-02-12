@@ -1,0 +1,56 @@
+#include "LoginManager.h"
+
+LoginManager::LoginManager(IDatabase* db)
+    : m_database(db)
+{
+}
+
+LoginStatus LoginManager::login(const std::string& username, const std::string& password)
+{
+    // Already logged in?
+    if (m_usernameToUser.find(username) != m_usernameToUser.end())
+    {
+        return LoginStatus::ALREADY_LOGGED_IN;
+    }
+
+    // Check if user exists
+    if (!m_database->doesUserExist(username))
+    {
+        return LoginStatus::USER_NOT_FOUND;
+    }
+
+    // Check password match
+    if (!m_database->doesPasswordMatch(username, password))
+    {
+        return LoginStatus::WRONG_PASSWORD;
+    }
+
+    // Add to logged users
+    m_usernameToUser.emplace(username, LoggedUser(username));
+    return LoginStatus::SUCCESS;
+}
+
+SignUpStatus LoginManager::signup(const std::string& username, const std::string& password, const std::string& email) const
+{
+    if (m_database->doesUserExist(username))
+    {
+        return SignUpStatus::USER_ALREADY_EXISTS;
+    }
+
+    if (!m_database->addNewUser(username, password, email))
+    {
+        return SignUpStatus::UNKNOWN_ERROR;
+    }
+
+    return SignUpStatus::SUCCESS;
+}
+
+void LoginManager::logout(const std::string& username)
+{
+    m_usernameToUser.erase(username);
+}
+
+LoggedUser &LoginManager::usernameToUser(const std::string &username)
+{
+    return m_usernameToUser.at(username);
+}
